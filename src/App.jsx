@@ -1,15 +1,21 @@
-import { Button } from './components/ui/button'
+import Banner from "./components/LandingPage/Banner";
+import Category from "./components/LandingPage/Category";
+import Course from "./components/LandingPage/Course";
+import FAQ from "./components/LandingPage/FAQ";
+import Footer from "./components/LandingPage/Footer";
+import Navbar from "./components/LandingPage/Navbar";
 
 function App() {
   return (
     <>
-      <div className='h-screen w-full flex justify-center items-center'>
-        <Button className=' flex justify-center items-center'>
-          Hello World
-        </Button>
-      </div>
+      <Navbar />
+      <Banner />
+      <Category/>
+      <Course />
+      <Footer />
+      <FAQ />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
