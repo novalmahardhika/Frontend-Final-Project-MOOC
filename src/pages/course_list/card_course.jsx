@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useCategoryContext } from "./CategoryContext";
+import Footer from "../beranda/Footer";
 
 const Card_Course = () => {
   const { selectedCategory } = useCategoryContext();
@@ -32,26 +33,25 @@ const Card_Course = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="container mt-10 mb-8">
         <div className="text-3xl font-semibold text-primary">Cari Kelas</div>
         <div className="text-3xl font-semibold text-primary">Sesuai Karir Kamu</div>
       </div>
-      <div className="container flex flex-wrap gap-10">
+      <div className="container flex flex-wrap gap-10 mb-10">
         {courseList.map((course, index) => (
           <Card
             key={course.id}
             className={`md:w-72 ${index < 2 ? "flex-grow-0" : ""}`} // Apply flex-grow-0 for the first two cards
           >
-            <Link to={`/CourseDetail/${course.id}`}>
-              <div className="">
-                <img
-                  className="rounded-t-sm"
-                  src={course.image}
-                  alt={course.title}
-                />
-              </div>
-            </Link>
+            <div className="">
+              <img
+                className="rounded-t-sm"
+                src={course.image}
+                alt={course.title}
+              />
+            </div>
+
             <CardHeader>
               <Link to={`/CourseDetail/${course.id}`}>
                 <CardTitle className="text-xl font-semibold">{course.title}</CardTitle>
@@ -60,7 +60,9 @@ const Card_Course = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="hover:bg-active">{formatCurrency(course.price)}</Button>
+              <Link to={`/CourseDetail/${course.id}`}>
+                <Button className="hover:bg-active">{formatCurrency(course.price)}</Button>
+              </Link>
             </CardContent>
             <CardFooter className="flex gap-2 items-center">
               <StarRating rating={"5"} />
@@ -69,6 +71,7 @@ const Card_Course = () => {
           </Card>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };

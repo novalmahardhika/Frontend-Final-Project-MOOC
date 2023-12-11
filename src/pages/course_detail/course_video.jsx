@@ -3,6 +3,7 @@ import YouTube from "react-youtube";
 
 const VideoThumbnail = ({ videoUrl }) => {
   const isYouTubeVideo = isYouTubeUrl(videoUrl);
+  const videoId = getYouTubeVideoId(videoUrl);
 
   const opts = {
     height: "500",
@@ -16,12 +17,17 @@ const VideoThumbnail = ({ videoUrl }) => {
     return /^(https?:\/\/)?(www\.)?(youtube\.com\/(?:[^\\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i.test(url);
   }
 
+  function getYouTubeVideoId(url) {
+    const match = /^(https?:\/\/)?(www\.)?(youtube\.com\/(?:[^\\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/i.exec(url);
+    return match ? match[4] : null;
+  }
+
   return (
     <div>
       {isYouTubeVideo ? (
         <div className="rounded-lg mt-10 overflow-hidden w-fit">
           <YouTube
-            videoId=""
+            videoId={videoId}
             opts={opts}
           />
         </div>
@@ -33,7 +39,7 @@ const VideoThumbnail = ({ videoUrl }) => {
             height="500"
           >
             <source
-              src=""
+              src={videoUrl}
               type="video/mp4"
             />
             Your browser does not support the video tag.

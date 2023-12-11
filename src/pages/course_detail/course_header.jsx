@@ -82,7 +82,10 @@ const CourseHeader = () => {
             </div>
           </div>
           <div className="pt-2">
-            <Link to="#">
+            <Link
+              to={courseDetail.telegram}
+              target="blank"
+            >
               <Button className="text-xs h-8 bg-success space-x-2">
                 <p>Join Grup Telegram</p>
                 <FontAwesomeIcon icon={faComments} />

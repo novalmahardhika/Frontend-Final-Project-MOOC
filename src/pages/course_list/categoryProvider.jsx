@@ -1,23 +1,13 @@
-// // CategoryProvider.js
-// import { createContext, useState, useContext } from "react";
-// import PropTypes from "prop-types";
+import { useState } from "react";
+import PropTypes from "prop-types";
+import CategoryContext from "./CategoryContext"; // Import the context
 
-// const CategoryContext = createContext();
+export const CategoryProvider = ({ children }) => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-// export const useCategory = () => {
-//   const context = useContext(CategoryContext);
-//   if (!context) {
-//     throw new Error("useCategory must be used within a CategoryProvider");
-//   }
-//   return context;
-// };
+  return <CategoryContext.Provider value={{ selectedCategory, setSelectedCategory }}>{children}</CategoryContext.Provider>;
+};
 
-// export const CategoryProvider = ({ children }) => {
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-
-//   return <CategoryContext.Provider value={{ selectedCategory, setSelectedCategory }}>{children}</CategoryContext.Provider>;
-// };
-
-// CategoryProvider.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };
+CategoryProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

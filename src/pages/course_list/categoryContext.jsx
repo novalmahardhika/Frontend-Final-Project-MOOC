@@ -1,6 +1,4 @@
-// CategoryContext.js
-import { createContext, useContext, useState } from "react";
-import PropTypes from "prop-types";
+import { createContext, useContext } from "react";
 
 const CategoryContext = createContext();
 
@@ -12,12 +10,4 @@ export const useCategoryContext = () => {
   return context;
 };
 
-export const CategoryProvider = ({ children }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  return <CategoryContext.Provider value={{ selectedCategory, setSelectedCategory }}>{children}</CategoryContext.Provider>;
-};
-
-CategoryProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+export default CategoryContext; // Exporting the context itself
