@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import CategoryContext from "./CategoryContext"; // Import the context
+import CategoryContext from "./categoryContext"; // Import the context
 
 export const CategoryProvider = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
