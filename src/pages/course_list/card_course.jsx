@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useCategoryContext } from "./CategoryContext";
+import { useCategoryContext } from "./categoryContext";
 import Footer from "../beranda/Footer";
 
 const Card_Course = () => {
@@ -64,7 +64,7 @@ const Card_Course = () => {
                 <Button className="hover:bg-active">{formatCurrency(course.price)}</Button>
               </Link>
             </CardContent>
-            <CardFooter className="flex gap-2 items-center">
+            <CardFooter className="flex items-center gap-2">
               <StarRating rating={"5"} />
               <span className="text-sm">({"5"})</span>
             </CardFooter>
