@@ -41,7 +41,10 @@ const Menu = () => {
             <NavigationMenuContent>
               <div className="grid gap-7 p-4 md:w-[600px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
                 <div className="row-span-3">
-                  <Link to="/course">
+                  <Link
+                    to="/course"
+                    onClick={() => setSelectedCategory()}
+                  >
                     <NavigationMenuLink asChild>
                       <div className="flex h-full w-full select-none flex-col justify-center bg-primary text-white from-muted/50 to-muted p-3 no-underline outline-none focus:shadow-md ">
                         <span className="text-xs text-center text-success">Trusted by 900K+ Students</span>

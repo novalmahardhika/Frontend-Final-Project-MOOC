@@ -1,9 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const AvatarProfile = () => {
+  const navigate = useNavigate();
+  const [performLogout, setPerformLogout] = useState(false);
+
+  useEffect(() => {
+    if (performLogout) {
+      localStorage.removeItem("token");
+      navigate("user/login");
+    }
+  }, [performLogout, navigate]);
+
+  const handleLogout = () => {
+    setPerformLogout(true);
+  };
+
   return (
     <div className="font-poppins">
       <DropdownMenu>
@@ -32,7 +46,10 @@ const AvatarProfile = () => {
               {/* <Settings className="mr-2 h-4 w-4" /> */}
               <Link to="#">Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleLogout}
+            >
               {/* <Keyboard className="mr-2 h-4 w-4" /> */}
               <Link to="#">Keluar</Link>
             </DropdownMenuItem>
