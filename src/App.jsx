@@ -22,6 +22,14 @@ function App() {
     <Router>
       <Routes>
         <Route
+          path="/"
+          element={
+            <LayoutBeranda>
+              <Beranda />
+            </LayoutBeranda>
+          }
+        />
+        <Route
           path="/Admin"
           element={
             <LayoutAdmin>
@@ -62,14 +70,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/Beranda"
-          element={
-            <LayoutBeranda>
-              <Beranda />
-            </LayoutBeranda>
-          }
-        />
         <Route
           path="/Course"
           element={
