@@ -13,7 +13,7 @@ const Banner = () => {
             />
 
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-primary opacity-100 w-4/6"></div>
-            <div className="relative z-10 grid grid-cols-3">
+            <div className="relative z-1 grid grid-cols-3">
               <div className="col-span-3 text-white space-y-2">
                 <p className="text-2xl font-bold">Belajar</p>
                 <p className="text-2xl font-bold pb-3">dari Praktisi Terbaik!</p>

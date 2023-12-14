@@ -13,7 +13,7 @@ import LayoutBeranda from "./pages/beranda/layout";
 import UserProtected from "./pages/authentication/protected";
 import LayoutNotification from "@/pages/notification/layout";
 import NotificationList from "./pages/notification/notificationPage";
-import { DialogDemo } from "./pages/course_detail/modal";
+
 import Payment from "./pages/payment/payment";
 import LayoutPayment from "@/pages/payment/layout";
 
@@ -23,6 +23,14 @@ function App() {
       <Routes>
         <Route
           path="/"
+          element={
+            <LayoutBeranda>
+              <Beranda />
+            </LayoutBeranda>
+          }
+        />
+        <Route
+          path="/beranda"
           element={
             <LayoutBeranda>
               <Beranda />
@@ -81,7 +89,7 @@ function App() {
           }
         />
         <Route
-          path="/CourseDetail/:id"
+          path="/Course/:id/*"
           element={
             <UserProtected>
               <LayoutBeranda>
@@ -102,14 +110,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/dialogdemo"
-          element={
-            <LayoutBeranda>
-              <DialogDemo />
-            </LayoutBeranda>
-          }
-        />
         <Route
           path="/payment"
           element={
