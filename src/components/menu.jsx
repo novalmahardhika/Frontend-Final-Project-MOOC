@@ -12,6 +12,15 @@ const Menu = () => {
   const token = localStorage.getItem("token");
   const [category, setCategory] = useState([]);
 
+  const menu = [
+    { title: "Web Development", value: "Web Development" },
+    { title: "Android Development", value: "Android Development" },
+    { title: "Data Science", value: "Data Science" },
+    { title: "UI/UX Design", value: "UI/UX Design" },
+    { title: "Product Management", value: "Product Management" },
+    { title: "IOS Development", value: "IOS Development" },
+  ];
+
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -58,13 +67,28 @@ const Menu = () => {
                 <div className="flex space-x-2 items-center justify-start my-auto">
                   <div className="space-y-3 flex flex-col my-auto">
                     {category.map((item) => (
-                      <div key={item.id}>
+                      <div
+                        key={item.id}
+                        className="hidden"
+                      >
                         <NavigationMenuLink asChild>
                           <Link
                             to={`/course?category=${encodeURIComponent(item.category)}`}
                             className={`hover:text-active cursor-pointer`}
                           >
                             {item.category}
+                          </Link>
+                        </NavigationMenuLink>
+                      </div>
+                    ))}
+                    {menu.map((item) => (
+                      <div key={item.title}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={`/course?category=${encodeURIComponent(item.value)}`}
+                            className={`hover:text-active cursor-pointer`}
+                          >
+                            {item.title}
                           </Link>
                         </NavigationMenuLink>
                       </div>

@@ -1,9 +1,36 @@
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const PaidCourse = () => {
+  const { id } = useParams();
+  const [paymentDetail, setPaymentDetail] = useState();
+  const [image, setImage] = useState();
+  const [ppn, setPPN] = useState();
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchCourseDetail = async () => {
+      try {
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/course/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        setPaymentDetail(res.data.data.price);
+        setImage(res.data.data.image);
+        setPPN(res.data.data.price * 0.11);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCourseDetail();
+  }, [id, token]);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+  };
+
   return (
     <div className="font-poppins">
       <Card className="w-full p-2">
@@ -11,7 +38,7 @@ const PaidCourse = () => {
         <CardContent>
           <div className="mb-5 flex justify-center">
             <img
-              src="https://img.freepik.com/free-vector/gradient-ui-ux-background_23-2149065782.jpg?w=996&t=st=1702183073~exp=1702183673~hmac=5752829d904c1e7cb82c22375c5ad509a00e045d807f1fe1e6b4632d096eea74"
+              src={image}
               alt=""
               className=" object-cover w-96 h-44 rounded-sm "
             />
@@ -19,15 +46,15 @@ const PaidCourse = () => {
           <div className="flex justify-between text-sm">
             <div>
               <Label className="font-semibold">Harga</Label>
-              <div>Rp.349.000</div>
+              <div>{formatCurrency(paymentDetail)}</div>
             </div>
             <div>
               <Label className="font-semibold">PPN 11%</Label>
-              <div>Rp.38.390</div>
+              <div>{formatCurrency(ppn)}</div>
             </div>
             <div>
               <Label className="font-semibold">Total Bayar</Label>
-              <div>Rp.387.390</div>
+              <div>{formatCurrency(paymentDetail + ppn)}</div>
             </div>
           </div>
         </CardContent>

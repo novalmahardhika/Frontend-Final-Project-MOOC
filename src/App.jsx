@@ -111,7 +111,7 @@ function App() {
         />
 
         <Route
-          path="/payment"
+          path="/payment/:id/*"
           element={
             <LayoutBeranda>
               <LayoutPayment>

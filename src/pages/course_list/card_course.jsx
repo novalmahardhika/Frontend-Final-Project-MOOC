@@ -1,19 +1,22 @@
 // Card_Course.js
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
 // import { useCategoryContext } from "./categoryContext";
 import { useLocation } from "react-router-dom";
 import Footer from "../beranda/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Card_Course = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const categoryParam = searchParams.get("category");
   const [courseList, setCourseList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -39,42 +42,56 @@ const Card_Course = () => {
     return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
   };
 
+  const onPayment = (course) => {
+    navigate(`/payment/${course.id}`);
+  };
   return (
     <div className="">
       <div className="container mt-10 mb-8">
         <div className="text-3xl font-semibold text-primary">Cari Kelas</div>
         <div className="text-3xl font-semibold text-primary">Sesuai Karir Kamu</div>
       </div>
-      <div className="container flex flex-wrap gap-10 mb-10">
-        {courseList.map((course, index) => (
+      <div className="container flex flex-wrap gap-10 mb-20">
+        {courseList.map((course) => (
           <Card
             key={course.id}
-            className={`md:w-72 ${index < 2 ? "flex-grow-0" : ""}`} // Apply flex-grow-0 for the first two cards
+            className="md:w-[300px] h-[400px] hover:scale-105 hover:transition-transform" // Apply flex-grow-0 for the first two cards
           >
             <div className="">
               <img
-                className="rounded-t-sm"
+                className="object-cover w-96 h-56 rounded-t-sm"
                 src={course.image}
                 alt={course.title}
               />
             </div>
 
-            <CardHeader>
-              <Link to={`/Course/${course.id}`}>
-                <CardTitle className="text-xl font-semibold">{course.title}</CardTitle>
-              </Link>
-              <CardDescription>{course.level === "beginner" ? "Beginner" : course.level === "intermediate" ? "Intermediate" : "Advance"}</CardDescription>
-            </CardHeader>
+            <div className="mx-5 space-y-5">
+              <div className="space-y-3">
+                <div>
+                  <Link to={`/Course/${course.id}`}>
+                    <CardTitle className="text-[18px] font-semibold pt-2">{course.title}</CardTitle>
+                  </Link>
+                  <div className="flex justify-between">
+                    <div className="text-xs">{course.level === "beginner" ? "Beginner" : course.level === "intermediate" ? "Intermediate" : "Advance"}</div>
+                    <div className="flex items-center gap-2">
+                      <StarRating rating={"5"} />
+                      <span className="text-xs">({course.rating})</span>
+                    </div>
+                  </div>
+                </div>
 
-            <CardContent>
-              <Link to={`/Course/${course.id}`}>
-                <Button className="hover:bg-active">{formatCurrency(course.price)}</Button>
-              </Link>
-            </CardContent>
-            <CardFooter className="flex items-center gap-2">
-              <StarRating rating={"5"} />
-              <span className="text-sm">({"5"})</span>
-            </CardFooter>
+                <div className="text-xs">{course.description}</div>
+              </div>
+
+              <div>
+                <Button
+                  className=" text-xs hover:bg-active"
+                  onClick={() => onPayment(course)}
+                >
+                  {formatCurrency(course.price)}
+                </Button>
+              </div>
+            </div>
           </Card>
         ))}
       </div>

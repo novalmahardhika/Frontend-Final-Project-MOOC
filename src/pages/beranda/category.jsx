@@ -4,7 +4,11 @@ import { Card } from "@/components/ui/card";
 
 const Category = () => {
   const heroCategory = [
-    { title: "UI/UX Design", image: "https://img.freepik.com/free-vector/gradient-ui-ux-background_23-2149065782.jpg?w=996&t=st=1702183073~exp=1702183673~hmac=5752829d904c1e7cb82c22375c5ad509a00e045d807f1fe1e6b4632d096eea74", path: "" },
+    {
+      title: "UI/UX Design",
+      image: "https://img.freepik.com/free-vector/gradient-ui-ux-background_23-2149065782.jpg?w=996&t=st=1702183073~exp=1702183673~hmac=5752829d904c1e7cb82c22375c5ad509a00e045d807f1fe1e6b4632d096eea74",
+      path: "UI/UX Design",
+    },
     {
       title: "Product Management",
       image: "https://img.freepik.com/free-vector/workgroup-discussing-project-scrum-meeting_1262-19823.jpg?w=996&t=st=1702183569~exp=1702184169~hmac=70732a67d4254170c1290fdd249158cf3292b69dedeb725a2d043c5441305d70",

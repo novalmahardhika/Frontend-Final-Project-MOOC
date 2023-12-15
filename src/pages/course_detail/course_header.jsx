@@ -50,7 +50,7 @@ const CourseHeader = () => {
                   icon={faStar}
                   className="text-active"
                 />
-                <div className="text-sm">5 stars</div>
+                <div className="text-sm">{courseDetail.rating} Stars</div>
               </div>
             </div>
 
