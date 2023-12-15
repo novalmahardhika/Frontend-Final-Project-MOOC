@@ -43,7 +43,7 @@ const Menu = () => {
                 <div className="row-span-3">
                   <Link
                     to="/course"
-                    onClick={() => setSelectedCategory()}
+                    onClick={() => setSelectedCategory("")}
                   >
                     <NavigationMenuLink asChild>
                       <div className="flex h-full w-full select-none flex-col justify-center bg-primary text-white from-muted/50 to-muted p-3 no-underline outline-none focus:shadow-md ">
@@ -61,8 +61,7 @@ const Menu = () => {
                       <div key={item.id}>
                         <NavigationMenuLink asChild>
                           <Link
-                            to="/course"
-                            onClick={() => setSelectedCategory(item.category)}
+                            to={`/course?category=${encodeURIComponent(item.category)}`}
                             className={`hover:text-active cursor-pointer`}
                           >
                             {item.category}

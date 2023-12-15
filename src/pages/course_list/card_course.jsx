@@ -5,28 +5,35 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useCategoryContext } from "./categoryContext";
+// import { useCategoryContext } from "./categoryContext";
+import { useLocation } from "react-router-dom";
 import Footer from "../beranda/Footer";
 
 const Card_Course = () => {
-  const { selectedCategory } = useCategoryContext();
-  const token = localStorage.getItem("token");
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const categoryParam = searchParams.get("category");
   const [courseList, setCourseList] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("https://idea-academy.up.railway.app/api/v1/course", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const filteredCourses = selectedCategory ? res.data.data.filter((course) => course.category === selectedCategory) : res.data.data;
-        setCourseList(filteredCourses);
+        let url = "https://idea-academy.up.railway.app/api/v1/course";
+
+        // Jika parameter 'category' ada, tambahkan ke URL
+        if (categoryParam) {
+          url += `?category=${encodeURIComponent(categoryParam)}`;
+        }
+        const res = await axios.get(url);
+
+        setCourseList(res.data.data);
       } catch (err) {
         console.log(err);
       }
     };
+
     fetchCourses();
-  }, [token, selectedCategory]);
+  }, [categoryParam]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
@@ -53,14 +60,14 @@ const Card_Course = () => {
             </div>
 
             <CardHeader>
-              <Link to={`/CourseDetail/${course.id}`}>
+              <Link to={`/Course/${course.id}`}>
                 <CardTitle className="text-xl font-semibold">{course.title}</CardTitle>
               </Link>
               <CardDescription>{course.level === "beginner" ? "Beginner" : course.level === "intermediate" ? "Intermediate" : "Advance"}</CardDescription>
             </CardHeader>
 
             <CardContent>
-              <Link to={`/CourseDetail/${course.id}`}>
+              <Link to={`/Course/${course.id}`}>
                 <Button className="hover:bg-active">{formatCurrency(course.price)}</Button>
               </Link>
             </CardContent>
