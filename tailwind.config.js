@@ -2,12 +2,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{js,jsx}",
-    "./components/**/*.{js,jsx}",
-    "./app/**/*.{js,jsx}",
-    "./src/**/*.{js,jsx}",
-  ],
+  content: ["./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}", "./app/**/*.{js,jsx}", "./src/**/*.{js,jsx}"],
   theme: {
     container: {
       center: true,
@@ -24,7 +19,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#020346",
+          DEFAULT: "#0C0D6A",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -34,6 +29,10 @@ module.exports = {
         active: {
           DEFAULT: "#F3801E",
           foreground: "hsl(var(--active-foreground))",
+        },
+        success: {
+          DEFAULT: "#73CA5C",
+          foreground: "hsl(var(--success-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -77,6 +76,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },
