@@ -23,11 +23,26 @@ import Profile_User from "./pages/Profile/Profile_User";
 import Footer from "./pages/beranda/Footer";
 import Ubah_Password from "./pages/Profile/Ubah_Password";
 import Riwayat_Pembayaran from "./pages/Profile/Riwayat_Pembayaran";
+import Banner_KelasSaya from "./pages/myCourse/Banner";
+import Content_kelasSaya from "./pages/myCourse/Filter";
+import Filter_Kelas_saya from "./pages/myCourse/Filter";
+import Content_Kelas_saya from "./pages/myCourse/content";
 
 function App() {
   return (
     <Router>
       <Routes>
+      
+        <Route
+          path="/beranda/MyCourse"
+          element={
+            <Layout>
+              <Banner_KelasSaya />
+              <Filter_Kelas_saya/>
+              <Footer/>
+            </Layout>
+          }
+        />
         <Route
           path="/Profile"
           element={
@@ -107,6 +122,7 @@ function App() {
             </LayoutBeranda>
           }
         />
+       
         <Route
           path="/Course"
           element={
