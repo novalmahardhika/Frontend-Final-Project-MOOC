@@ -24,22 +24,53 @@ import Footer from "./pages/beranda/Footer";
 import Ubah_Password from "./pages/Profile/Ubah_Password";
 import Riwayat_Pembayaran from "./pages/Profile/Riwayat_Pembayaran";
 import Banner_KelasSaya from "./pages/myCourse/Banner";
-import Content_kelasSaya from "./pages/myCourse/Filter";
-import Filter_Kelas_saya from "./pages/myCourse/Filter";
-import Content_Kelas_saya from "./pages/myCourse/content";
+import Filter_Kelas_saya from "./pages/myCourse/Kelas_Saya";
+import Pilih_Kelas_premium from "./pages/myCourse/Kelas_premium";
+import Banner_Premium from "./pages/myCourse/Banner_Premium";
+import Kelas_gratis from "./pages/myCourse/Kelas_Gratis";
+import Kelas_Filter from "./pages/myCourse/kelas_filter";
 
 function App() {
   return (
     <Router>
       <Routes>
-      
+        <Route
+          path="/beranda/filter"
+          element={
+            <Layout>
+              <Banner_Premium />
+              <Kelas_Filter />
+              <Footer />
+            </Layout>
+          }
+        />
+        <Route
+          path="/beranda/gratis"
+          element={
+            <Layout>
+              <Banner_Premium />
+              <Kelas_gratis />
+              <Footer />
+            </Layout>
+          }
+        />
+        <Route
+          path="/beranda/premium"
+          element={
+            <Layout>
+              <Banner_Premium />
+              <Pilih_Kelas_premium />
+              <Footer />
+            </Layout>
+          }
+        />
         <Route
           path="/beranda/MyCourse"
           element={
             <Layout>
               <Banner_KelasSaya />
-              <Filter_Kelas_saya/>
-              <Footer/>
+              <Filter_Kelas_saya />
+              <Footer />
             </Layout>
           }
         />
@@ -47,9 +78,9 @@ function App() {
           path="/Profile"
           element={
             <Layout>
-              <Banner_Profile/>
+              <Banner_Profile />
               <Profile_User />
-              <Footer/>
+              <Footer />
             </Layout>
           }
         />
@@ -57,9 +88,9 @@ function App() {
           path="/Profile/Ubahpassword"
           element={
             <Layout>
-              <Banner_Profile/>
+              <Banner_Profile />
               <Ubah_Password />
-              <Footer/>
+              <Footer />
             </Layout>
           }
         />
@@ -67,9 +98,9 @@ function App() {
           path="/Profile/Riwayat_Pembayaran"
           element={
             <Layout>
-              <Banner_Profile/>
-              <Riwayat_Pembayaran/>
-              <Footer/>
+              <Banner_Profile />
+              <Riwayat_Pembayaran />
+              <Footer />
             </Layout>
           }
         />
@@ -122,7 +153,7 @@ function App() {
             </LayoutBeranda>
           }
         />
-       
+
         <Route
           path="/Course"
           element={
