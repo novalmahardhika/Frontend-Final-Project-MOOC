@@ -29,11 +29,20 @@ import Pilih_Kelas_premium from "./pages/myCourse/Kelas_premium";
 import Banner_Premium from "./pages/myCourse/Banner_Premium";
 import Kelas_gratis from "./pages/myCourse/Kelas_Gratis";
 import Kelas_Filter from "./pages/myCourse/kelas_filter";
+import Otp from "./pages/authentication/register/Otp";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/user/register/OTP"
+          element={
+            <LayoutUser>
+              <Otp/>
+            </LayoutUser>
+          }
+        />
         <Route
           path="/beranda/filter"
           element={
