@@ -30,11 +30,47 @@ import Banner_Premium from "./pages/myCourse/Banner_Premium";
 import Kelas_gratis from "./pages/myCourse/Kelas_Gratis";
 import Kelas_Filter from "./pages/myCourse/kelas_filter";
 import Otp from "./pages/authentication/register/Otp";
+import Reset_password from "./pages/authentication/register/reset_password_baru_Success";
+import Reset_password_invalid from "./pages/authentication/register/reset_password_invalid";
+import Reset_password_Success from "./pages/authentication/register/reset_password_baru_Success";
+import Reset_password_gagal from "./pages/authentication/register/reset_password_baru_gagal";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route
+          path="/user/reset_password_gagal"
+          element={
+            <LayoutUser>
+              <Reset_password_gagal/>
+            </LayoutUser>
+          }
+        />
+        <Route
+          path="/user/reset_password_success"
+          element={
+            <LayoutUser>
+              <Reset_password_Success/>
+            </LayoutUser>
+          }
+        />
+        <Route
+          path="/user/reset_password_invalid"
+          element={
+            <LayoutUser>
+              <Reset_password_invalid/>
+            </LayoutUser>
+          }
+        />
+        <Route
+          path="/user/reset_password"
+          element={
+            <LayoutUser>
+              <Reset_password/>
+            </LayoutUser>
+          }
+        />
         <Route
           path="/user/register/OTP"
           element={
