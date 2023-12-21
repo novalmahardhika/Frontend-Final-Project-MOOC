@@ -15,7 +15,7 @@ const PaidCourse = () => {
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/course/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
         setPaymentDetail(res.data.data.price);
         setImage(res.data.data.image);
         setPPN(res.data.data.price * 0.11);
@@ -34,13 +34,13 @@ const PaidCourse = () => {
   return (
     <div className="font-poppins">
       <Card className="w-full p-2">
-        <CardHeader className="font-bold text-primary">Pembayaran Kelas</CardHeader>
+        <CardHeader className="font-bold text-primary text-center">Pembayaran Kelas</CardHeader>
         <CardContent>
           <div className="mb-5 flex justify-center">
             <img
               src={image}
               alt=""
-              className=" object-cover w-96 h-44 rounded-sm "
+              className=" object-cover w-72 h-36 rounded-sm "
             />
           </div>
           <div className="flex justify-between text-sm">

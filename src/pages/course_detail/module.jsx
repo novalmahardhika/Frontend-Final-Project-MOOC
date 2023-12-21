@@ -17,7 +17,7 @@ const Module = ({ onSelectModule }) => {
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/course/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
       } catch (err) {
         console.log(err);

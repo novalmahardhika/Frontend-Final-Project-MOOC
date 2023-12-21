@@ -15,7 +15,6 @@ import LayoutNotification from "@/pages/notification/layout";
 import NotificationList from "./pages/notification/notificationPage";
 
 import Payment from "./pages/payment/payment";
-import LayoutPayment from "@/pages/payment/layout";
 
 function App() {
   return (
@@ -81,21 +80,17 @@ function App() {
         <Route
           path="/Course"
           element={
-            <UserProtected>
-              <LayoutBeranda>
-                <Card_Course />
-              </LayoutBeranda>
-            </UserProtected>
+            <LayoutBeranda>
+              <Card_Course />
+            </LayoutBeranda>
           }
         />
         <Route
           path="/Course/:id/*"
           element={
-            <UserProtected>
-              <LayoutBeranda>
-                <CourseDetail />
-              </LayoutBeranda>
-            </UserProtected>
+            <LayoutBeranda>
+              <CourseDetail />
+            </LayoutBeranda>
           }
         />
 
@@ -114,9 +109,9 @@ function App() {
           path="/payment/:id/*"
           element={
             <LayoutBeranda>
-              <LayoutPayment>
+              <UserProtected>
                 <Payment />
-              </LayoutPayment>
+              </UserProtected>
             </LayoutBeranda>
           }
         />

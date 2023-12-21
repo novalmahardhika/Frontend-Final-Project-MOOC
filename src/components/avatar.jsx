@@ -10,7 +10,7 @@ const AvatarProfile = () => {
   useEffect(() => {
     if (performLogout) {
       localStorage.removeItem("token");
-      navigate("user/login");
+      navigate("/user/login");
     }
   }, [performLogout, navigate]);
 

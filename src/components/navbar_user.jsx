@@ -25,27 +25,31 @@ const Navbar_User = () => {
           <Menu />
         </div>
 
-        {token ? (
-          <div className="flex justify-between items-center space-x-4">
-            <div className=" rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
-              <FontAwesomeIcon
-                icon={faSearch}
-                title="search"
-              />
-            </div>
-            <div>
-              <Notification />
-            </div>
-
-            <div>
-              <AvatarProfile />
-            </div>
+        <div className="flex justify-between items-center space-x-4">
+          <div className=" rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
+            <FontAwesomeIcon
+              icon={faSearch}
+              title="search"
+            />
           </div>
-        ) : (
-          <Link to="/user/login">
-            <Button className="cursor-pointer bg-active text-white hover:bg-secondary hover:text-black">Masuk</Button>
-          </Link>
-        )}
+          {token ? (
+            <div className="flex space-x-4 items-center">
+              <div>
+                <Notification />
+              </div>
+
+              <div>
+                <AvatarProfile />
+              </div>
+            </div>
+          ) : (
+            <div className="flex space-x-5 items-center">
+              <Link to="/user/Register">
+                <Button className="cursor-pointer bg-active text-white hover:bg-secondary hover:text-black">Daftar</Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

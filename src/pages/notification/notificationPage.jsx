@@ -10,7 +10,7 @@ const Notification = () => {
   ];
 
   return (
-    <div className="relative -top-16 z-10 flex gap-10 justify-between font-poppins">
+    <div className="relative -top-16 z-1 flex gap-10 justify-between font-poppins">
       <Card className=" w-2/5 p-5 h-full">
         <div className="space-y-4 font-medium">
           <div className="space-y-5">
