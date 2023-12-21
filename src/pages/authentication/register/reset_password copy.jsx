@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../login_image";
 import axios from "axios";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription,  } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 
 
