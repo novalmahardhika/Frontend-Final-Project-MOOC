@@ -3,23 +3,18 @@ import { Input } from "@/components/ui/input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import LoginImage from "../login_image";
+import LoginImage from "../../login_image";
 import axios from "axios";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-
-const Reset_password_gagal = () => {
+const Forgot_success = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
+  const [name] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -34,10 +29,10 @@ const Reset_password_gagal = () => {
   const validateInput = useCallback(() => {
     // Validasi Nama
     if (!name) {
-      setNameError("Nama harus diisi");
+      ("Nama harus diisi");
       setIsNameValid(false);
     } else {
-      setNameError("");
+      ("");
       setIsNameValid(true);
     }
 
@@ -57,13 +52,13 @@ const Reset_password_gagal = () => {
     // Validasi Nomor Telepon
     const phoneRegex = /^\+62\d{1,}$/;
     if (!phoneNumber) {
-      setPhoneNumberError("Nomor telepon harus diisi");
+      ("Nomor telepon harus diisi");
       setIsPhoneNumberValid(false);
     } else if (!phoneRegex.test(phoneNumber)) {
-      setPhoneNumberError("Nomor telepon harus diawali dengan +62");
+      ("Nomor telepon harus diawali dengan +62");
       setIsPhoneNumberValid(false);
     } else {
-      setPhoneNumberError("");
+      ("");
       setIsPhoneNumberValid(true);
     }
 
@@ -97,7 +92,10 @@ const Reset_password_gagal = () => {
           password,
           phoneNumber,
         };
-        const res = await axios.post("https://idea-academy.up.railway.app/api/v1/register", payload);
+        const res = await axios.post(
+          "https://idea-academy.up.railway.app/api/v1/register",
+          payload
+        );
         console.log(res);
 
         setIsModalVisible(true);
@@ -133,7 +131,7 @@ const Reset_password_gagal = () => {
             <form className="space-y-7">
               <div className="space-y-1 relative">
                 <div className="block text-sm font-medium text-gray-800">
-                  Email
+                  Masukkan Email
                 </div>
                 <Input
                   placeholder="Contoh: johndee@gmail.com"
@@ -159,47 +157,6 @@ const Reset_password_gagal = () => {
                 </div>
               </div>
 
-              <div className="space-y-1 relative mb-10">
-                <div className="block text-sm font-medium text-gray-800 flex justify-between">
-                  <p>Password</p>
-                </div>
-                <div className="flex space-x-4 relative items-center">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="Buat Password"
-                    maxLength={12}
-                    className={`h-11 relative ${
-                      !isPasswordValid && isFormSubmitted && "border-red-500"
-                    }`}
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                      setIsPasswordValid(false);
-                    }}
-                    onBlur={() => setIsFormSubmitted(true)}
-                  />
-                  <div
-                    className="absolute cursor-pointer text-primary right-4 top-1/2 transform -translate-y-1/2"
-                    onClick={togglePasswordVisibility}
-                  >
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
-                      className=""
-                    />
-                  </div>
-                </div>
-                <div
-                  className={`text-red-500 text-xs absolute top-full ${
-                    !isPasswordValid && isFormSubmitted
-                      ? "opacity-100"
-                      : "opacity-0"
-                  }`}
-                >
-                  {!isPasswordValid && passwordError}
-                </div>
-              </div>
-
               <div className="pt-3">
                 <Button
                   type="button"
@@ -209,13 +166,11 @@ const Reset_password_gagal = () => {
                   Simpan
                 </Button>
               </div>
-              <div>
-                <Alert className="bg-red-600 text-white flex justify-center"> 
-                  <AlertDescription>
-                    Password min 8 karakter
-                  </AlertDescription>
+              {/* <div>
+                <Alert className="bg-success text-white flex justify-center">
+                  <AlertDescription>Reset Password Berhasil</AlertDescription>
                 </Alert>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>
@@ -243,4 +198,4 @@ const Reset_password_gagal = () => {
   );
 };
 
-export default Reset_password_gagal;
+export default Forgot_success;

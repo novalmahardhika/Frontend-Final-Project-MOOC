@@ -8,18 +8,13 @@ import { useNavigate } from "react-router-dom";
 import LoginImage from "../login_image";
 import axios from "axios";
 import { Alert, AlertDescription,  } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
 
 
 const Reset_password = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);

@@ -213,7 +213,7 @@ const Reset_password_invalid = () => {
                 </Button>
               </div>
               <div>
-                <Alert className="bg-red-600 text-white flex justify-center"> 
+                <Alert className="bg-success text-white flex justify-center"> 
                   <AlertDescription>
                     Tautan reset password terkirim
                   </AlertDescription>

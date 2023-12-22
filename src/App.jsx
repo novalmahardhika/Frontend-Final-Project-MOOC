@@ -17,7 +17,6 @@ import { DialogDemo } from "./pages/course_detail/modal";
 import Payment from "./pages/payment/payment";
 import LayoutPayment from "@/pages/payment/layout";
 import Layout from "./pages/beranda/layout";
-import Banner from "./pages/beranda/banner";
 import Banner_Profile from "./pages/Profile/banner_Profile";
 import Profile_User from "./pages/Profile/Profile_User";
 import Footer from "./pages/beranda/Footer";
@@ -30,28 +29,28 @@ import Banner_Premium from "./pages/myCourse/Banner_Premium";
 import Kelas_gratis from "./pages/myCourse/Kelas_Gratis";
 import Kelas_Filter from "./pages/myCourse/kelas_filter";
 import Otp from "./pages/authentication/register/Otp";
-import Reset_password from "./pages/authentication/register/reset_password_baru_Success";
+import Reset_password from "./pages/authentication/register/Forgot_Password/Success";
 import Reset_password_invalid from "./pages/authentication/register/reset_password_invalid";
-import Reset_password_Success from "./pages/authentication/register/reset_password_baru_Success";
-import Reset_password_gagal from "./pages/authentication/register/reset_password_baru_gagal";
+import Forgot_Invalid from "./pages/authentication/register/Forgot_Password/Invalid";
+import Forgot_success from "./pages/authentication/register/Forgot_Password/Success";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/user/reset_password_gagal"
+          path="/forgot/invalid"
           element={
             <LayoutUser>
-              <Reset_password_gagal/>
+              <Forgot_Invalid />
             </LayoutUser>
           }
         />
         <Route
-          path="/user/reset_password_success"
+          path="/forgot/success"
           element={
             <LayoutUser>
-              <Reset_password_Success/>
+              <Forgot_success />
             </LayoutUser>
           }
         />
@@ -59,7 +58,7 @@ function App() {
           path="/user/reset_password_invalid"
           element={
             <LayoutUser>
-              <Reset_password_invalid/>
+              <Reset_password_invalid />
             </LayoutUser>
           }
         />
@@ -67,7 +66,7 @@ function App() {
           path="/user/reset_password"
           element={
             <LayoutUser>
-              <Reset_password/>
+              <Reset_password />
             </LayoutUser>
           }
         />
@@ -75,7 +74,7 @@ function App() {
           path="/user/register/OTP"
           element={
             <LayoutUser>
-              <Otp/>
+              <Otp />
             </LayoutUser>
           }
         />
@@ -254,4 +253,4 @@ function App() {
   );
 }
 
-export default App;;
+export default App;

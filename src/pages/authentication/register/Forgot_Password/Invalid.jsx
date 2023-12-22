@@ -3,23 +3,20 @@ import { Input } from "@/components/ui/input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import LoginImage from "../login_image";
+import LoginImage from "../../login_image";
 import axios from "axios";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-
-const Reset_password_Success = () => {
+const Forgot_Invalid = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
+  const [name] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [setPhoneNumberError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -97,7 +94,10 @@ const Reset_password_Success = () => {
           password,
           phoneNumber,
         };
-        const res = await axios.post("https://idea-academy.up.railway.app/api/v1/register", payload);
+        const res = await axios.post(
+          "https://idea-academy.up.railway.app/api/v1/register",
+          payload
+        );
         console.log(res);
 
         setIsModalVisible(true);
@@ -133,10 +133,10 @@ const Reset_password_Success = () => {
             <form className="space-y-7">
               <div className="space-y-1 relative">
                 <div className="block text-sm font-medium text-gray-800">
-                  Email
+                  Masukkan Password Baru
                 </div>
                 <Input
-                  placeholder="Contoh: johndee@gmail.com"
+                  placeholder="******* "
                   className={`h-11 ${
                     !isEmailValid && isFormSubmitted && "border-red-500"
                   }`}
@@ -161,13 +161,13 @@ const Reset_password_Success = () => {
 
               <div className="space-y-1 relative mb-10">
                 <div className="block text-sm font-medium text-gray-800 flex justify-between">
-                  <p>Password</p>
+                  <p>Ulangi Password baru</p>
                 </div>
                 <div className="flex space-x-4 relative items-center">
                   <Input
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    placeholder="Buat Password"
+                    placeholder="*******"
                     maxLength={12}
                     className={`h-11 relative ${
                       !isPasswordValid && isFormSubmitted && "border-red-500"
@@ -210,10 +210,8 @@ const Reset_password_Success = () => {
                 </Button>
               </div>
               <div>
-                <Alert className="bg-success text-white flex justify-center"> 
-                  <AlertDescription>
-                    Reset Password Berhasil
-                  </AlertDescription>
+                <Alert className="bg-red-600 text-white flex justify-center">
+                  <AlertDescription>Password min 8 karakter</AlertDescription>
                 </Alert>
               </div>
             </form>
@@ -243,4 +241,4 @@ const Reset_password_Success = () => {
   );
 };
 
-export default Reset_password_Success;
+export default Forgot_Invalid;
