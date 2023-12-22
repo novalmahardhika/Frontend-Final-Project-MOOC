@@ -14,7 +14,7 @@ const Notification = () => {
     const fetchNotifications = async () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/notifications`, { headers: { Authorization: `Bearer ${token}` } });
-        setNotifications(res.data.data.notification || []); // Handle undefined case
+        setNotifications(res.data.data.notifications || []); // Handle undefined case
       } catch (err) {
         console.log(err);
       }
@@ -27,7 +27,7 @@ const Notification = () => {
     <div className="font-poppins">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
+          <div className="flex items-center justify-center text-xl bg-white rounded-full cursor-pointer w-11 h-11 hover:bg-muted-foreground">
             <FontAwesomeIcon
               icon={faBell}
               title="notification"
@@ -35,7 +35,7 @@ const Notification = () => {
             />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-3/4 mt-2 me-28 p-3 font-poppins">
+        <DropdownMenuContent className="w-3/4 p-3 mt-2 me-28 font-poppins">
           <DropdownMenuGroup className="space-y-4 font-medium">
             <div className="space-y-2">
               {notifications.map((notification) => (
@@ -44,12 +44,12 @@ const Notification = () => {
                   className="cursor-pointer"
                 >
                   <Link to="#">
-                    <div className="flex space-x-3 items-start">
+                    <div className="flex items-start space-x-3">
                       <FontAwesomeIcon icon={faComments} />
                       <div className="space-y-1">
                         <div className="text-xs font-thin">{notification.title}</div>
                         <div className="text-xs">{notification.message}</div>
-                        <div className="text-xs">{notification.createdAt}</div>
+                        <div className="text-xs">{new Date(notification.createdAt).toDateString()}</div>
                       </div>
                     </div>
                   </Link>
