@@ -1,21 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faComments, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faComments } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Notification = () => {
-  const dummyNotifications = [
-    { id: 1, type: "Message", text: "New message from John Doe", timestamp: "2 minutes ago" },
-    { id: 2, type: "Reminder", text: "You have a meeting at 3 PM", timestamp: "1 hour ago" },
-    { id: 3, type: "Information", text: "Payment received from Jane Doe", timestamp: "3 hours ago" },
-  ];
+  const [notifications, setNotifications] = useState([]);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/notifications`, { headers: { Authorization: `Bearer ${token}` } });
+        setNotifications(res.data.data.notification || []); // Handle undefined case
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchNotifications();
+  }, [token]); // Add token as dependency
 
   return (
     <div className="font-poppins">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className=" rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
+          <div className="rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
             <FontAwesomeIcon
               icon={faBell}
               title="notification"
@@ -23,27 +35,27 @@ const Notification = () => {
             />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className=" w-3/4 mt-2 me-28 p-3 font-poppins ">
+        <DropdownMenuContent className="w-3/4 mt-2 me-28 p-3 font-poppins">
           <DropdownMenuGroup className="space-y-4 font-medium">
             <div className="space-y-2">
-              {dummyNotifications.map((notification) => (
+              {notifications.map((notification) => (
                 <DropdownMenuItem
                   key={notification.id}
                   className="cursor-pointer"
                 >
                   <Link to="#">
                     <div className="flex space-x-3 items-start">
-                      {notification.type === "Message" ? <FontAwesomeIcon icon={faComments} /> : notification.type === "Reminder" ? <FontAwesomeIcon icon={faBell} /> : <FontAwesomeIcon icon={faCircleExclamation} />}
+                      <FontAwesomeIcon icon={faComments} />
                       <div className="space-y-1">
-                        <div className=" text-xs font-thin">{notification.type}</div>
-                        <div className="text-xs">{notification.text}</div>
-                        <div className="text-xs">{notification.timestamp}</div>
+                        <div className="text-xs font-thin">{notification.title}</div>
+                        <div className="text-xs">{notification.message}</div>
+                        <div className="text-xs">{notification.createdAt}</div>
                       </div>
                     </div>
                   </Link>
                 </DropdownMenuItem>
               ))}
-              <DropdownMenuItem className="flex justify-center my-1 ">
+              <DropdownMenuItem className="flex justify-center my-1">
                 <Link to="/notification">See All</Link>
               </DropdownMenuItem>
             </div>
@@ -53,4 +65,5 @@ const Notification = () => {
     </div>
   );
 };
+
 export default Notification;

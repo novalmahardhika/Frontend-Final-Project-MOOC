@@ -3,36 +3,20 @@ import { Button } from "./ui/button";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuTrigger, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuContent } from "@/components/ui/navigation-menu";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { useCategoryContext } from "./../pages/course_list/categoryContext";
+import categoryData from "./../pages/beranda/dummyCategory.json";
 
 const Menu = () => {
+  const categories = categoryData.heroCategory || [];
   const { setSelectedCategory } = useCategoryContext();
-  const token = localStorage.getItem("token");
-  const [category, setCategory] = useState([]);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const res = await axios.get("https://idea-academy.up.railway.app/api/v1/course", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const uniqueCategories = res.data.data.filter((c, index, self) => index === self.findIndex((category) => category.category === c.category));
-        setCategory(uniqueCategories);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCategory();
-  }, [token]);
 
   return (
     <div>
       <NavigationMenu className="w-full">
         <NavigationMenuList className="space-x-2">
           <NavigationMenuItem className="">
-            <Link to="/beranda">
+            <Link to="/">
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-primary text-white p-6`}>Beranda</NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -43,7 +27,7 @@ const Menu = () => {
                 <div className="row-span-3">
                   <Link
                     to="/course"
-                    onClick={() => setSelectedCategory()}
+                    onClick={() => setSelectedCategory("")}
                   >
                     <NavigationMenuLink asChild>
                       <div className="flex h-full w-full select-none flex-col justify-center bg-primary text-white from-muted/50 to-muted p-3 no-underline outline-none focus:shadow-md ">
@@ -57,15 +41,14 @@ const Menu = () => {
                 </div>
                 <div className="flex space-x-2 items-center justify-start my-auto">
                   <div className="space-y-3 flex flex-col my-auto">
-                    {category.map((item) => (
-                      <div key={item.id}>
+                    {categories.map((item) => (
+                      <div key={item.title}>
                         <NavigationMenuLink asChild>
                           <Link
-                            to="/course"
-                            onClick={() => setSelectedCategory(item.category)}
+                            to={`/course?category=${encodeURIComponent(item.value)}`}
                             className={`hover:text-active cursor-pointer`}
                           >
-                            {item.category}
+                            {item.title}
                           </Link>
                         </NavigationMenuLink>
                       </div>
