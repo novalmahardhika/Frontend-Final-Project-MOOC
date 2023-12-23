@@ -1,27 +1,29 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LayoutAdmin from "./pages/dashboard/layout";
-import Dashboard from "./pages/dashboard/dashboard";
-import KelolaKelas from "./pages/dashboard/kelolaKelas";
-import LayoutUser from "./pages/authentication/auth_layout";
-import Register from "./pages/authentication/register/register";
-import UserLogin from "./pages/authentication/login/user";
-import AdminLogin from "./pages/authentication/login/admin";
-import Beranda from "./pages/beranda/beranda";
-import Card_Course from "./pages/course_list/card_course";
-import CourseDetail from "./pages/course_detail/detail_course";
-import LayoutBeranda from "./pages/beranda/layout";
-import UserProtected from "./pages/authentication/protected";
-import LayoutNotification from "@/pages/notification/layout";
-import NotificationList from "./pages/notification/notificationPage";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import LayoutAdmin from './pages/dashboard/layout'
+import Dashboard from './pages/dashboard/dashboard'
+import KelolaKelas from './pages/dashboard/kelolaKelas'
+import LayoutUser from './pages/authentication/auth_layout'
+import Register from './pages/authentication/register/register'
+import UserLogin from './pages/authentication/login/user'
+import AdminLogin from './pages/authentication/login/admin'
+import Beranda from './pages/beranda/beranda'
+import Card_Course from './pages/course_list/card_course'
+import CourseDetail from './pages/course_detail/detail_course'
+import LayoutBeranda from './pages/beranda/layout'
+import UserProtected from './pages/authentication/protected'
+import LayoutNotification from '@/pages/notification/layout'
+import NotificationList from './pages/notification/notificationPage'
+import Otp from './pages/authentication/register/Otp'
 
-import Payment from "./pages/payment/payment";
+import Payment from './pages/payment/payment'
+import OtpProtected from './pages/authentication/otp_protected'
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
             <LayoutBeranda>
               <Beranda />
@@ -29,7 +31,7 @@ function App() {
           }
         />
         <Route
-          path="/beranda"
+          path='/beranda'
           element={
             <LayoutBeranda>
               <Beranda />
@@ -37,7 +39,7 @@ function App() {
           }
         />
         <Route
-          path="/Admin"
+          path='/Admin'
           element={
             <LayoutAdmin>
               <Dashboard />
@@ -45,7 +47,7 @@ function App() {
           }
         />
         <Route
-          path="/AdminKelolaKelas"
+          path='/AdminKelolaKelas'
           element={
             <LayoutAdmin>
               <KelolaKelas />
@@ -53,7 +55,7 @@ function App() {
           }
         />
         <Route
-          path="/User/Register"
+          path='/User/Register'
           element={
             <LayoutUser>
               <Register />
@@ -61,7 +63,17 @@ function App() {
           }
         />
         <Route
-          path="/User/Login"
+          path='/User/otp'
+          element={
+            <OtpProtected>
+              <LayoutUser>
+                <Otp />
+              </LayoutUser>
+            </OtpProtected>
+          }
+        />
+        <Route
+          path='/User/Login'
           element={
             <LayoutUser>
               <UserLogin />
@@ -69,7 +81,7 @@ function App() {
           }
         />
         <Route
-          path="/Admin/Login"
+          path='/Admin/Login'
           element={
             <LayoutUser>
               <AdminLogin />
@@ -78,7 +90,7 @@ function App() {
         />
 
         <Route
-          path="/Course"
+          path='/Course'
           element={
             <LayoutBeranda>
               <Card_Course />
@@ -86,7 +98,7 @@ function App() {
           }
         />
         <Route
-          path="/Course/:id/*"
+          path='/Course/:id/*'
           element={
             <LayoutBeranda>
               <CourseDetail />
@@ -95,7 +107,7 @@ function App() {
         />
 
         <Route
-          path="/notification"
+          path='/notification'
           element={
             <LayoutBeranda>
               <LayoutNotification>
@@ -106,7 +118,7 @@ function App() {
         />
 
         <Route
-          path="/payment/:id/*"
+          path='/payment/:id/*'
           element={
             <LayoutBeranda>
               <UserProtected>
@@ -117,7 +129,7 @@ function App() {
         />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
