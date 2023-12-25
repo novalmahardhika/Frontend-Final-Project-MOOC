@@ -7,6 +7,9 @@ import axios from "axios";
 
 const KelolaKelas = () => {
   const [courses, SetCourses] = useState([]);
+  const [filterType, setFilterType] = useState("ASC");
+  const [search, setSearch] = useState("");
+
   async function getData() {
     try {
       const data = await axios.get("https://idea-academy.up.railway.app/api/v1/courses", {
@@ -24,13 +27,35 @@ const KelolaKelas = () => {
   useEffect(() => {
     getData();
   }, [])
+  
+  let sortedData = courses;
+
+  if (search != null && search != "") {
+    sortedData = sortedData.filter(e => {
+      for (const [key, value] of Object.entries(e)) {
+        if (typeof(value) != "string" || key == "id") continue;
+        if (value.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+          return true;
+      }
+
+      return false;
+    });
+  }
+
+  sortedData = sortedData.sort((a, b) => {
+    if (filterType === "ASC") {
+      return a.category.localeCompare(b.category);
+    } else {
+      return b.category.localeCompare(a.category);
+    }
+  });
 
   return (
-    <body className="px-10 font-poppins">
+    <div className="px-10 font-poppins">
       <div className="flex flex-1 items-center justify-between mb-4">
         <div className="text-2xl font-semibold">Kelola Kelas</div>
         <div className="flex space-x-4 justify-between">
-          <Filter />
+          <Filter onFilterChange={setFilterType} onSearchChange={setSearch} />
         </div>
       </div>
       <div>
@@ -44,30 +69,30 @@ const KelolaKelas = () => {
               <TableHead className="text-primary font-bold">Tipe Kelas</TableHead>
               <TableHead className="text-primary font-bold">Level</TableHead>
               <TableHead className="text-primary font-bold">Harga Kelas</TableHead>
-              <TableHead className="text-primary font-bold">Aksi</TableHead>
+              <TableHead className="text-primary font-bold text-center">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {courses.map((item) => (
+            {sortedData.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">{item.kodeKelas}</TableCell>
                 <TableCell>{item.category}</TableCell>
                 <TableCell>{item.title}</TableCell>
-                <TableCell className={item.type === "PREMIUM" ? "text-active font-semibold" : "text-success font-medium"}>{item.type.toUpperCase()}</TableCell>
+                <TableCell className={item.type.toUpperCase() === "PREMIUM" ? "text-active font-semibold" : "text-success font-medium"}>{item.type.toUpperCase()}</TableCell>
                 <TableCell>{item.level.toUpperCase()}</TableCell>
                 <TableCell>Rp. {item.price}</TableCell>
-                <TableCell>
-                  <div className="justify-between space-x-2">
+                <TableCell className="justify-between space-x-2">
                     <Button className=" w-14 h-6 text-xs bg-success">Ubah</Button>
-                    <Button className=" w-14 h-6 text-xs bg-destructive">Hapus</Button>
-                  </div>
+                    <a href={'/delete/' + item.id }>
+                      <Button className=" w-14 h-6 text-xs bg-destructive">Hapus</Button>
+                    </a>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
-    </body>
+    </div>
   );
 };
 

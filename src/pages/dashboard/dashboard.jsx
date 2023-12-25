@@ -6,6 +6,7 @@ import axios from "axios";
 const Dashboard = () => {
   const [payments, setPayments] = useState([]);
   const [filterType, setFilterType] = useState("DESC");
+  const [search, setSearch] = useState("");
 
   async function getData() {
     try {
@@ -15,7 +16,6 @@ const Dashboard = () => {
         }
       });
       setPayments(data.data.data);
-      return data.data.data;
     } catch (err) {
       console.error(err)
     }
@@ -24,25 +24,43 @@ const Dashboard = () => {
   useEffect(() => {
     getData();
   }, [])
+  
+  let sortedPayments = payments;
 
-  const handleFilterChange = (newFilterType) => {
-    setFilterType(newFilterType);
-  };
+  if (search != null && search != "") {
+    sortedPayments = sortedPayments.filter(e => {
+      for (const [key, value] of Object.entries(e)) {
+        if (typeof(value) != "string") continue;
+        if (value.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+          return true;
+      }
+
+      for (const [key, value] of Object.entries(e.Course)) {
+        if (typeof(value) != "string") continue;
+        if (value.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+          return true;
+      }
+
+      return false;
+    });
+  }
 
   // Sorting the dummyPayments based on the filter type
-  const sortedPayments = payments.sort((a, b) => {
+  sortedPayments = sortedPayments.sort((a, b) => {
     if (filterType === "ASC") {
-      return a.id.localeCompare(b.id);
+      return a.userId.localeCompare(b.userId);
     } else {
-      return b.id.localeCompare(a.id);
+      return b.userId.localeCompare(a.userId);
     }
   });
 
+  
+
   return (
-    <body className="px-10 font-poppins">
+    <div className="px-10 font-poppins">
       <div className="flex flex-1 items-center justify-between mb-4">
         <div className="text-2xl font-semibold"> Status Pembayaran</div>
-        <Filter onFilterChange={handleFilterChange} />
+        <Filter onFilterChange={setFilterType} onSearchChange={setSearch} />
       </div>
       <div>
         <Table>
@@ -71,7 +89,7 @@ const Dashboard = () => {
           </TableBody>
         </Table>
       </div>
-    </body>
+    </div>
   );
 };
 
