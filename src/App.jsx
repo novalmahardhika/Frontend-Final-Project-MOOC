@@ -14,121 +14,124 @@ import UserProtected from './pages/authentication/protected'
 import LayoutNotification from '@/pages/notification/layout'
 import NotificationList from './pages/notification/notificationPage'
 import Otp from './pages/authentication/register/Otp'
+import AuthContextProvider from './context/AuthContext'
 
 import Payment from './pages/payment/payment'
 import OtpProtected from './pages/authentication/otp_protected'
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <LayoutBeranda>
-              <Beranda />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path='/beranda'
-          element={
-            <LayoutBeranda>
-              <Beranda />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path='/Admin'
-          element={
-            <LayoutAdmin>
-              <Dashboard />
-            </LayoutAdmin>
-          }
-        />
-        <Route
-          path='/AdminKelolaKelas'
-          element={
-            <LayoutAdmin>
-              <KelolaKelas />
-            </LayoutAdmin>
-          }
-        />
-        <Route
-          path='/User/Register'
-          element={
-            <LayoutUser>
-              <Register />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path='/User/otp'
-          element={
-            <OtpProtected>
+    <AuthContextProvider>
+      <Router>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <LayoutBeranda>
+                <Beranda />
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path='/beranda'
+            element={
+              <LayoutBeranda>
+                <Beranda />
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path='/Admin'
+            element={
+              <LayoutAdmin>
+                <Dashboard />
+              </LayoutAdmin>
+            }
+          />
+          <Route
+            path='/AdminKelolaKelas'
+            element={
+              <LayoutAdmin>
+                <KelolaKelas />
+              </LayoutAdmin>
+            }
+          />
+          <Route
+            path='/User/Register'
+            element={
               <LayoutUser>
-                <Otp />
+                <Register />
               </LayoutUser>
-            </OtpProtected>
-          }
-        />
-        <Route
-          path='/User/Login'
-          element={
-            <LayoutUser>
-              <UserLogin />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path='/Admin/Login'
-          element={
-            <LayoutUser>
-              <AdminLogin />
-            </LayoutUser>
-          }
-        />
-
-        <Route
-          path='/Course'
-          element={
-            <LayoutBeranda>
-              <Card_Course />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path='/Course/:id/*'
-          element={
-            <LayoutBeranda>
-              <CourseDetail />
-            </LayoutBeranda>
-          }
-        />
-
-        <Route
-          path='/notification'
-          element={
-            <LayoutBeranda>
-              <LayoutNotification>
-                <NotificationList />
-              </LayoutNotification>
-            </LayoutBeranda>
-          }
-        />
-
-        <Route
-          path='/payment/:id/*'
-          element={
-            <LayoutBeranda>
-              <UserProtected>
-                <Payment />
-              </UserProtected>
-            </LayoutBeranda>
-          }
-        />
-      </Routes>
-    </Router>
+            }
+          />
+          <Route
+            path='/User/otp'
+            element={
+              <OtpProtected>
+                <LayoutUser>
+                  <Otp />
+                </LayoutUser>
+              </OtpProtected>
+            }
+          />
+          <Route
+            path='/User/Login'
+            element={
+              <LayoutUser>
+                <UserLogin />
+              </LayoutUser>
+            }
+          />
+          <Route
+            path='/Admin/Login'
+            element={
+              <LayoutUser>
+                <AdminLogin />
+              </LayoutUser>
+            }
+          />
+  
+          <Route
+            path='/Course'
+            element={
+              <LayoutBeranda>
+                <Card_Course />
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path='/Course/:id/*'
+            element={
+              <LayoutBeranda>
+                <CourseDetail />
+              </LayoutBeranda>
+            }
+          />
+  
+          <Route
+            path='/notification'
+            element={
+              <LayoutBeranda>
+                <LayoutNotification>
+                  <NotificationList />
+                </LayoutNotification>
+              </LayoutBeranda>
+            }
+          />
+  
+          <Route
+            path='/payment/:id/*'
+            element={
+              <LayoutBeranda>
+                <UserProtected>
+                  <Payment />
+                </UserProtected>
+              </LayoutBeranda>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthContextProvider>
   )
 }
 

@@ -2,19 +2,25 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Filter from "@/components/filter_button";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from '../../context/AuthContext';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const KelolaKelas = () => {
+  const { token, logout } = useContext(AuthContext);
   const [courses, SetCourses] = useState([]);
   const [filterType, setFilterType] = useState("ASC");
   const [search, setSearch] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [isRequestDone, setIsRequestDone] = useState(false);
 
   async function getData() {
     try {
       const data = await axios.get("https://idea-academy.up.railway.app/api/v1/courses", {
         headers: {
-          Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNDA5ZmI0LTNlMWUtNDFhNC04NzI2LTQxYTBjMmE2ZTk5ZSIsImlhdCI6MTcwMzMwNzU4M30.CMDb7Xw1730zLb-0PVuHR4L0YimuH-iABs3BbPfeYVw"
+          Authorization: token
         }
       });
       SetCourses(data.data.data);
@@ -24,9 +30,36 @@ const KelolaKelas = () => {
     }
   }
 
+  async function deleteCourse(e) {
+    const id = e.target.value
+    let data;
+    setIsRequestDone(false);
+    setErrMsg(false);
+    try {
+      data = await axios.delete("https://idea-academy.up.railway.app/api/v1/courses/" + id, {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      if (data.data.status == "OK") {
+        SetCourses(courses.filter(e => e.id != id));
+      } else {
+        setErrMsg(data.data.message)
+      }
+    } catch (err) {
+      console.error(err)
+      setErrMsg(err.response?.data?.message);
+    }
+    setIsRequestDone(true);
+    return data.data.data;
+  }
+
   useEffect(() => {
+    if (!token)
+      return;
     getData();
-  }, [])
+  }, [token])
   
   let sortedData = courses;
 
@@ -83,15 +116,22 @@ const KelolaKelas = () => {
                 <TableCell>Rp. {item.price}</TableCell>
                 <TableCell className="justify-between space-x-2">
                     <Button className=" w-14 h-6 text-xs bg-success">Ubah</Button>
-                    <a href={'/delete/' + item.id }>
-                      <Button className=" w-14 h-6 text-xs bg-destructive">Hapus</Button>
-                    </a>
+                    <Button className=" w-14 h-6 text-xs bg-destructive" onClick={deleteCourse} value={item.id}>Hapus</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
+      
+      {isRequestDone && <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-20 z-10">
+          <div className={"text-white p-4 rounded-md shadow-md " + (errMsg ? "bg-destructive" : "bg-success")}>
+            {errMsg || "Data berhasil dihapus..."}
+            <a href="#" onClick={e => setIsRequestDone(false)}>
+              <FontAwesomeIcon className="ml-4" icon={faXmark} />
+            </a>
+          </div>
+      </div>}
     </div>
   );
 };

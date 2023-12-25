@@ -44,9 +44,9 @@ const AdminLogin = () => {
     if (!password) {
       setPasswordError("Password harus diisi");
       setIsPasswordValid(false);
-    } else if (password.length < 8 || password.length > 12) {
-      setPasswordError("Password harus terdiri dari 8-12 karakter");
-      setIsPasswordValid(false);
+    // } else if (password.length < 8 || password.length > 12) {
+      // setPasswordError("Password harus terdiri dari 8-12 karakter");
+      // setIsPasswordValid(false);
     } else {
       setPasswordError("");
       setIsPasswordValid(true);
@@ -78,7 +78,7 @@ const AdminLogin = () => {
           setEmail("");
           setPassword("");
           localStorage.setItem("token", res.data.data.token);
-          navigate("/beranda");
+          navigate("/admin");
         }, 3000);
       } catch (err) {
         if (!email && !password) {

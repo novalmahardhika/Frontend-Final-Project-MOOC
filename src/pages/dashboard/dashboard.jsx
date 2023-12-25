@@ -1,9 +1,11 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Filter from "@/components/filter_button";
 import axios from "axios";
+import { AuthContext } from '../../context/AuthContext';
 
 const Dashboard = () => {
+  const { token, logout } = useContext(AuthContext);
   const [payments, setPayments] = useState([]);
   const [filterType, setFilterType] = useState("DESC");
   const [search, setSearch] = useState("");
@@ -12,7 +14,7 @@ const Dashboard = () => {
     try {
       const data = await axios.get("https://idea-academy.up.railway.app/api/v1/orders/list", {
         headers: {
-          Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNDA5ZmI0LTNlMWUtNDFhNC04NzI2LTQxYTBjMmE2ZTk5ZSIsImlhdCI6MTcwMzMwNzU4M30.CMDb7Xw1730zLb-0PVuHR4L0YimuH-iABs3BbPfeYVw"
+          Authorization: token
         }
       });
       setPayments(data.data.data);
@@ -22,8 +24,10 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    if (!token)
+      return;
     getData();
-  }, [])
+  }, [token])
   
   let sortedPayments = payments;
 

@@ -7,12 +7,12 @@ import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import Navbar from "../../components/navbar";
 import Logo from "./../../assets/logo.png";
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from "react";
 
 const Layout = ({ children }) => {
+  const { logout } = useContext(AuthContext);
   const location = useLocation();
-  const handleLogout = () => {
-    console.log("Keluar sekarang juga!");
-  };
 
   const summary = [
     { id: 1, total: 450, title: "Active Users", color: "text-success" },
@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
   const menu = [
     { id: 1, path: "/Admin", label: "Dashboard" },
     { id: 2, path: "/AdminKelolaKelas", label: "Kelola Kelas" },
-    { id: 3, path: "/Keluar", label: "Keluar", onClick: handleLogout },
+    { id: 3, path: "/Keluar", label: "Keluar", onClick: logout },
   ];
   return (
     <div className="flex h-screen font-poppins">
