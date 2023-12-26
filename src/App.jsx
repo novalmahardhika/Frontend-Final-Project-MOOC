@@ -17,6 +17,10 @@ import Otp from './pages/authentication/register/Otp'
 
 import Payment from './pages/payment/payment'
 import OtpProtected from './pages/authentication/otp_protected'
+import LayoutProfile from './pages/profile/LayoutProfile'
+import UserProfile from './pages/profile/UserProfile'
+import ResetPassword from './pages/profile/ResetPassword'
+import HistoryPayment from './pages/profile/HistoryPayment'
 
 function App() {
   return (
@@ -78,6 +82,38 @@ function App() {
             <LayoutUser>
               <UserLogin />
             </LayoutUser>
+          }
+        />
+        <Route
+          path='/User/profile'
+          element={
+            <LayoutBeranda>
+              <LayoutProfile>
+                <UserProfile />
+              </LayoutProfile>
+            </LayoutBeranda>
+          }
+        />
+
+        <Route
+          path='/User/reset-password'
+          element={
+            <LayoutBeranda>
+              <LayoutProfile>
+                <ResetPassword />
+              </LayoutProfile>
+            </LayoutBeranda>
+          }
+        />
+
+        <Route
+          path='/User/history-payment'
+          element={
+            <LayoutBeranda>
+              <LayoutProfile>
+                <HistoryPayment />
+              </LayoutProfile>
+            </LayoutBeranda>
           }
         />
         <Route
