@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LayoutAdmin from './pages/dashboard/layout'
 import Dashboard from './pages/dashboard/dashboard'
 import KelolaKelas from './pages/dashboard/kelolaKelas'
+import ClassEdit from './pages/dashboard/classEdit'
 import LayoutUser from './pages/authentication/auth_layout'
 import Register from './pages/authentication/register/register'
 import UserLogin from './pages/authentication/login/user'
@@ -53,6 +54,14 @@ function App() {
             element={
               <LayoutAdmin>
                 <KelolaKelas />
+              </LayoutAdmin>
+            }
+          />
+          <Route
+            path='/AdminKelolaKelas/update/:id'
+            element={
+              <LayoutAdmin>
+                <ClassEdit />
               </LayoutAdmin>
             }
           />

@@ -115,7 +115,7 @@ const KelolaKelas = () => {
                 <TableCell>{item.level.toUpperCase()}</TableCell>
                 <TableCell>Rp. {item.price}</TableCell>
                 <TableCell className="justify-between space-x-2">
-                    <Button className=" w-14 h-6 text-xs bg-success">Ubah</Button>
+                    <Button className=" w-14 h-6 text-xs bg-success" onClick={() => location.href += `/update/${item.id}`}>Ubah</Button>
                     <Button className=" w-14 h-6 text-xs bg-destructive" onClick={deleteCourse} value={item.id}>Hapus</Button>
                 </TableCell>
               </TableRow>

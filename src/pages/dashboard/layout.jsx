@@ -8,23 +8,60 @@ import PropTypes from "prop-types";
 import Navbar from "../../components/navbar";
 import Logo from "./../../assets/logo.png";
 import { AuthContext } from '../../context/AuthContext';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const Layout = ({ children }) => {
-  const { logout } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
   const location = useLocation();
+  const [summary, setSummary] = useState([
+      { id: 1, total: 0, title: "Active Users", color: "text-success" },
+      { id: 2, total: 0, title: "Active Class" },
+      { id: 3, total: 0, title: "Premium Class" },
+  ]);
 
-  const summary = [
-    { id: 1, total: 450, title: "Active Users", color: "text-success" },
-    { id: 2, total: 25, title: "Active Class" },
-    { id: 3, total: 20, title: "Premium Class" },
-  ];
+  async function getData(id) {
+    let response;
+    let data;
+
+    try {
+      const [a, b, c] = [...summary]
+      const header = {
+        headers: {
+          Authorization: token
+        }
+      };
+
+      response = await axios.get("https://idea-academy.up.railway.app/api/v1/courses", header);
+      data = response.data?.data;
+      b.total = data.length;
+      c.total = 0;
+      data.forEach((item) => {
+        if (item.type.toLowerCase() === "premium") c.total++;
+      })
+
+      response = await axios.get("https://idea-academy.up.railway.app/api/v1/users", header);
+      data = response.data?.data;
+      a.total = data.length;
+
+      setSummary([a, b, c]);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  
+  useEffect(() => {
+    if (!token)
+      return;
+    getData();
+  }, [token])
 
   const menu = [
     { id: 1, path: "/Admin", label: "Dashboard" },
     { id: 2, path: "/AdminKelolaKelas", label: "Kelola Kelas" },
     { id: 3, path: "/Keluar", label: "Keluar", onClick: logout },
   ];
+  
   return (
     <div className="flex h-screen font-poppins">
       {/* Sidebar */}
