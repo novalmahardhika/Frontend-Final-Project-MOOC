@@ -1,12 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import LoginImage from '../login_image'
 import axios from 'axios'
 
 const Otp = () => {
+  const inputRef = useRef()
+  const [activeOtp, setActiveOtp] = useState(0)
   const [isEmail, setIsEmail] = useState('')
   const [isSubmit, setIsSubmit] = useState(false)
   const [otp, setOtp] = useState(new Array(6).fill(''))
@@ -21,8 +23,6 @@ const Otp = () => {
     const email = localStorage.getItem('emailOTP')
     setIsEmail(email)
 
-    console.log(isSubmit)
-
     if (isSubmit) {
       localStorage.removeItem('emailOTP')
     }
@@ -31,8 +31,16 @@ const Otp = () => {
   const handleChange = (event, index) => {
     const newOtp = [...otp]
     newOtp[index] = event.target.value
+
+    if (!event.target.value) setActiveOtp(index - 1)
+    else setActiveOtp(index + 1)
+
     setOtp(newOtp)
   }
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [activeOtp])
 
   const onSubmit = async () => {
     const payload = {
@@ -76,12 +84,13 @@ const Otp = () => {
             <form className='space-y-7'>
               <div className='relative space-y-3'>
                 <div className='text-sm font-medium text-center text-gray-800'>
-                  Ketik 5 digit kode yang dikirimkan ke {isEmail}
+                  Ketik 6 digit kode yang dikirimkan ke {isEmail}
                 </div>
                 <div className='flex justify-center mt-3 space-x-3'>
                   {otp.map((x, index) => (
                     <Input
                       key={`otp-${index}`}
+                      ref={index === activeOtp ? inputRef : null}
                       className='w-10 text-center'
                       maxLength='1'
                       onChange={(e) => handleChange(e, index)}
