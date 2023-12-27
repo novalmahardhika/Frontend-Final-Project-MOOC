@@ -30,8 +30,33 @@ const Module = ({ onSelectModule }) => {
     onSelectModule(module.video);
   };
 
-  const onPayment = () => {
-    navigate(`/payment/${courseDetail.id}`);
+  const onPayment = async () => {
+    try {
+      if (!courseDetail) {
+        console.error("Course detail is not available");
+        return;
+      }
+  
+      const response = await axios.post(
+        `https://idea-academy.up.railway.app/api/v1/orders/${courseDetail.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.data && response.data.data && response.data.data.id) {
+
+        const orderId = response.data.data.id;
+  
+        console.log(response.data);
+  
+        
+        navigate(`/payment/${orderId}`);
+      } else {
+        console.error("Invalid response structure");
+      }
+    } catch (error) {
+      console.error("Error posting order:", error);
+    }
   };
 
   if (!courseDetail) {
@@ -90,11 +115,10 @@ const Module = ({ onSelectModule }) => {
                             </div>
                           </div>
                         </DialogTrigger>
-
                         <DialogContent className="sm:max-w-[500px] font-poppins">
                           <DialogHeader>
                             <DialogTitle className="text-center text-sm font-normal">Selangkah Lagi Menuju</DialogTitle>
-                            <DialogDescription className="text-center text-2xl text-active font-medium ">Kelas Premium</DialogDescription>
+                            <DialogDescription className="text-center text-2xl text-active font-medium ">{courseDetail.type === "free" ? "Kelas Free" : "Kelas Premium"}</DialogDescription>
                           </DialogHeader>
                           <div className=" flex flex-col">
                             <div className="space-y-3 cursor-pointer mx-auto">
@@ -116,7 +140,7 @@ const Module = ({ onSelectModule }) => {
                               onClick={() => onPayment()}
                               className="flex  mx-auto hover:bg-active w-60"
                             >
-                              Beli Sekarang
+                              {courseDetail.type === "free" ? "Claim Sekarang" : "Beli Sekarang"}
                             </Button>
                           </DialogFooter>
                         </DialogContent>
