@@ -45,17 +45,17 @@ const Course = ({ activeTab }) => {
   }
 
   return (
-    <div className="container mt-10 ">
+    <div className="container mt-5 ">
       <div className="flex md:flex-wrap gap-6 md:justify-between pb-10 overflow-x-scroll md:overflow-hidden ">
         {displayedCourses.map((item) => (
           <div
             className="space-y-3 cursor-pointer"
             key={item.title}
           >
-            <Card className="md:w-[420px]">
+            <Card className="md:w-[420px] w-[250px] h-[280px] md:h-full">
               <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
                 <img
-                  className="object-cover w-full h-48 rounded-t-sm"
+                  className="object-cover w-full h-32 md:h-48 rounded-t-sm"
                   src={item.image}
                   alt={item.title}
                 />
@@ -68,13 +68,13 @@ const Course = ({ activeTab }) => {
                   <div className="flex space-x-2">
                     <FontAwesomeIcon
                       icon={faStar}
-                      className="text-active"
+                      className="text-active text-sm ms:text-lg"
                     />
-                    <div className="text-sm">{item.rating}</div>
+                    <div className="text-xs md:text-sm">{item.rating}</div>
                   </div>
                 </div>
                 <div className="text-xs ">#{item.category}</div>
-                <div className="flex space-x-10 justify-between items-center pt-3">
+                <div className="flex flex-wrap gap-3 justify-between items-center pt-3">
                   <div className="flex items-center space-x-2">
                     <FontAwesomeIcon
                       icon={faMedal}
