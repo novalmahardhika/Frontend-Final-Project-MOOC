@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faHouse, faBell, faPlayCircle, faList, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faBell, faPlayCircle, faList, faUser } from "@fortawesome/free-solid-svg-icons";
 import Logo from "./../assets/logo.png";
 import Menu from "./menu";
 import { Button } from "./ui/button";
@@ -7,6 +7,7 @@ import AvatarProfile from "./avatar";
 import { Link } from "react-router-dom";
 import Notification from "@/pages/notification/notif";
 import { useState, useEffect } from "react";
+import Search from "./search";
 
 const Navbar_User = () => {
   const token = localStorage.getItem("token");
@@ -102,11 +103,8 @@ const Navbar_User = () => {
             </div>
 
             <div className="flex justify-between items-center space-x-4">
-              <div className=" rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
-                <FontAwesomeIcon
-                  icon={faSearch}
-                  title="search"
-                />
+              <div>
+                <Search />
               </div>
               {token ? (
                 <div className="flex space-x-4 items-center">
