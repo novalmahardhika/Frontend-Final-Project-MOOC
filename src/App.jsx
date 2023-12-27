@@ -88,9 +88,11 @@ function App() {
           path='/User/profile'
           element={
             <LayoutBeranda>
-              <LayoutProfile>
-                <UserProfile />
-              </LayoutProfile>
+              <UserProtected>
+                <LayoutProfile>
+                  <UserProfile />
+                </LayoutProfile>
+              </UserProtected>
             </LayoutBeranda>
           }
         />
@@ -99,9 +101,11 @@ function App() {
           path='/User/reset-password'
           element={
             <LayoutBeranda>
-              <LayoutProfile>
-                <ResetPassword />
-              </LayoutProfile>
+              <UserProtected>
+                <LayoutProfile>
+                  <ResetPassword />
+                </LayoutProfile>
+              </UserProtected>
             </LayoutBeranda>
           }
         />
@@ -110,9 +114,11 @@ function App() {
           path='/User/history-payment'
           element={
             <LayoutBeranda>
-              <LayoutProfile>
-                <HistoryPayment />
-              </LayoutProfile>
+              <UserProtected>
+                <LayoutProfile>
+                  <HistoryPayment />
+                </LayoutProfile>
+              </UserProtected>
             </LayoutBeranda>
           }
         />
