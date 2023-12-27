@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 const Module = ({ onSelectModule }) => {
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -26,8 +27,8 @@ const Module = ({ onSelectModule }) => {
     fetchCourseDetail();
   }, [id, token]);
 
-  const handleModuleClick = (module) => {
-    onSelectModule(module.video);
+  const handleModuleClick = async (module) => {
+    onSelectModule(module);
   };
 
   const onPayment = () => {
@@ -39,7 +40,7 @@ const Module = ({ onSelectModule }) => {
   }
 
   return (
-    <div className="relative w-[450px] -top-20  mr-20 z-1 font-poppins ">
+    <div className="md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
       <Card className="p-3">
         <CardHeader>
           <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>

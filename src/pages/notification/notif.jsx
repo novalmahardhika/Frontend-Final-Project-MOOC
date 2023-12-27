@@ -3,6 +3,7 @@ import { faBell, faComments } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
@@ -14,7 +15,12 @@ const Notification = () => {
     const fetchNotifications = async () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/notifications`, { headers: { Authorization: `Bearer ${token}` } });
-        setNotifications(res.data.data.notification || []); // Handle undefined case
+        const latestNotifications = res.data.data.notifications || [];
+
+        // Take only the latest 3 notifications
+        const latestThreeNotifications = latestNotifications.slice(0, 3);
+
+        setNotifications(latestThreeNotifications);
       } catch (err) {
         console.log(err);
       }
@@ -41,15 +47,15 @@ const Notification = () => {
               {notifications.map((notification) => (
                 <DropdownMenuItem
                   key={notification.id}
-                  className="cursor-pointer"
+                  className="cursor-pointer p-3"
                 >
                   <Link to="#">
                     <div className="flex space-x-3 items-start">
                       <FontAwesomeIcon icon={faComments} />
                       <div className="space-y-1">
-                        <div className="text-xs font-thin">{notification.title}</div>
+                        <div className="text-sm font-thin text-success">{notification.title}</div>
                         <div className="text-xs">{notification.message}</div>
-                        <div className="text-xs">{notification.createdAt}</div>
+                        <div className="text-xs">{formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}</div>
                       </div>
                     </div>
                   </Link>

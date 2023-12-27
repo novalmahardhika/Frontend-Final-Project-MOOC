@@ -1,16 +1,23 @@
 import PropTypes from "prop-types";
+import NotificationPage from "./list";
 
 const Layout = ({ children }) => {
   return (
-    <div className=" overflow-hidden h-screen font-poppins justify-between items-center">
+    <div className="overflow-hidden font-poppins justify-between items-center">
       {/* Main Content */}
       <div className="bg-secondary">
         <div className="container pt-12 pb-20">
           <div className=" text-3xl font-semibold text-primary">Notification </div>
         </div>
       </div>
-      <div className="">
-        <div className="container ">{children}</div>
+      <div className="container flex justify-between gap-10">
+        <div className="w-[500px]">
+          <NotificationPage />
+        </div>
+
+        <div className="">
+          <div className=" w-[900px]">{children}</div>
+        </div>
       </div>
     </div>
   );

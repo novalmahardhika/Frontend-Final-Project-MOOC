@@ -5,7 +5,7 @@ import Menu from "./menu";
 import { Button } from "./ui/button";
 import AvatarProfile from "./avatar";
 import { Link } from "react-router-dom";
-import Notification from "@/pages/notification/notification";
+import Notification from "@/pages/notification/notif";
 
 const Navbar_User = () => {
   const token = localStorage.getItem("token");

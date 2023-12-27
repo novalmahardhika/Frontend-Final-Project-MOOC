@@ -4,12 +4,10 @@ import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
 import { NavigationMenu, NavigationMenuTrigger, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuContent } from "@/components/ui/navigation-menu";
 
-import { useCategoryContext } from "./../pages/course_list/categoryContext";
 import categoryData from "./../pages/beranda/dummyCategory.json";
 
 const Menu = () => {
   const categories = categoryData.heroCategory || [];
-  const { setSelectedCategory } = useCategoryContext();
 
   return (
     <div>
@@ -25,10 +23,7 @@ const Menu = () => {
             <NavigationMenuContent>
               <div className="grid gap-7 p-4 md:w-[600px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
                 <div className="row-span-3">
-                  <Link
-                    to="/course"
-                    onClick={() => setSelectedCategory("")}
-                  >
+                  <Link to="/courses">
                     <NavigationMenuLink asChild>
                       <div className="flex h-full w-full select-none flex-col justify-center bg-primary text-white from-muted/50 to-muted p-3 no-underline outline-none focus:shadow-md ">
                         <span className="text-xs text-center text-success">Trusted by 900K+ Students</span>
@@ -45,7 +40,7 @@ const Menu = () => {
                       <div key={item.title}>
                         <NavigationMenuLink asChild>
                           <Link
-                            to={`/course?category=${encodeURIComponent(item.value)}`}
+                            to={`/courses?category=${encodeURIComponent(item.value)}`}
                             className={`hover:text-active cursor-pointer`}
                           >
                             {item.title}
