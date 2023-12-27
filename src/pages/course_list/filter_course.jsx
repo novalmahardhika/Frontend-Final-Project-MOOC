@@ -28,9 +28,9 @@ const FilterCourse = ({ onFilterChange }) => {
   const [checkedLevelIds, setCheckedLevelIds] = useState([]);
   const [checkedCategoryIds, setCheckedCategoryIds] = useState([]);
 
-  const getCategoryItemId = (title) => {
-    return `${title.replace(/\s+/g, " ")}`;
-  };
+  // const getCategoryItemId = (title) => {
+  //   return `${title.replace(/\s+/g, " ")}`;
+  // };
 
   const onCheckedChange = (checked, item, type) => {
     if (type === "sort") {
@@ -59,11 +59,9 @@ const FilterCourse = ({ onFilterChange }) => {
       }
       navigate(`${location.pathname}?${newSearchParams.toString()}`);
     } else if (type === "category") {
-      const itemId = getCategoryItemId(item.title);
-      const updatedCategoryIds = checked ? [...checkedCategoryIds, itemId] : checkedCategoryIds.filter((id) => id !== itemId);
+      const updatedCategoryIds = checked ? [...checkedCategoryIds, item.title] : checkedCategoryIds.filter((id) => id !== item.title);
       setCheckedCategoryIds(updatedCategoryIds);
       onFilterChange("category", updatedCategoryIds);
-      console.log(updatedCategoryIds);
       const newSearchParams = new URLSearchParams(location.search);
       if (updatedCategoryIds.length > 0) {
         newSearchParams.set("category", updatedCategoryIds.join(","));
@@ -151,14 +149,14 @@ const FilterCourse = ({ onFilterChange }) => {
             >
               <Checkbox
                 className="w-3 h-3 md:w-7 md:h-7"
-                id={getCategoryItemId(item.title)}
+                id={item.title}
                 value={item.title}
-                checked={checkedCategoryIds.includes(getCategoryItemId(item.title))}
+                checked={checkedCategoryIds.includes(item.title)}
                 onCheckedChange={(checked) => onCheckedChange(checked, item, "category")}
               />
               <div className="grid gap-1.5 leading-none">
                 <label
-                  htmlFor={getCategoryItemId(item.title)}
+                  htmlFor={item.title}
                   className="text-xs md:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {item.title}

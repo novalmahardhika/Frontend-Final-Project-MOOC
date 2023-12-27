@@ -21,12 +21,7 @@ const Card_Course = ({ selectedFilters }) => {
     const fetchCourses = async () => {
       try {
         let url = "https://idea-academy.up.railway.app/api/v1/courses";
-
-        if (categoryParam) {
-          url += `?category=${encodeURIComponent(categoryParam)}`;
-        }
         const res = await axios.get(url);
-
         setCourseList(res.data.data);
       } catch (err) {
         console.log(err);
