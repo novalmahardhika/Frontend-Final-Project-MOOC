@@ -12,7 +12,7 @@ const Banner = () => {
               className="object-cover md:w-4/6 h-full "
             />
 
-            <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-primary opacity-100 md:w-4/6"></div>
+            <div className="h-screen absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-primary opacity-100 md:w-4/6"></div>
             <div className="relative z-1 grid grid-cols-3">
               <div className="pt-6 md:pt-0 col-span-3 text-white space-y-2 mx-auto">
                 <p className="md:text-2xl font-bold text-center md:text-start w-32 md:w-48 mb-2 md:mb-5 ">Belajar dari Praktisi Terbaik!</p>
