@@ -7,15 +7,15 @@ import Register from "./pages/authentication/register/register";
 import UserLogin from "./pages/authentication/login/user";
 import AdminLogin from "./pages/authentication/login/admin";
 import Beranda from "./pages/beranda/beranda";
-import Card_Course from "./pages/course_list/card_course";
+import Courses from "./pages/course_list/courses";
 import CourseDetail from "./pages/course_detail/detail_course";
 import LayoutBeranda from "./pages/beranda/layout";
 import UserProtected from "./pages/authentication/protected";
-import LayoutNotification from "@/pages/notification/layout";
-import NotificationList from "./pages/notification/notificationPage";
-
+import NotificationList from "./pages/notification/notification_detail";
+import MyCourses from "./pages/my_course/my_courses";
+import Otp from "./pages/authentication/register/Otp";
+import OtpProtected from "./pages/authentication/otp_protected";
 import Payment from "./pages/payment/payment";
-import LayoutPayment from "@/pages/payment/layout";
 
 function App() {
   return (
@@ -70,6 +70,16 @@ function App() {
           }
         />
         <Route
+          path="/User/otp"
+          element={
+            <OtpProtected>
+              <LayoutUser>
+                <Otp />
+              </LayoutUser>
+            </OtpProtected>
+          }
+        />
+        <Route
           path="/Admin/Login"
           element={
             <LayoutUser>
@@ -79,23 +89,19 @@ function App() {
         />
 
         <Route
-          path="/Course"
+          path="/courses"
           element={
-            <UserProtected>
-              <LayoutBeranda>
-                <Card_Course />
-              </LayoutBeranda>
-            </UserProtected>
+            <LayoutBeranda>
+              <Courses />
+            </LayoutBeranda>
           }
         />
         <Route
-          path="/Course/:id/*"
+          path="/course/:id/*"
           element={
-            <UserProtected>
-              <LayoutBeranda>
-                <CourseDetail />
-              </LayoutBeranda>
-            </UserProtected>
+            <LayoutBeranda>
+              <CourseDetail />
+            </LayoutBeranda>
           }
         />
 
@@ -103,20 +109,28 @@ function App() {
           path="/notification"
           element={
             <LayoutBeranda>
-              <LayoutNotification>
-                <NotificationList />
-              </LayoutNotification>
+              {/* <LayoutNotification> */}
+              <NotificationList />
+              {/* </LayoutNotification> */}
             </LayoutBeranda>
           }
         />
 
         <Route
-          path="/payment"
+          path="/payment/:id/*"
           element={
             <LayoutBeranda>
-              <LayoutPayment>
+              <UserProtected>
                 <Payment />
-              </LayoutPayment>
+              </UserProtected>
+            </LayoutBeranda>
+          }
+        />
+        <Route
+          path="/myCourses"
+          element={
+            <LayoutBeranda>
+              <MyCourses />
             </LayoutBeranda>
           }
         />

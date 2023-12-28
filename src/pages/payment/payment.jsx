@@ -1,147 +1,128 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import visaLogo from "@/assets/visa.png";
-import masterCardLogo from "@/assets/master_card.png";
-import payPalLogo from "@/assets/paypal.png";
+import { Card } from "@/components/ui/card";
 import PaidCourse from "./course";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Payment = () => {
-  return (
-    <div className="mt-5 font-poppins">
-      <div className="container flex justify-center space-x-20">
-        <div className="w-3/5">
-          <Accordion
-            type="single"
-            collapsible
-            className="w-full space-y-5"
-          >
-            <AccordionItem
-              value="item-1"
-              className=" rounded-sm space-y-2 border-none"
-            >
-              <AccordionTrigger className=" bg-black text-white no-underline px-3 rounded-sm hover:no-underline">Bank Transfer</AccordionTrigger>
-              <AccordionContent className=" shadow-lg rounded-sm p-5 border">
-                <div className="bg-white flex justify-between space-x-5 py-4">
-                  <div className="space-y-3">
-                    <Label>Bank Name</Label>
-                    <Select>
-                      <SelectTrigger className="w-[300px]">
-                        <SelectValue placeholder="Select Bank Name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Select Bank Name</SelectLabel>
-                          <SelectItem value="BCA">BCA</SelectItem>
-                          <SelectItem value="BNI">BNI</SelectItem>
-                          <SelectItem value="BRI">BRI</SelectItem>
-                          <SelectItem value="Mandiri">Mandiri</SelectItem>
-                          <SelectItem value="OCBC">OCBC</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-3 w-full">
-                    <Label>Account Name</Label>
-                    <Input
-                      placeholder="Bank Transfer"
-                      className="w-4/5"
-                    />
-                  </div>
-                </div>
-                <div className="bg-white flex justify-between space-x-5 py-4">
-                  <div className="space-y-3">
-                    <Label>Bank Name</Label>
-                    <Select>
-                      <SelectTrigger className="w-[300px]">
-                        <SelectValue placeholder="Select Bank Name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Select Bank Name</SelectLabel>
-                          <SelectItem value="BCA">BCA</SelectItem>
-                          <SelectItem value="BNI">BNI</SelectItem>
-                          <SelectItem value="BRI">BRI</SelectItem>
-                          <SelectItem value="Mandiri">Mandiri</SelectItem>
-                          <SelectItem value="OCBC">OCBC</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-3 w-full">
-                    <Label>Account Name</Label>
-                    <Input
-                      placeholder="Bank Transfer"
-                      className="w-4/5"
-                    />
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+  // Fungsi untuk menghasilkan nomor Virtual Account secara acak
+  const generateVirtualAccount = () => {
+    const randomVirtualAccount = Math.floor(Math.random() * 1000000000).toString();
+    return randomVirtualAccount;
+  };
 
-            <AccordionItem
-              value="item-2"
-              className=" rounded-sm space-y-2 border-none"
-            >
-              <AccordionTrigger className=" bg-primary text-white no-underline px-3 rounded-sm hover:no-underline">Credit Card</AccordionTrigger>
-              <AccordionContent className=" shadow-lg rounded-sm p-5 border">
-                <div className="bg-white space-y-4 py-3">
-                  <div className="flex justify-center space-x-3 items-center pb-2">
-                    <img
-                      src={masterCardLogo}
-                      className="h-5 object-contain"
-                    />
-                    <img
-                      src={visaLogo}
-                      className="h-4 object-contain "
-                    />
-                    <img
-                      src={payPalLogo}
-                      className="h-4 object-contain "
-                    />
-                  </div>
-                  <div className="space-y-2 w-3/5 mx-auto">
-                    <Label>Card Number</Label>
-                    <Input
-                      placeholder="B4480 0000 0000 0000"
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="space-y-2 w-3/5 mx-auto">
-                    <Label>Card Holder Name</Label>
-                    <Input
-                      placeholder="John Doe"
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="flex justify-between w-3/5 mx-auto">
-                    <div className="space-y-2">
-                      <Label>CVV</Label>
-                      <Input
-                        placeholder="000"
-                        className="w-full"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Expiry Date</Label>
-                      <Input
-                        placeholder="07/24"
-                        className="w-full"
-                      />
-                    </div>
-                  </div>
+  return (
+    <div className="container mt-5 font-poppins">
+      <div className="flex justify-between gap-20">
+        <div className="w-4/5">
+          <Tabs
+            defaultValue="Transfer"
+            className="w-full"
+          >
+            <TabsList className="w-full">
+              <TabsTrigger
+                value="Transfer"
+                className="w-full"
+              >
+                Transfer Melalui Mobile Banking
+              </TabsTrigger>
+              <TabsTrigger
+                value="Bank"
+                className="w-full"
+              >
+                Pembayaran Melalui Go-Pay
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="Transfer">
+              <div className="container space-y-5 pt-3">
+                <div>Pembayaran Melalui Mobile Banking</div>
+                <div className="px-5">
+                  <ol
+                    style={{ listStyleType: "&quot;decimal&quot;" }}
+                    className="space-y-2"
+                  >
+                    <li>
+                      <strong>Buka Aplikasi Mobile Banking:</strong> Buka aplikasi mobile banking dari bank Anda.
+                    </li>
+                    <li>
+                      <strong>Pilih Menu Transfer:</strong> Pilih opsi &ldquo;Transfer&rdquo; atau serupa.
+                    </li>
+                    <li>
+                      <strong>Pilih Rekening Bank Lain:</strong> Pilih opsi &ldquo;Transfer ke Bank Lain&rdquo; atau sejenisnya.
+                    </li>
+                    <li>
+                      <strong>Masukkan Nomor Rekening Tujuan:</strong> Masukkan nomor rekening tujuan yang diberikan pada halaman pembayaran.
+                    </li>
+                    <li>
+                      <strong>Masukkan Nominal Transfer:</strong> Isi nominal yang ingin Anda transfer sesuai dengan instruksi pembayaran.
+                    </li>
+                    <li>
+                      <strong>Pilih Jenis Transfer:</strong> Pilih jenis transfer yang sesuai, misalnya &ldquo;Antar Bank&rdquo; atau &ldquo;Transfer Online.&rdquo;
+                    </li>
+                    <li>
+                      <strong>Masukkan Deskripsi atau Nomor Referensi:</strong> Masukkan deskripsi atau nomor referensi sesuai petunjuk pembayaran.
+                    </li>
+                    <li>
+                      <strong>Konfirmasi dan Kirim:</strong> Konfirmasikan transaksi dan kirim pembayaran.
+                    </li>
+                    <li>
+                      <strong>Periksa Konfirmasi:</strong> Setelah transaksi berhasil, periksa konfirmasi yang diberikan oleh aplikasi mobile banking.
+                    </li>
+                  </ol>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+              </div>
+            </TabsContent>
+            <TabsContent value="Bank">
+              <div className="container space-y-5 pt-3">
+                <div>Pembayaran Melalui Go-Pay</div>
+                <div className="px-5">
+                  <ol
+                    style={{ listStyleType: "decimal" }}
+                    className="space-y-2"
+                  >
+                    <li>
+                      <strong>Buka Aplikasi GoPay:</strong> Pastikan Anda membuka aplikasi GoPay pada perangkat mobile Anda.
+                    </li>
+                    <li>
+                      <strong>Pilih Menu Scan QR:</strong> Temukan opsi untuk melakukan pembayaran atau scan QR Code. Biasanya, terdapat ikon scan QR di aplikasi GoPay.
+                    </li>
+                    <li>
+                      <strong>Scan QR Code:</strong> Arahkan kamera ponsel Anda ke QR Code yang diberikan pada halaman pembayaran atau di toko fisik.
+                    </li>
+                    <li>
+                      <strong>Masukkan Jumlah Pembayaran:</strong> Isi nominal yang ingin Anda bayarkan sesuai dengan petunjuk pembayaran.
+                    </li>
+                    <li>
+                      <strong>Konfirmasi Pembayaran:</strong> Pastikan untuk memeriksa kembali detail pembayaran, termasuk nomor transaksi dan jumlah yang benar. Konfirmasikan pembayaran jika sudah sesuai.
+                    </li>
+                    <li>
+                      <strong>Isi Deskripsi (Opsional):</strong> Jika ada opsi untuk mengisi deskripsi atau catatan, Anda bisa melakukannya untuk memberikan informasi tambahan.
+                    </li>
+                    <li>
+                      <strong>Konfirmasi dan Kirim:</strong> Setelah semua informasi benar, konfirmasikan pembayaran dan kirimkan.
+                    </li>
+                    <li>
+                      <strong>Periksa Konfirmasi:</strong> Setelah transaksi berhasil, Anda akan menerima konfirmasi pembayaran. Pastikan untuk menyimpan bukti transaksi sebagai referensi.
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
-        <div className="w-2/5 ">
+
+        <div className="w-2/5">
+          {/* Komponen PaidCourse (gantilah dengan implementasi sesuai kebutuhan) */}
+          <Card className="h-[150px] flex items-center justify-center mb-10">
+            <div className="space-y-5">
+              <Label className="flex justify-center">Nomor Virtual Account</Label>
+              <div className="text-2xl text-center">{generateVirtualAccount()}</div>
+            </div>
+          </Card>
           <PaidCourse />
         </div>
       </div>
     </div>
   );
 };
+
 export default Payment;
