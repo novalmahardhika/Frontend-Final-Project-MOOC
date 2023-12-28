@@ -27,6 +27,13 @@ const Register = () => {
   const [isModalError, setIsModalError] = useState(false)
 
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    if (token) {
+      navigate('/beranda')
+    }
+  }, [token])
 
   const validateInput = useCallback(() => {
     // Validasi Nama

@@ -12,6 +12,7 @@ const ForgotPassword = () => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false)
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -54,7 +55,11 @@ const ForgotPassword = () => {
     if (isSubmit) {
       localStorage.setItem('email-forgot', email)
     }
-  }, [isSubmit])
+
+    if (token) {
+      navigate('/beranda')
+    }
+  }, [isSubmit, token])
 
   const changeHandler = (e) => {
     const { value } = e.target
