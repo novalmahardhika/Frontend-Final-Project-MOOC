@@ -91,13 +91,15 @@ const Navbar_User = () => {
           </nav>
           {/* <div className="bg-primary opacity-80"> */}
 
-          <div className="bg-primary h-16 flex items-center">
-            <img
-              src={Logo}
-              alt="Logo"
-              className="ms-3 my-auto w-28"
-            />
-            <div className="block fixed top-0 right-0 z-20 p-4">
+          <div className="flex bg-primary h-16  w-screen items-center justify-between">
+            <Link to="/">
+              <img
+                src={Logo}
+                alt="Logo"
+                className="ms-3 my-auto w-28"
+              />
+            </Link>
+            <div className="block relative top-0 right-0 z-10 p-4">
               <Search />
             </div>
           </div>
@@ -108,11 +110,13 @@ const Navbar_User = () => {
           <nav className="bg-primary font-poppins font-medium p-4 top-0 right-0 w-full z-10 sticky">
             <div className=" container mx-auto flex items-center justify-between h-12 ">
               <div>
-                <img
-                  src={Logo}
-                  alt="Logo"
-                  className="mx-auto my-auto w-36"
-                />
+                <Link to="/">
+                  <img
+                    src={Logo}
+                    alt="Logo"
+                    className="mx-auto my-auto w-36"
+                  />
+                </Link>
               </div>
               <div>
                 <Menu />
