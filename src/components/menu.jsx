@@ -55,7 +55,7 @@ const Menu = () => {
           </NavigationMenuItem>
           <NavigationMenuItem className="">
             <Link to="#">
-              <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-primary text-white p-6`}>Informasi</NavigationMenuLink>
+              <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-primary text-white p-6`}>About Us</NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>

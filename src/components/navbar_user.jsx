@@ -89,9 +89,19 @@ const Navbar_User = () => {
               </Link>
             </div>
           </nav>
-          <div className="block fixed top-0 right-0 z-20 p-4">
-            <Search />
+          {/* <div className="bg-primary opacity-80"> */}
+
+          <div className="bg-primary h-16 flex items-center">
+            <img
+              src={Logo}
+              alt="Logo"
+              className="ms-3 my-auto w-28"
+            />
+            <div className="block fixed top-0 right-0 z-20 p-4">
+              <Search />
+            </div>
           </div>
+          {/* </div> */}
         </>
       ) : (
         <>
