@@ -56,7 +56,7 @@ const AvatarProfile = () => {
               <Link to="/myCourses">Kelas Saya</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
-              <Link to="#">Payment</Link>
+              <Link to="/payment-history">Payment</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               <Link to="#">Settings</Link>
