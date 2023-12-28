@@ -12,26 +12,29 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const LoadingSkeletonCard = () => (
-  <Card className="md:w-[420px] w-[300px] h-[280px] md:h-full pb-5">
-    <div className="hover:opacity-50 cursor-pointer hover:transition-transform space-y-4">
-      <Skeleton className=" object-cover w-full h-32 md:h-48 rounded-t-sm rounded-b-none" />
-      <div className="space-y-3 p-3">
-        <div className="flex justify-between">
-          <Skeleton className=" w-32 md:w-52 h-2" />
-          <Skeleton className="w-10 h-2" />
-        </div>
-        <Skeleton className=" w-20 md:w-32 h-2" />
-        <div className="flex flex-wrap justify-between gap-5">
-          <Skeleton className=" w-16 md:w-20 h-2" />
-          <Skeleton className=" w-16 md:w-20 h-2" />
-          <Skeleton className=" w-16 md:w-20 h-2" />
+  <div className="block top-0">
+    <Card className="md:w-[420px] w-[300px] h-[280px] md:h-full pb-5">
+      <div className="hover:opacity-50 cursor-pointer hover:transition-transform space-y-4">
+        <Skeleton className=" object-cover w-full h-32 md:h-48 rounded-t-sm rounded-b-none" />
+        <div className="space-y-3 p-3">
+          <div className="flex justify-between">
+            <Skeleton className=" w-32 md:w-52 h-2" />
+            <Skeleton className="w-10 h-2" />
+          </div>
+          <Skeleton className=" w-20 md:w-32 h-2" />
+          <div className="flex flex-wrap justify-between gap-5">
+            <Skeleton className=" w-16 md:w-20 h-2" />
+            <Skeleton className=" w-16 md:w-20 h-2" />
+            <Skeleton className=" w-16 md:w-20 h-2" />
+          </div>
         </div>
       </div>
-    </div>
-  </Card>
+    </Card>
+  </div>
 );
 
-const Card_Course = ({ selectedFilters }) => {
+const Card_Course = ({ selectedFilters, activeTab }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -45,6 +48,7 @@ const Card_Course = ({ selectedFilters }) => {
         let url = "https://idea-academy.up.railway.app/api/v1/courses";
         const res = await axios.get(url);
         setCourseList(res.data.data);
+        console.log(res.data.data);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -57,6 +61,13 @@ const Card_Course = ({ selectedFilters }) => {
 
   const filterCourses = () => {
     let filteredCourses = courseList.filter((course) => {
+      if (activeTab === "premium") {
+        return course.type !== "premium";
+      }
+      if (activeTab === "free") {
+        return course.type !== "free";
+      }
+
       return (selectedLevels.length === 0 || selectedLevels.includes(course.level)) && (selectedCategories.length === 0 || selectedCategories.includes(course.category));
     });
 
@@ -73,30 +84,37 @@ const Card_Course = ({ selectedFilters }) => {
     return filteredCourses;
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   if (loading) {
     return (
-      <div className="container mt-3">
-        <div className="flex flex-wrap gap-6">
-          {[...Array(2)].map((_, index) => (
-            <LoadingSkeletonCard key={index} />
-          ))}
-        </div>
+      <div>
+        {isMobile ? (
+          <div className="flex flex-wrap gap-10">
+            {[...Array(2)].map((_, index) => (
+              <LoadingSkeletonCard key={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-6">
+            {[...Array(4)].map((_, index) => (
+              <LoadingSkeletonCard key={index} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
-
-  // const formatCurrency = (course) => {
-  //   if (course.type === "free") {
-  //     return "Free";
-  //   } else {
-  //     return new Intl.NumberFormat("id-ID", {
-  //       style: "currency",
-  //       currency: "IDR",
-  //       minimumFractionDigits: 0,
-  //       maximumFractionDigits: 0,
-  //     }).format(course.price);
-  //   }
-  // };
 
   if (filterCourses().length === 0) {
     return <div className="flex text-center mx-auto text-xl font-semibold ">No courses available</div>;
@@ -159,7 +177,7 @@ const Card_Course = ({ selectedFilters }) => {
                   </div>
                 </div>
                 <div>
-                  {course.type === "Free" ? (
+                  {course.type === "free" ? (
                     <Button className="h-7 text-xs flex gap-3 bg-active text-white">
                       <FontAwesomeIcon icon={faGem} /> Premium{" "}
                     </Button>
@@ -184,6 +202,7 @@ Card_Course.propTypes = {
     category: PropTypes.arrayOf(PropTypes.string),
     sort: PropTypes.string,
   }),
+  activeTab: PropTypes.string,
 };
 
 export default Card_Course;

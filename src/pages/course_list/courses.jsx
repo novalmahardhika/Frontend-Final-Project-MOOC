@@ -3,6 +3,7 @@ import FilterCourse from "@/pages/course_list/filter_course";
 import Card_Course from "./card_course";
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import TabCourse from "./tab";
 
 const Courses = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -26,7 +27,6 @@ const Courses = () => {
       sort: sortValue,
     }));
   };
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -40,6 +40,12 @@ const Courses = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const [activeTab, setActiveTab] = useState("All");
+
+  const handleTabChange = (value) => {
+    setActiveTab(value);
+  };
 
   return (
     <>
@@ -90,9 +96,15 @@ const Courses = () => {
                 />
               </div>
             )}
+            <div className="flex justify-center">
+              <TabCourse onTabChange={handleTabChange} />
+            </div>
             <div className="container flex justify-between gap-16">
               <div className="font-poppins flex flex-wrap gap-10 mb-20 w-full">
-                <Card_Course selectedFilters={selectedFilters} />
+                <Card_Course
+                  selectedFilters={selectedFilters}
+                  activeTab={activeTab}
+                />
               </div>
             </div>
             <Footer />
@@ -104,6 +116,7 @@ const Courses = () => {
             <div className="text-3xl font-semibold text-primary">Cari Kelas</div>
             <div className="text-3xl font-semibold text-primary">Sesuai Karir Kamu</div>
           </div>
+
           <div className="container flex justify-between gap-16">
             <div className="w-1/3">
               <FilterCourse
@@ -111,8 +124,14 @@ const Courses = () => {
                 onSortChange={handleSortChange}
               />
             </div>
-            <div className="font-poppins flex flex-wrap gap-10 mb-20 w-full">
-              <Card_Course selectedFilters={selectedFilters} />
+            <div className="font-poppins grid gap-5 w-full">
+              <TabCourse onTabChange={handleTabChange} />
+              <div className="flex flex-wrap gap-10 mb-20">
+                <Card_Course
+                  selectedFilters={selectedFilters}
+                  activeTab={activeTab}
+                />
+              </div>
             </div>
           </div>
           <Footer />
