@@ -19,18 +19,18 @@ const FrequentlyAskQuestions = () => {
     },
     {
       id: 4,
-      question: "Apa itu IdeaMy atau Idea Academy?",
-      answer: "IdeaMy atau Idea Academy adalah platform pembelajaran daring yang menyediakan berbagai kursus dan sumber daya untuk membantu Anda mengembangkan keterampilan dan mencapai tujuan belajar Anda.",
+      question: "Apa manfaat belajar di IdeaMy atau Idea Academy?",
+      answer: "Belajar di Idea Academy memberikan Anda akses ke instruktur berpengalaman, materi berkualitas, dan komunitas belajar yang mendukung. Temukan potensi Anda dan raih kesuksesan bersama kami.",
     },
     {
       id: 5,
-      question: "Bagaimana cara mendaftar di IdeaMy atau Idea Academy?",
-      answer: "Untuk mendaftar, kunjungi halaman pendaftaran kami dan ikuti langkah-langkah yang tertera. Isi informasi yang diperlukan, dan Anda akan mendapatkan akses ke berbagai kursus.",
+      question: "Bagaimana saya bisa berinteraksi dengan instruktur?",
+      answer: "Anda dapat berinteraksi dengan instruktur melalui forum diskusi di setiap kursus. Ajukan pertanyaan, bagikan pengalaman, dan dapatkan dukungan langsung dari ahli di bidangnya.",
     },
     {
       id: 6,
-      question: "Berapa biaya langganan IdeaMy atau Idea Academy?",
-      answer: "Detail biaya dan langganan dapat ditemukan di halaman Tarif kami. Kami menawarkan berbagai opsi langganan yang sesuai dengan kebutuhan dan anggaran Anda.",
+      question: "Apakah kursus di Idea Academy cocok untuk pemula?",
+      answer: "Tentu saja! Kami menawarkan berbagai kursus yang cocok untuk pemula hingga tingkat lanjutan. Pilih dari berbagai topik dan tingkat kesulitan sesuai dengan kebutuhan dan minat Anda.",
     },
   ];
 
