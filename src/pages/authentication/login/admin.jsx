@@ -2,12 +2,14 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useContext } from 'react'
 import LoginImage from './../login_image'
 import { useNavigate } from 'react-router'
+import { AuthContext } from '@/context/AuthContext'
 import axios from 'axios'
 
 const AdminLogin = () => {
+  const { token, login } = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalError, setIsModalError] = useState(false)
@@ -23,7 +25,6 @@ const AdminLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const token = localStorage.getItem('token')
   const navigate = useNavigate()
 
   const validateInput = useCallback(() => {
@@ -69,20 +70,12 @@ const AdminLogin = () => {
           email,
           password,
         }
-        const res = await axios.post(
-          'https://idea-academy.up.railway.app/api/v1/login',
-          payload
-        )
-
+        
+        await login(payload)
+        
+        setEmail('')
+        setPassword('')
         setIsModalVisible(true)
-
-        setTimeout(() => {
-          setIsModalVisible(false)
-          setEmail('')
-          setPassword('')
-          localStorage.setItem('tokenAdmin', res.data.data.token)
-          navigate('/admin')
-        }, 3000)
       } catch (err) {
         if (!email && !password) {
           console.log(err)
@@ -99,7 +92,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/beranda')
+      navigate('/admin')
     }
   }, [token, navigate])
 
@@ -107,7 +100,7 @@ const AdminLogin = () => {
     setShowPassword(!showPassword)
   }
   return (
-    <div className='flex w-screen h-screen font-poppins'>
+    <div className='flex w-screen h-screen font-poppins' onKeyDown={(e) => {if (e.key == "Enter") document.querySelector("button").click();}}>
       <div className='items-center hidden w-screen h-full mx-auto my-auto md:flex md:w-1/2'>
         <LoginImage />
       </div>

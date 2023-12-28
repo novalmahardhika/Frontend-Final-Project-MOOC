@@ -7,9 +7,10 @@ export const AuthContext = createContext()
 export default function AuthContextProvider(props) {
   const [isAuth, setIsAuth] = useState(false)
   const [token, setToken] = useState('')
+  const tokenName = "tokenAdmin"
 
   useEffect(() => {
-    const _token = localStorage.getItem('tokenAdmin')
+    const _token = localStorage.getItem(tokenName)
     if (_token) {
       setIsAuth(true)
       setToken(_token)
@@ -18,10 +19,14 @@ export default function AuthContextProvider(props) {
 
   async function login(payload) {
     try {
-      const res = await axios.post('http://localhost/login', payload)
-      const token = res.data.data.token
-
-      localStorage.setItem('token', token)
+      const res = await axios.post('https://idea-academy.up.railway.app/api/v1/login', payload)
+      const data = res.data.data;
+      
+      if (!["root", "admin"].includes(data.role.toLowerCase()))
+        throw new Error("Gunakan akun admin");
+      
+      const token = data.token
+      localStorage.setItem(tokenName, token)
       setToken(token)
       setIsAuth(true)
     } catch (err) {
@@ -32,7 +37,7 @@ export default function AuthContextProvider(props) {
   }
 
   async function logout() {
-    localStorage.removeItem('tokenAdmin')
+    localStorage.removeItem(tokenName)
     setIsAuth(false)
     setToken('')
   }

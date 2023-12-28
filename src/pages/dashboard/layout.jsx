@@ -9,10 +9,12 @@ import Navbar from "../../components/navbar";
 import Logo from "./../../assets/logo.png";
 import { AuthContext } from '../../context/AuthContext';
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router';
 import axios from "axios";
 
 const Layout = ({ children }) => {
   const { token, logout } = useContext(AuthContext);
+  const navigate = useNavigate()
   const location = useLocation();
   const [summary, setSummary] = useState([
       { id: 1, total: 0, title: "Active Users", color: "text-success" },
@@ -20,7 +22,7 @@ const Layout = ({ children }) => {
       { id: 3, total: 0, title: "Premium Class" },
   ]);
 
-  async function getData(id) {
+  async function getData() {
     let response;
     let data;
 
@@ -49,6 +51,11 @@ const Layout = ({ children }) => {
       console.error(err)
     }
   }
+
+  function onLogout() {
+    logout();
+    navigate("/admin/login");
+  }
   
   useEffect(() => {
     if (!token)
@@ -59,7 +66,7 @@ const Layout = ({ children }) => {
   const menu = [
     { id: 1, path: "/Admin", label: "Dashboard" },
     { id: 2, path: "/AdminKelolaKelas", label: "Kelola Kelas" },
-    { id: 3, path: "/Keluar", label: "Keluar", onClick: logout },
+    { id: 3, path: "/Keluar", label: "Keluar", onClick: onLogout },
   ];
   
   return (
