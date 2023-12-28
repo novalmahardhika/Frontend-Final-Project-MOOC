@@ -21,6 +21,9 @@ import LayoutProfile from './pages/profile/LayoutProfile'
 import UserProfile from './pages/profile/UserProfile'
 import ResetPassword from './pages/profile/ResetPassword'
 import HistoryPayment from './pages/profile/HistoryPayment'
+import ForgotPassword from './pages/authentication/forgot_password/forgot_password'
+import ForgotPasswordProtected from './pages/authentication/forgot_password_protected'
+import InputForgotPassword from './pages/authentication/forgot_password/input_password'
 
 function App() {
   return (
@@ -56,6 +59,24 @@ function App() {
             <LayoutAdmin>
               <KelolaKelas />
             </LayoutAdmin>
+          }
+        />
+        <Route
+          path='/User/forgot-password'
+          element={
+            <LayoutUser>
+              <ForgotPassword />
+            </LayoutUser>
+          }
+        />
+        <Route
+          path='/User/forgot-password/verified'
+          element={
+            <ForgotPasswordProtected>
+              <LayoutUser>
+                <InputForgotPassword />
+              </LayoutUser>
+            </ForgotPasswordProtected>
           }
         />
         <Route
