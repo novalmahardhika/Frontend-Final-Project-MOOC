@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import NotificationPage from "./list";
+import NotificationPage from "./list_notif";
 
 const Layout = ({ children }) => {
   return (
