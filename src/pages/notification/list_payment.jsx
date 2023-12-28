@@ -1,13 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
+import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const PaymentsPage = () => {
+  const navigate = useNavigate();
   const [payments, setPayments] = useState([]);
   const token = localStorage.getItem("token");
 
@@ -44,33 +47,73 @@ const PaymentsPage = () => {
     <>
       {isMobile ? (
         <>
-          <Accordion
-            type="single"
-            collapsible
-            className="w-full font-poppins"
-          >
-            {payments.length > 0 ? (
-              payments.map((payment) => (
-                <AccordionItem
-                  value={payment.id}
-                  key={payment.id}
-                >
-                  <AccordionTrigger className="no-underline hover:no-underline">
-                    <div className="flex space-x-3 items-center">
-                      <FontAwesomeIcon
-                        icon={faBell}
-                        className="text-sm items-center"
-                      />
-                      <div className="text-sm  font-thin">{payment.status}</div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>{payment.curseId}</AccordionContent>
-                </AccordionItem>
-              ))
-            ) : (
-              <div className="text-sm pt-5">Saat ini Anda belum memiliki riwayat pembayaran.</div>
-            )}
-          </Accordion>
+          <div className="font-poppins">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+            >
+              {payments.length > 0 ? (
+                payments.map((payment) => (
+                  <AccordionItem
+                    value={payment.id}
+                    key={payment.id}
+                  >
+                    <AccordionTrigger className="no-underline hover:no-underline">
+                      <div className="flex items-center space-x-10">
+                        <div className={`flex items-center space-x-3 justify-evenly ${payment.status === "PENDING" ? "text-active" : payment.status === "COMPLETED" ? "text-success" : ""}`}>
+                          <FontAwesomeIcon
+                            icon={faCreditCard}
+                            className="text-sm items-center"
+                          />
+                          <div className="text-sm font-semibold">{payment.status.slice(0, 1).toUpperCase() + payment.status.slice(1).toLowerCase()}</div>
+                        </div>
+                        <div className="text-xs justify-end">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-3">
+                      {payment.status === "PENDING" && <div className="text-xs">Anda belum menyelesaikan pembelian :</div>}
+
+                      {payment.status === "COMPLETED" && <div className="text-xs">Anda baru saja membeli</div>}
+                      <div className="flex gap-3">
+                        <img
+                          src={payment.Course.image}
+                          className="w-32 rounded-sm"
+                        />
+                        <div className=" space-y-2 grid items-center">
+                          <div>
+                            <div className="font-semibold text-primary">{payment.Course.title}</div>
+                            <div className="text-xs">#{payment.Course.category}</div>
+                            {payment.status === "PENDING" && (
+                              <div className="grid">
+                                <Link
+                                  to={`/payment/${payment.id}`}
+                                  onClick={() => navigate(`payment/${payment.id}`)}
+                                >
+                                  <Button className="h-6 text-xs mt-2 w-fit bg-active">Bayar</Button>
+                                </Link>
+                              </div>
+                            )}{" "}
+                          </div>
+
+                          {payment.status === "COMPLETED" && (
+                            <Link
+                              to={`/course/${payment.courseId}`}
+                              onClick={() => navigate(`course/${payment.courseId}`)}
+                            >
+                              <Button className="bg-success h-6 w-fit">Akses</Button>
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))
+              ) : (
+                <div className="text-sm pt-5">Saat ini Anda belum memiliki riwayat pembayaran.</div>
+              )}
+            </Accordion>
+          </div>
         </>
       ) : (
         <>

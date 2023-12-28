@@ -25,7 +25,7 @@ const NotificationDetail = () => {
       {isMobile ? (
         <div className="relative z-1 font-poppins">
           <div className="bg-secondary">
-            <div className="container pt-20 pb-5">
+            <div className="container pt-8 pb-3">
               <TabComponent
                 activeTab={activeTab}
                 onTabChange={setActiveTab}

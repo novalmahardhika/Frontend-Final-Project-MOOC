@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -55,11 +55,18 @@ const NotificationPage = () => {
               >
                 <AccordionTrigger className="no-underline hover:no-underline">
                   <div className="flex space-x-3 items-center">
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      className="text-sm items-center"
-                    />
-                    <div className="text-sm  font-thin">{notification.title}</div>
+                    {notification.title === "Payment Success" ? (
+                      <FontAwesomeIcon
+                        icon={faCreditCard}
+                        className="text-sm items-center text-active"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        className="text-sm items-center text-success"
+                      />
+                    )}
+                    <div className="text-sm  font-semibold s">{notification.title}</div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
