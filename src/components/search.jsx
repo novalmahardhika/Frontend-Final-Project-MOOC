@@ -35,17 +35,17 @@ const Search = () => {
   };
 
   return (
-    <div className="font-poppins">
+    <div>
       <Dialog>
         <DialogTrigger>
-          <div className="rounded-full bg-white w-11 h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
+          <div className="rounded-full bg-white w-9 h-9 md:w-11 md:h-11 flex justify-center items-center text-xl cursor-pointer hover:bg-muted-foreground">
             <FontAwesomeIcon
               icon={faSearch}
               title="search"
             />
           </div>
         </DialogTrigger>
-        <DialogContent className="w-screen h-3/4">
+        <DialogContent className="w-screen h-3/4 font-poppins">
           <div className="h-full">
             <DialogHeader className="space-y-3">
               <DialogTitle>Search</DialogTitle>
@@ -58,10 +58,10 @@ const Search = () => {
 
               <div className="h-[400px] overflow-auto">
                 {searchResults.length === 0 ? (
-                  <div className="text-center">Cari Kursus yang kamu inginkan</div>
+                  <div className="text-center text-sm">Cari Kursus yang kamu inginkan</div>
                 ) : (
                   <div className="flex items-start">
-                    <div className=" h-full grid gap-5 w-full">
+                    <div className=" h-full grid gap-5 w-full overflow-y-scroll mb-5">
                       {searchResults.map((course) => (
                         <Link
                           key={course.id}
@@ -73,12 +73,12 @@ const Search = () => {
                           >
                             <img
                               src={course.image}
-                              className="rounded-sm w-36"
+                              className="rounded-sm w-24 md:w-36"
                             />
-                            <div>
-                              <div className="text-lg font-semibold">{course.title}</div>
+                            <div className="text-start">
+                              <div className="text-sm md:text-lg font-semibold">{course.title}</div>
                               <div className="text-xs mb-2">{course.category}</div>
-                              <div>{formatCurrency(course.price)}</div>
+                              <div className="text-xs md:text-sm">{formatCurrency(course.price)}</div>
                             </div>
                           </Card>
                         </Link>
