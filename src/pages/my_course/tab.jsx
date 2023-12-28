@@ -17,33 +17,35 @@ const TabCourse = ({ onTabChange }) => {
   }
 
   return (
-    <div className="container">
-      <div className="mb-3">
-        <div className="flex justify-start">
-          <TabButton
-            tabName="All Course"
-            value="All Course"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <TabButton
-            tabName="Beginner"
-            value="beginner"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <TabButton
-            tabName="Intermediate"
-            value="intermediate"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
-          <TabButton
-            tabName="Advance"
-            value="advance"
-            activeTab={activeTab}
-            onClick={handleTabClick}
-          />
+    <div>
+      <div className="font-poppins space-y-6">
+        <div className="md:absolute z-10 md:top-20 mb-4 pb-3 md:pb-0 md:mb-0 overflow-x-scroll md:overflow-hidden">
+          <div className="flex justify-start  md:pb-0 ">
+            <TabButton
+              tabName="All Course"
+              value="All Course"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+            <TabButton
+              tabName="Beginner"
+              value="beginner"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+            <TabButton
+              tabName="Intermediate"
+              value="intermediate"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+            <TabButton
+              tabName="Advance"
+              value="advance"
+              activeTab={activeTab}
+              onClick={handleTabClick}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -60,7 +62,7 @@ const TabButton = ({ tabName, value, activeTab, onClick }) => {
   return (
     <div className={`m-2 flex flex-col items-center`}>
       <Button
-        className={`bg-secondary text-black text-sm hover:text-white ${isActive ? "bg-primary text-white" : ""}`}
+        className={`bg-white text-black text-sm hover:text-white ${isActive ? "bg-primary text-white" : ""}`}
         onClick={() => onClick(tabName, value)} // Pass both tabName and value to the parent component
       >
         {tabName}
