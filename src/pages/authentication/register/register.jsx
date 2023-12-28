@@ -80,8 +80,9 @@ const Register = () => {
   useEffect(() => {
     if (isFormSubmitted) {
       validateInput();
+      localStorage.setItem("emailOTP", email);
     }
-  }, [isFormSubmitted, validateInput]);
+  }, [isFormSubmitted, validateInput, email]);
 
   const onSubmit = async () => {
     setIsFormSubmitted(true);
@@ -94,14 +95,14 @@ const Register = () => {
           password,
           phoneNumber,
         };
-        const res = await axios.post("https://idea-academy.up.railway.app/api/v1/register", payload);
-        console.log(res);
+
+        await axios.post("https://idea-academy.up.railway.app/api/v1/register", payload);
 
         setIsModalVisible(true);
 
         setTimeout(() => {
           setIsModalVisible(false);
-          navigate("/User/Login");
+          navigate("/User/otp");
         }, 3000);
       } catch (err) {
         if (!email && !name && !phoneNumber && !password) {
@@ -122,13 +123,13 @@ const Register = () => {
   };
 
   return (
-    <div className="font-poppins flex h-screen w-screen">
-      <div className="flex mx-auto my-auto items-center w-screen md:w-1/2">
-        <div className=" mx-auto items-center w-4/5 md:w-1/2">
-          <div className="max-w-md mx-auto p-8 space-y-6">
+    <div className="flex w-screen h-screen font-poppins">
+      <div className="flex items-center w-screen mx-auto my-auto md:w-1/2">
+        <div className="items-center w-4/5 mx-auto md:w-1/2">
+          <div className="max-w-md p-8 mx-auto space-y-6">
             <h2 className="text-2xl font-semibold">Daftar</h2>
             <form className="space-y-7">
-              <div className="space-y-1 relative">
+              <div className="relative space-y-1">
                 <div className="block text-sm font-medium text-gray-800">Nama</div>
                 <Input
                   placeholder="Nama Lengkap"
@@ -145,7 +146,7 @@ const Register = () => {
                 <div className={`text-red-500 text-xs absolute top-full ${!isNameValid && isFormSubmitted ? "opacity-100" : "opacity-0"}`}>{!isNameValid && nameError}</div>
               </div>
 
-              <div className="space-y-1 relative">
+              <div className="relative space-y-1">
                 <div className="block text-sm font-medium text-gray-800">Email</div>
                 <Input
                   placeholder="Contoh: johndee@gmail.com"
@@ -161,7 +162,7 @@ const Register = () => {
                 <div className={`text-red-500 text-xs absolute top-full ${!isEmailValid && isFormSubmitted ? "opacity-100" : "opacity-0"}`}>{!isEmailValid && emailError}</div>
               </div>
 
-              <div className="space-y-1 relative mb-10">
+              <div className="relative mb-10 space-y-1">
                 <div className="block text-sm font-medium text-gray-800">Nomor Telepon</div>
                 <Input
                   placeholder="+62 . "
@@ -177,9 +178,9 @@ const Register = () => {
                 <div className={`text-red-500 text-xs absolute top-full ${!isPhoneNumberValid && isFormSubmitted ? "opacity-100" : "opacity-0"}`}>{!isPhoneNumberValid && phoneNumberError}</div>
               </div>
 
-              <div className="space-y-1 relative mb-10">
+              <div className="relative mb-10 space-y-1">
                 <div className="block text-sm font-medium text-gray-800">Password</div>
-                <div className="flex space-x-4 relative items-center">
+                <div className="relative flex items-center space-x-4">
                   <Input
                     type={showPassword ? "text" : "password"}
                     id="password"
@@ -194,7 +195,7 @@ const Register = () => {
                     onBlur={() => setIsFormSubmitted(true)}
                   />
                   <div
-                    className="absolute cursor-pointer text-primary right-4 top-1/2 transform -translate-y-1/2"
+                    className="absolute transform -translate-y-1/2 cursor-pointer text-primary right-4 top-1/2"
                     onClick={togglePasswordVisibility}
                   >
                     <FontAwesomeIcon
@@ -215,11 +216,11 @@ const Register = () => {
                   Submit
                 </Button>
               </div>
-              <div className="flex justify-center items-center space-x-2 text-sm pt-2">
+              <div className="flex items-center justify-center pt-2 space-x-2 text-sm">
                 <div>Sudah Punya Akun?</div>
                 <Link
                   to="/User/Login"
-                  className="text-active font-semibold hover:text-primary"
+                  className="font-semibold text-active hover:text-primary"
                 >
                   Masuk di sini
                 </Link>
@@ -228,19 +229,19 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <div className="hidden md:flex mx-auto my-auto items-center w-1/2 h-full">
+      <div className="items-center hidden w-1/2 h-full mx-auto my-auto md:flex">
         <LoginImage />
       </div>
 
       {isModalVisible && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-20">
-          <div className="bg-success text-white p-4 rounded-md shadow-md">Registrasi berhasil! Mengalihkan ke halaman login...</div>
+        <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center h-20">
+          <div className="p-4 text-white rounded-md shadow-md bg-success">Registrasi berhasil! Mengalihkan ke halaman OTP...</div>
         </div>
       )}
 
       {isModalError && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-20">
-          <div className=" bg-destructive text-white p-4 rounded-md shadow-md">Email sudah digunakan silahkan coba dengan email lain...</div>
+        <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center h-20">
+          <div className="p-4 text-white rounded-md shadow-md bg-destructive">Email sudah digunakan silahkan coba dengan email lain...</div>
         </div>
       )}
     </div>

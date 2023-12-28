@@ -13,7 +13,7 @@ const CourseHeader = () => {
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/course/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
       } catch (err) {
         console.log(err);
@@ -32,7 +32,7 @@ const CourseHeader = () => {
   return (
     <div className="font-poppin bg-secondary h-60">
       <div className="container">
-        <div className="cursor-pointer hover:text-active w-1/6 pt-6">
+        <div className="md:flex cursor-pointer hover:text-active md:w-1/6 hidden md:pt-6">
           <Link
             to="/course"
             className="flex space-x-3 items-center"
@@ -41,7 +41,7 @@ const CourseHeader = () => {
             <p className="w-fit font-medium">Kelas Lainnya</p>
           </Link>
         </div>
-        <div className="ms-6 mt-6 space-y-3">
+        <div className="ms-6 md:mt-6 pt-3 md:pt-0 space-y-3">
           <div className="w-1/2">
             <div className="flex justify-between items-center">
               <div className="font-bold text-2xl text-primary mb-2">{courseDetail.title}</div>
@@ -50,7 +50,7 @@ const CourseHeader = () => {
                   icon={faStar}
                   className="text-active"
                 />
-                <div className="text-sm">5 stars</div>
+                <div className="text-sm">{courseDetail.rating} Stars</div>
               </div>
             </div>
 

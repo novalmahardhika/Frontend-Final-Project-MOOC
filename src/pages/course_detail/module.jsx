@@ -11,14 +11,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 const Module = ({ onSelectModule }) => {
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/course/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
       } catch (err) {
         console.log(err);
@@ -27,16 +27,12 @@ const Module = ({ onSelectModule }) => {
     fetchCourseDetail();
   }, [id, token]);
 
-  const handleModuleClick = (module, chapterIndex) => {
-    if (chapterIndex !== 0) {
-      // Show modal for premium content
-      setShowModal(true);
-      console.log("Nampilin Modal");
-    } else {
-      // Handle regular module click
-      navigate(`/course/${id}/${module.video}`, { replace: true });
-      onSelectModule(module.video);
-    }
+  const handleModuleClick = async (module) => {
+    onSelectModule(module);
+  };
+
+  const onPayment = () => {
+    navigate(`/payment/${courseDetail.id}`);
   };
 
   if (!courseDetail) {
@@ -44,7 +40,7 @@ const Module = ({ onSelectModule }) => {
   }
 
   return (
-    <div className="relative w-[450px] -top-20  mr-20 z-10 font-poppins ">
+    <div className="md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
       <Card className="p-3">
         <CardHeader>
           <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
@@ -87,7 +83,7 @@ const Module = ({ onSelectModule }) => {
                               <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
                               <div>{module.title}</div>
                             </div>
-                            <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
+                            <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
                               <FontAwesomeIcon
                                 icon={faLock} // Use faLock for the second module
                                 className="text-white text-xs"
@@ -96,10 +92,7 @@ const Module = ({ onSelectModule }) => {
                           </div>
                         </DialogTrigger>
 
-                        <DialogContent
-                          isOpen={showModal}
-                          className="sm:max-w-[500px] font-poppins"
-                        >
+                        <DialogContent className="sm:max-w-[500px] font-poppins">
                           <DialogHeader>
                             <DialogTitle className="text-center text-sm font-normal">Selangkah Lagi Menuju</DialogTitle>
                             <DialogDescription className="text-center text-2xl text-active font-medium ">Kelas Premium</DialogDescription>
@@ -121,6 +114,7 @@ const Module = ({ onSelectModule }) => {
                           <DialogFooter className="flex">
                             <Button
                               type="button"
+                              onClick={() => onPayment()}
                               className="flex  mx-auto hover:bg-active w-60"
                             >
                               Beli Sekarang

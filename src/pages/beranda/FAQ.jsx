@@ -36,26 +36,26 @@ const FrequentlyAskQuestions = () => {
 
   return (
     <>
-      <div className=" bg-secondary w-screen text-xl flex flex-col mt-10 pb-10">
-        <div className="container h-[400px] mt-28 mb-10 space-y-5">
+      <div className="bg-secondary w-screen text-xl flex flex-col mt-10 pb-10">
+        <div className="container  md:h-[400px] mt-20 md:mt-28 mb-10 space-y-5">
           <div className="text-center space-y-3 mb-5">
             <p className="font-bold text-3xl ">Frequently Asked Questions</p>
             <p className="text-lg text-success">#TanyaIdeamy</p>
           </div>
-          <div className="container flex z-10 absolute">
+          <div className="mx-auto flex justify-center md:z-10 md:absolute">
             <Accordion
               type="single"
               collapsible
-              className="flex gap-5 flex-wrap no-underline justify-center mx-auto"
+              className="md:flex grid gap-5 md:flex-wrap no-underline justify-center"
             >
               {" "}
               {FAQ.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white px-3 rounded-md w-2/5"
+                  className="bg-white px-3 rounded-md md:w-2/5 w-80"
                 >
                   <AccordionItem value={item.id}>
-                    <AccordionTrigger className="font-semibold hover:no-underline hover:text-active">{item.question}</AccordionTrigger>
+                    <AccordionTrigger className="text-sm text-start font-semibold hover:no-underline hover:text-active">{item.question}</AccordionTrigger>
                     <AccordionContent>{item.answer}</AccordionContent>
                   </AccordionItem>
                 </div>
