@@ -19,6 +19,12 @@ const Otp = () => {
 
   const navigate = useNavigate()
 
+  const encrypEmail = (data) => {
+    const emailProvider = data.split('@').pop()
+    const encrypted = data.at(0) + '*'.repeat(5) + emailProvider
+    return encrypted
+  }
+
   useEffect(() => {
     const email = localStorage.getItem('emailOTP')
     setIsEmail(email)
@@ -84,7 +90,7 @@ const Otp = () => {
             <form className='space-y-7'>
               <div className='relative space-y-3'>
                 <div className='text-sm font-medium text-center text-gray-800'>
-                  Ketik 6 digit kode yang dikirimkan ke {isEmail}
+                  Ketik 6 digit kode yang dikirimkan ke {encrypEmail(isEmail)}
                 </div>
                 <div className='flex justify-center mt-3 space-x-3'>
                   {otp.map((x, index) => (

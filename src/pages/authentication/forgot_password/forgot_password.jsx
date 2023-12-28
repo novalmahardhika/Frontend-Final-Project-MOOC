@@ -73,7 +73,9 @@ const ForgotPassword = () => {
           <div className='max-w-md p-8 mx-auto space-y-6'>
             <h2 className='text-2xl font-semibold'>Forgot Password</h2>
             <form className='flex flex-col space-y-3' onSubmit={submitHandler}>
-              <label htmlFor='email'>Email</label>
+              <label htmlFor='email' className='-mb-1 text-sm'>
+                Email
+              </label>
               <Input
                 id='email'
                 type='email'
@@ -94,7 +96,7 @@ const ForgotPassword = () => {
       {isSuccess && (
         <div className='fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center h-20'>
           <div className='p-4 text-white rounded-md shadow-md bg-success'>
-            Mengalihkan ke halaman OTP...
+            Mengalihkan ke halaman Reset Password...
           </div>
         </div>
       )}

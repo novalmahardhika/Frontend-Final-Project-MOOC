@@ -33,6 +33,12 @@ const InputForgotPassword = () => {
   const navigate = useNavigate()
   const isEmail = localStorage.getItem('email-forgot')
 
+  const encrypEmail = (email) => {
+    const emailProvider = email.split('@').pop()
+    const encrypted = email.at(0) + '*'.repeat(5) + emailProvider
+    return encrypted
+  }
+
   const handleChange = (event, index) => {
     const newOtp = [...otp]
     newOtp[index] = event.target.value
@@ -128,7 +134,7 @@ const InputForgotPassword = () => {
             <form className='space-y-7' onSubmit={submitHandler}>
               <div className='relative space-y-3'>
                 <h2 className='text-sm font-medium text-center text-gray-800'>
-                  Ketik 6 digit kode yang dikirimkan ke {isEmail}
+                  Ketik 6 digit kode yang dikirimkan ke {encrypEmail(isEmail)}
                 </h2>
                 <div className='flex justify-center mt-3 space-x-3'>
                   {otp.map((x, index) => (

@@ -263,6 +263,13 @@ const Register = () => {
                 >
                   {!isPasswordValid && passwordError}
                 </div>
+
+                <Link
+                  to={'/user/forgot-password'}
+                  className='flex justify-end text-sm font-medium text-gray-900 text-end hover:text-active'
+                >
+                  Lupa Password
+                </Link>
               </div>
 
               <div className='pt-3'>
