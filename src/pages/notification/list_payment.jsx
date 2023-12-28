@@ -1,16 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faGem, faClock, faMedal, faBook } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { formatDistanceToNow } from "date-fns";
 
 const PaymentsPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [payments, setPayments] = useState([]);
   const token = localStorage.getItem("token");
 
@@ -47,105 +45,162 @@ const PaymentsPage = () => {
     <>
       {isMobile ? (
         <>
-          <div className="font-poppins">
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full"
-            >
+          <div className="font-poppins mt-5 mb-20 h-full">
+            <div className="font-poppins flex flex-wrap gap-5 md:gap-10 md:mb-20 w-full justify-center md:justify-start">
               {payments.length > 0 ? (
                 payments.map((payment) => (
-                  <AccordionItem
-                    value={payment.id}
+                  <Card
                     key={payment.id}
+                    className="md:w-[420px] w-[300px] h-[250px] md:h-full "
                   >
-                    <AccordionTrigger className="no-underline hover:no-underline">
-                      <div className="flex items-center space-x-10">
-                        <div className={`flex items-center space-x-3 justify-evenly ${payment.status === "PENDING" ? "text-active" : payment.status === "COMPLETED" ? "text-success" : ""}`}>
+                    <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
+                      <div className="text-xs  z-10 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                      <img
+                        className="object-cover w-full h-24 md:h-48 rounded-t-sm"
+                        src={payment.Course.image}
+                        alt={payment.Course.title}
+                      />
+                    </div>
+                    <div className="p-4 space-y-1">
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs font-semibold text-active ">{payment.Course.category}</div>
+                        <div className="flex space-x-2">
                           <FontAwesomeIcon
-                            icon={faCreditCard}
-                            className="text-sm items-center"
+                            icon={faStar}
+                            className="text-active text-sm ms:text-lg"
                           />
-                          <div className="text-sm font-semibold">{payment.status.slice(0, 1).toUpperCase() + payment.status.slice(1).toLowerCase()}</div>
-                        </div>
-                        <div className="text-xs justify-end">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-3">
-                      {payment.status === "PENDING" && <div className="text-xs">Anda belum menyelesaikan pembelian :</div>}
-
-                      {payment.status === "COMPLETED" && <div className="text-xs">Anda baru saja membeli</div>}
-                      <div className="flex gap-3">
-                        <img
-                          src={payment.Course.image}
-                          className="w-32 rounded-sm"
-                        />
-                        <div className=" space-y-2 grid items-center">
-                          <div>
-                            <div className="font-semibold text-primary">{payment.Course.title}</div>
-                            <div className="text-xs">#{payment.Course.category}</div>
-                            {payment.status === "PENDING" && (
-                              <div className="grid">
-                                <Link
-                                  to={`/payment/${payment.id}`}
-                                  onClick={() => navigate(`payment/${payment.id}`)}
-                                >
-                                  <Button className="h-6 text-xs mt-2 w-fit bg-active">Bayar</Button>
-                                </Link>
-                              </div>
-                            )}{" "}
-                          </div>
-
-                          {payment.status === "COMPLETED" && (
-                            <Link
-                              to={`/course/${payment.courseId}`}
-                              onClick={() => navigate(`course/${payment.courseId}`)}
-                            >
-                              <Button className="bg-success h-6 w-fit">Akses</Button>
-                            </Link>
-                          )}
+                          <div className="text-xs md:text-sm">{payment.Course.rating}</div>
                         </div>
                       </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                      <Link to={`/Course/${payment.Course.id}`}>
+                        <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
+                      </Link>
+                      <div className="text-xs">by {payment.Course.creator}</div>
+                      <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faMedal}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.level === "beginner" ? "Beginner" : payment.Course.level === "intermediate" ? "Intermediate" : "Advance"}</div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faBook}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.totalModule} Modules</div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faClock}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.totalDuration} Menit</div>
+                        </div>
+                      </div>
+                      <div>
+                        {payment.status === "PENDING" ? (
+                          <Link to={`/payment/${payment.id}`}>
+                            <Button className="h-6 md:h-7 text-xs flex gap-3 bg-active text-white">
+                              <FontAwesomeIcon icon={faClock} /> Waiting for Payment{" "}
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Link to={`/Course/${payment.Course.id}`}>
+                            <Button className="h-6 md:h-7 text-xs bg-success flex gap-3">
+                              <FontAwesomeIcon icon={faGem} /> Paid{" "}
+                            </Button>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
                 ))
               ) : (
                 <div className="text-sm pt-5">Saat ini Anda belum memiliki riwayat pembayaran.</div>
               )}
-            </Accordion>
+            </div>
           </div>
         </>
       ) : (
         <>
-          <div className="relative -top-16 font-poppins">
-            <Card className="h-[450px] p-5">
-              <div className="space-y-4 font-medium">
-                <div className="space-y-3">
-                  {payments.map((payment) => (
-                    <div
-                      key={payment.id}
-                      className="cursor-pointer hover:bg-secondary rounded-sm p-2"
-                    >
-                      <Link to="#">
-                        <div className="space-x-3 items-start">
-                          <div className="flex space-x-3 items-center">
-                            <FontAwesomeIcon
-                              icon={faBell}
-                              className="text-sm items-center"
-                            />
-                            <div className=" text-sm text-success font-thin">{payment.status}</div>
-                          </div>
-                          <div className="ps-3 space-y-1">
-                            <div className="text-xs">{payment.courseID}</div>
-                            <div className="text-xs">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
-                          </div>
-                        </div>
-                      </Link>
+          <div className="relative -top-16 font-poppins w-screen">
+            <div className="flex flex-wrap gap-10">
+              {payments.length > 0 ? (
+                payments.map((payment) => (
+                  <Card
+                    key={payment.id}
+                    className="md:w-[420px] w-[300px] h-[250px] md:h-full "
+                  >
+                    <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
+                      <div className="text-xs z-10 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                      <img
+                        className="object-cover w-full h-24 md:h-48 rounded-t-sm"
+                        src={payment.Course.image}
+                        alt={payment.Course.title}
+                      />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </Card>
+                    <div className="p-4 space-y-1">
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs font-semibold text-active ">{payment.Course.category}</div>
+                        <div className="flex space-x-2">
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            className="text-active text-sm ms:text-lg"
+                          />
+                          <div className="text-xs md:text-sm">{payment.Course.rating}</div>
+                        </div>
+                      </div>
+                      <Link to={`/Course/${payment.Course.id}`}>
+                        <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
+                      </Link>
+                      <div className="text-xs">by {payment.Course.creator}</div>
+                      <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faMedal}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.level === "beginner" ? "Beginner" : payment.Course.level === "intermediate" ? "Intermediate" : "Advance"}</div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faBook}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.totalModule} Modules</div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <FontAwesomeIcon
+                            icon={faClock}
+                            className="text-success"
+                          />
+                          <div className="text-xs">{payment.Course.totalDuration} Menit</div>
+                        </div>
+                      </div>
+                      <div>
+                        {payment.status === "PENDING" ? (
+                          <Link to={`/payment/${payment.id}`}>
+                            <Button className="h-6 md:h-7 text-xs flex gap-3 bg-active text-white">
+                              <FontAwesomeIcon icon={faClock} /> Waiting for Payment{" "}
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Link to={`/Course/${payment.Course.id}`}>
+                            <Button className="h-6 md:h-7 text-xs bg-success flex gap-3">
+                              <FontAwesomeIcon icon={faGem} /> Paid{" "}
+                            </Button>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ))
+              ) : (
+                <div className="text-sm pt-5">Saat ini Anda belum memiliki riwayat pembayaran.</div>
+              )}
+            </div>
           </div>
         </>
       )}
