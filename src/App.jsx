@@ -19,6 +19,7 @@ import AuthContextProvider from './context/AuthContext'
 
 import Payment from './pages/payment/payment'
 import OtpProtected from './pages/authentication/otp_protected'
+import DashboardProtected from './pages/dashboard/dashboard_protected'
 
 function App() {
   return (
@@ -41,28 +42,35 @@ function App() {
               </LayoutBeranda>
             }
           />
+
           <Route
             path='/Admin'
             element={
-              <LayoutAdmin>
-                <Dashboard />
-              </LayoutAdmin>
+              <DashboardProtected>
+                <LayoutAdmin>
+                  <Dashboard />
+                </LayoutAdmin>
+              </DashboardProtected>
             }
           />
           <Route
             path='/AdminKelolaKelas'
             element={
-              <LayoutAdmin>
-                <KelolaKelas />
-              </LayoutAdmin>
+              <DashboardProtected>
+                <LayoutAdmin>
+                  <KelolaKelas />
+                </LayoutAdmin>
+              </DashboardProtected>
             }
           />
           <Route
             path='/AdminKelolaKelas/update/:id'
             element={
-              <LayoutAdmin>
-                <ClassEdit />
-              </LayoutAdmin>
+              <DashboardProtected>
+                <LayoutAdmin>
+                  <ClassEdit />
+                </LayoutAdmin>
+              </DashboardProtected>
             }
           />
           <Route
@@ -99,7 +107,7 @@ function App() {
               </LayoutUser>
             }
           />
-  
+
           <Route
             path='/Course'
             element={
@@ -116,7 +124,7 @@ function App() {
               </LayoutBeranda>
             }
           />
-  
+
           <Route
             path='/notification'
             element={
@@ -127,7 +135,7 @@ function App() {
               </LayoutBeranda>
             }
           />
-  
+
           <Route
             path='/payment/:id/*'
             element={
