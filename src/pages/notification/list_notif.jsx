@@ -97,11 +97,12 @@ const NotificationPage = () => {
                               icon={faBell}
                               className="text-sm items-center"
                             />
-                            <div className=" text-sm text-success font-thin">{notification.title}</div>
+                            <div className=" text-success font-thin">{notification.title}</div>
                           </div>
                           <div className="ps-3 space-y-1">
-                            <div className="text-xs">{notification.message}</div>
+                            <div className="text-sm">{notification.message}</div>
                             <div className="text-xs">{formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}</div>
+                            <div className="text-xs">{new Date(notification.createdAt).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" })}</div>{" "}
                           </div>
                         </div>
                       </Link>

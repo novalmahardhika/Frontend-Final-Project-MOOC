@@ -32,7 +32,6 @@ const PaymentsPage = () => {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/orders`, { headers: { Authorization: `Bearer ${token}` } });
         const sortedPayments = res.data.data ? res.data.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : [];
         setPayments(sortedPayments);
-        console.log(sortedPayments);
       } catch (err) {
         console.log(err);
       }
@@ -72,9 +71,7 @@ const PaymentsPage = () => {
                           <div className="text-xs md:text-sm">{payment.Course.rating}</div>
                         </div>
                       </div>
-                      <Link to={`/Course/${payment.Course.id}`}>
-                        <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
-                      </Link>
+                      <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
                       <div className="text-xs">by {payment.Course.creator}</div>
                       <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
                         <div className="flex items-center space-x-2">
@@ -107,7 +104,7 @@ const PaymentsPage = () => {
                             </Button>
                           </Link>
                         ) : (
-                          <Link to={`/Course/${payment.Course.id}`}>
+                          <Link to={`/Course/${payment.courseId}`}>
                             <Button className="h-6 md:h-7 text-xs bg-success flex gap-3">
                               <FontAwesomeIcon icon={faGem} /> Paid{" "}
                             </Button>
@@ -152,9 +149,7 @@ const PaymentsPage = () => {
                           <div className="text-xs md:text-sm">{payment.Course.rating}</div>
                         </div>
                       </div>
-                      <Link to={`/Course/${payment.Course.id}`}>
-                        <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
-                      </Link>
+                      <div className="text-sm text-primary font-semibold">{payment.Course.title}</div>
                       <div className="text-xs">by {payment.Course.creator}</div>
                       <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
                         <div className="flex items-center space-x-2">
@@ -187,7 +182,7 @@ const PaymentsPage = () => {
                             </Button>
                           </Link>
                         ) : (
-                          <Link to={`/Course/${payment.Course.id}`}>
+                          <Link to={`/Course/${payment.courseId}`}>
                             <Button className="h-6 md:h-7 text-xs bg-success flex gap-3">
                               <FontAwesomeIcon icon={faGem} /> Paid{" "}
                             </Button>

@@ -1,6 +1,5 @@
 import Notification from "./list_notif";
 import Payments from "./list_payment";
-import Detail from "./Detail";
 import { useState, useEffect } from "react";
 import TabComponent from "./tab";
 import { useLocation } from "react-router-dom";
@@ -56,15 +55,15 @@ const NotificationDetail = () => {
               <div className="text-3xl font-semibold text-primary">{isPaymentHistoryPage ? "Payments History" : "Notification"}</div>
             </div>
           </div>
-          <div className="container flex gap-10 justify-between">
-            <div className="w-[500px]">{isPaymentHistoryPage ? <Payments /> : <Notification />}</div>
-            {isPaymentHistoryPage ? (
+          <div className="container flex gap-10 justify-center">
+            <div className="w-full">{isPaymentHistoryPage ? <Payments /> : <Notification />}</div>
+            {/* {isPaymentHistoryPage ? (
               ""
             ) : (
               <div className="w-[900px]">
                 <Detail />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       )}
