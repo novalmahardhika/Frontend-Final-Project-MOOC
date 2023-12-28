@@ -61,13 +61,6 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
 
   const filterCourses = () => {
     let filteredCourses = courseList.filter((course) => {
-      if (activeTab === "premium") {
-        return course.type !== "premium";
-      }
-      if (activeTab === "free") {
-        return course.type !== "free";
-      }
-
       return (selectedLevels.length === 0 || selectedLevels.includes(course.level)) && (selectedCategories.length === 0 || selectedCategories.includes(course.category));
     });
 
@@ -81,6 +74,12 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
       filteredCourses = filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
     }
 
+    if (activeTab === "premium") {
+      filteredCourses = filteredCourses.filter((course) => course.type !== "premium");
+    }
+    if (activeTab === "free") {
+      filteredCourses = filteredCourses.filter((course) => course.type !== "free");
+    }
     return filteredCourses;
   };
 

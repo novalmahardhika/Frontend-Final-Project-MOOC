@@ -92,6 +92,7 @@ const FilterCourse = ({ onFilterChange }) => {
     newSearchParams.delete("sort");
     newSearchParams.delete("level");
     newSearchParams.delete("category");
+    newSearchParams.delete("type");
     navigate(`${location.pathname}?${newSearchParams.toString()}`);
     onFilterChange("sort", null);
     onFilterChange("level", []);

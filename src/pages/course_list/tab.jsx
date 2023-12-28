@@ -14,6 +14,12 @@ const TabCourse = ({ onTabChange }) => {
     onTabChange(activeTab);
   }, [activeTab, onTabChange]);
 
+  useEffect(() => {
+    const type = new URLSearchParams(location.search).get("type");
+    const validTypes = ["All", "premium", "free"];
+    setActiveTab(validTypes.includes(type) ? type : "All");
+  }, [location.search]);
+
   const handleTabClick = (tabName, value) => {
     let updatedActiveTab = "All";
 
@@ -54,13 +60,13 @@ const TabCourse = ({ onTabChange }) => {
           />
           <TabButton
             tabName="premium"
-            value="Premium"
+            value="premium"
             activeTab={activeTab}
             onClick={handleTabClick}
           />
           <TabButton
             tabName="free"
-            value="Free"
+            value="free"
             activeTab={activeTab}
             onClick={handleTabClick}
           />
