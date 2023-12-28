@@ -6,6 +6,27 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedal, faClock, faBook, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const LoadingSkeletonCard = () => (
+  <Card className="md:w-[420px] w-[280px] h-[280px] md:h-full pb-5">
+    <div className="hover:opacity-50 cursor-pointer hover:transition-transform space-y-4">
+      <Skeleton className=" object-cover w-full h-32 md:h-48 rounded-t-sm rounded-b-none" />
+      <div className="space-y-3 p-3">
+        <div className="flex justify-between">
+          <Skeleton className=" w-32 md:w-52 h-2" />
+          <Skeleton className="w-10 h-2" />
+        </div>
+        <Skeleton className=" w-20 md:w-32 h-2" />
+        <div className="flex flex-wrap justify-between gap-5">
+          <Skeleton className=" w-16 md:w-20 h-2" />
+          <Skeleton className=" w-16 md:w-20 h-2" />
+          <Skeleton className=" w-16 md:w-20 h-2" />
+        </div>
+      </div>
+    </div>
+  </Card>
+);
 
 const Course = ({ activeTab }) => {
   const [courseList, setCourseList] = useState([]);
@@ -37,7 +58,15 @@ const Course = ({ activeTab }) => {
   const displayedCourses = filteredCourses.slice(0, 6);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container mt-3">
+        <div className="flex gap-6">
+          {[...Array(3)].map((_, index) => (
+            <LoadingSkeletonCard key={index} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (displayedCourses.length === 0) {
@@ -62,7 +91,7 @@ const Course = ({ activeTab }) => {
               </div>
               <div className="p-4 space-y-1">
                 <div className="flex justify-between">
-                  <Link to={`/Courses/${item.id}`}>
+                  <Link to={`/Course/${item.id}`}>
                     <div className="text-sm text-primary font-semibold">{item.title}</div>
                   </Link>
                   <div className="flex space-x-2">

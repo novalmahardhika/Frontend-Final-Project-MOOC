@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -16,7 +17,9 @@ const Banner = () => {
             <div className="relative z-1 grid grid-cols-3">
               <div className="pt-6 md:pt-0 col-span-3 text-white space-y-2 mx-auto">
                 <p className="md:text-2xl font-bold text-center md:text-start w-32 md:w-48 mb-2 md:mb-5 ">Belajar dari Praktisi Terbaik!</p>
-                <Button className="bg-secondary hover:bg-active text-black w-32 h-6 md:w-52 md:h-8">Ikuti Kelas!</Button>
+                <Link to="/courses">
+                  <Button className="mt-2 md:mt-0 bg-secondary hover:bg-active text-black w-32 h-6 md:w-52 md:h-8">Ikuti Kelas!</Button>
+                </Link>
               </div>
             </div>
           </div>
