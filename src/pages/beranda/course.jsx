@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faClock, faBook, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faMedal, faClock, faBook, faStar, faGem, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 const LoadingSkeletonCard = () => (
   <Card className="md:w-[420px] w-[280px] h-[280px] md:h-full pb-5">
@@ -90,10 +91,8 @@ const Course = ({ activeTab }) => {
                 />
               </div>
               <div className="p-4 space-y-1">
-                <div className="flex justify-between">
-                  <Link to={`/Course/${item.id}`}>
-                    <div className="text-sm text-primary font-semibold">{item.title}</div>
-                  </Link>
+                <div className="flex justify-between items-center">
+                  <div className="text-xs font-semibold text-active ">{item.category}</div>
                   <div className="flex space-x-2">
                     <FontAwesomeIcon
                       icon={faStar}
@@ -102,8 +101,11 @@ const Course = ({ activeTab }) => {
                     <div className="text-xs md:text-sm">{item.rating}</div>
                   </div>
                 </div>
-                <div className="text-xs ">#{item.category}</div>
-                <div className="flex flex-wrap gap-3 justify-between items-center pt-3">
+                <Link to={`/Course/${item.id}`}>
+                  <div className="text-sm text-primary font-semibold">{item.title}</div>
+                </Link>
+                <div className="text-xs">by {item.creator}</div>
+                <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
                   <div className="flex items-center space-x-2">
                     <FontAwesomeIcon
                       icon={faMedal}
@@ -125,6 +127,19 @@ const Course = ({ activeTab }) => {
                     />
                     <div className="text-xs">{item.totalDuration} Menit</div>
                   </div>
+                </div>
+                <div>
+                  <Link to={`/Course/${item.id}`}>
+                    {item.type === "Free" ? (
+                      <Button className="h-7 text-xs flex gap-3 bg-active text-white">
+                        <FontAwesomeIcon icon={faGem} /> Premium{" "}
+                      </Button>
+                    ) : (
+                      <Button className="h-7 text-xs bg-primary flex gap-3">
+                        <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{" "}
+                      </Button>
+                    )}
+                  </Link>
                 </div>
               </div>
             </Card>
