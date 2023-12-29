@@ -69,7 +69,7 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
     } else if (selectedSort === "Terpopuler") {
       filteredCourses = filteredCourses.sort((a, b) => b.rating - a.rating);
     } else if (selectedSort === "Promo") {
-      filteredCourses = filteredCourses.filter((course) => course.isOnPromo);
+      filteredCourses = filteredCourses.filter((course) => course.price === 1000);
     } else {
       filteredCourses = filteredCourses.sort((a, b) => a.title.localeCompare(b.title));
     }
@@ -127,7 +127,7 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
             className="space-y-3"
             key={course.title}
           >
-            <Card className="md:w-[420px] w-[300px] h-full md:h-full">
+            <Card className="md:w-[420px] w-[300px] h-full md:h-full ">
               <Link to={`/Course/${course.id}`}>
                 <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
                   <img
@@ -176,15 +176,17 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
                   </div>
                 </div>
                 <div>
-                  {course.type === "free" ? (
-                    <Button className="h-7 text-xs flex gap-3 bg-active text-white">
-                      <FontAwesomeIcon icon={faGem} /> Premium{" "}
-                    </Button>
-                  ) : (
-                    <Button className="h-7 text-xs bg-primary flex gap-3 ">
-                      <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{" "}
-                    </Button>
-                  )}
+                  <Link to={`/Course/${course.id}`}>
+                    {course.type === "free" ? (
+                      <Button className="h-7 text-xs flex gap-3 bg-active text-white">
+                        <FontAwesomeIcon icon={faGem} /> Premium{" "}
+                      </Button>
+                    ) : (
+                      <Button className="h-7 text-xs bg-primary flex gap-3 ">
+                        <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{" "}
+                      </Button>
+                    )}
+                  </Link>
                 </div>
               </div>
             </Card>
