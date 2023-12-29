@@ -11,7 +11,9 @@ const Category = () => {
         <div className="container font-poppins pt-10 space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="font-bold md:text-xl">Kategori Belajar</h1>
-            <Button className="text-xs h-6 md:h-8 hover:bg-active">Lihat Semua</Button>
+            <Link to="/courses">
+              <Button className="text-xs h-6 md:h-8 hover:bg-active">Lihat Semua</Button>
+            </Link>
           </div>
 
           <div className="flex flex-wrap gap-6 justify-between pb-10 overflow-x-scroll md:overflow-x-hidden">

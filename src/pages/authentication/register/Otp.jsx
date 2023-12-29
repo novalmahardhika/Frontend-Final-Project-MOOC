@@ -128,18 +128,6 @@ const Otp = () => {
       <div className='items-center hidden w-1/2 h-full mx-auto my-auto md:flex'>
         <LoginImage />
       </div>
-
-      {/* {isModalVisible && (
-        <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center h-20">
-          <div className="p-4 text-white rounded-md shadow-md bg-success">Registrasi berhasil! Mengalihkan ke halaman login...</div>
-        </div>
-      )} */}
-
-      {/* {isModalError && (
-        <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center h-20">
-          <div className="p-4 text-white rounded-md shadow-md bg-destructive">Email sudah digunakan silahkan coba dengan email lain...</div>
-        </div>
-      )} */}
     </div>
   )
 }

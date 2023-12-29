@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TabCourse = ({ onTabChange }) => {
   const location = useLocation();
@@ -54,10 +55,12 @@ const TabCourse = ({ onTabChange }) => {
       <div className="font-poppins space-y-6">
         <div className="flex items-center justify-between pt-10">
           <h1 className="font-bold md:text-xl">Kursus Populer</h1>
-          <Button className="text-xs h-6 md:h-8 hover:bg-active">Lihat Semua</Button>
+          <Link to="/courses">
+            <Button className="text-xs h-6 md:h-8 hover:bg-active">Lihat Semua</Button>
+          </Link>
         </div>
         <div className="mb-3 overflow-x-scroll md:overflow-hidden">
-          <div className="flex justify-start pb-5 md:pb-0">
+          <div className="flex justify-start pb-5 md:pb-0 ">
             <TabButton
               tabName="Data Science"
               value="Data Science"

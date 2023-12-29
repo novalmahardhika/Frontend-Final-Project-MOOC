@@ -15,19 +15,15 @@ const Notification = () => {
     const fetchNotifications = async () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/notifications`, { headers: { Authorization: `Bearer ${token}` } });
-        const latestNotifications = res.data.data.notifications || [];
-
-        // Take only the latest 3 notifications
-        const latestThreeNotifications = latestNotifications.slice(0, 3);
-
-        setNotifications(latestThreeNotifications);
+        const sortedNotifications = res.data.data.notifications ? res.data.data.notifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : [];
+        setNotifications(sortedNotifications);
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchNotifications();
-  }, [token]); // Add token as dependency
+  }, [token]);
 
   return (
     <div className="font-poppins">
