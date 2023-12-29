@@ -31,106 +31,239 @@ const Module = ({ onSelectModule }) => {
     onSelectModule(module);
   };
 
-  const onPayment = () => {
-    navigate(`/payment/${courseDetail.id}`);
+  const onPayment = async () => {
+    try {
+      if (!courseDetail) {
+        console.error("Course detail is not available");
+        return;
+      }
+
+      const response = await axios.post(`https://idea-academy.up.railway.app/api/v1/orders/${courseDetail.id}`, {}, { headers: { Authorization: `Bearer ${token}` } });
+
+      if (response.data && response.data.data && response.data.data.id) {
+        const orderId = response.data.data.id;
+
+        console.log(response.data);
+
+        navigate(`/payment/${orderId}`);
+      } else {
+        console.error("Invalid response structure");
+      }
+    } catch (error) {
+      console.error("Error posting order:", error);
+    }
   };
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   if (!courseDetail) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
-      <Card className="p-3">
-        <CardHeader>
-          <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
-        </CardHeader>
-        <CardContent className=" space-y-10">
-          {courseDetail.chapters.map((chapter, chapterIndex) => (
-            <div
-              key={chapter.id}
-              className="space-y-5"
-            >
-              <div className="flex justify-between font-semibold text-sm">
-                <div>{`Chapter ${chapter.chapterNumber} - ${chapter.title}`}</div>
-                <div>{`${chapter.duration} Menit`}</div>
+    <>
+      {isMobile ? (
+        <>
+          <div className="px-4 md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins mb-14 ">
+            <div className="p-3">
+              <div>
+                <div className="font-bold text-lg">Materi Belajar</div>
               </div>
-              <div className="space-y-3">
-                {chapter.modules.map((module, index) => (
+              <div className=" space-y-10">
+                {courseDetail.chapters.map((chapter, chapterIndex) => (
                   <div
-                    key={module.id}
-                    onClick={() => handleModuleClick(module, chapterIndex)}
-                    className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
+                    key={chapter.id}
+                    className="space-y-5"
                   >
-                    {chapterIndex === 0 ? (
-                      <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center text-sm">
-                          <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
-                          <div>{module.title}</div>
-                        </div>
-                        <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
-                          <FontAwesomeIcon
-                            icon={faPlay} // Use faLock for the second module
-                            className="text-white text-xs"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <Dialog className="font-poppins">
-                        <DialogTrigger className="w-full">
-                          <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center text-sm">
-                              <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
-                              <div>{module.title}</div>
+                    <div className="flex justify-between font-semibold text-sm">
+                      <div>{`Chapter ${chapter.chapterNumber} - ${chapter.title}`}</div>
+                      <div>{`${chapter.duration} Menit`}</div>
+                    </div>
+                    <div className="space-y-3">
+                      {chapter.modules.map((module, index) => (
+                        <div
+                          key={module.id}
+                          onClick={() => handleModuleClick(module, chapterIndex)}
+                          className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
+                        >
+                          {chapterIndex === 0 ? (
+                            <div className="flex items-center justify-between w-full">
+                              <div className="flex items-center text-sm">
+                                <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
+                                <div>{module.title}</div>
+                              </div>
+                              <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
+                                <FontAwesomeIcon
+                                  icon={faPlay} // Use faLock for the second module
+                                  className="text-white text-xs"
+                                />
+                              </div>
                             </div>
-                            <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
-                              <FontAwesomeIcon
-                                icon={faLock} // Use faLock for the second module
-                                className="text-white text-xs"
-                              />
-                            </div>
-                          </div>
-                        </DialogTrigger>
-
-                        <DialogContent className="sm:max-w-[500px] font-poppins">
-                          <DialogHeader>
-                            <DialogTitle className="text-center text-sm font-normal">Selangkah Lagi Menuju</DialogTitle>
-                            <DialogDescription className="text-center text-2xl text-active font-medium ">Kelas Premium</DialogDescription>
-                          </DialogHeader>
-                          <div className=" flex flex-col">
-                            <div className="space-y-3 cursor-pointer mx-auto">
-                              <Card className="">
-                                <div>
-                                  <img
-                                    src={courseDetail.image}
-                                    alt="UI/UX Design"
-                                    className=" object-cover w-96 h-56 rounded-sm "
-                                  />
+                          ) : (
+                            <Dialog className="font-poppins">
+                              <DialogTrigger className="w-full">
+                                <div className="flex items-center justify-between w-full">
+                                  <div className="flex items-center text-sm">
+                                    <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
+                                    <div>{module.title}</div>
+                                  </div>
+                                  <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
+                                    <FontAwesomeIcon
+                                      icon={faLock} // Use faLock for the second module
+                                      className="text-white text-xs"
+                                    />
+                                  </div>
                                 </div>
-                              </Card>
-                              <div className=" font-bold text-center">{courseDetail.title}</div>
-                            </div>
-                          </div>
-                          <DialogFooter className="flex">
-                            <Button
-                              type="button"
-                              onClick={() => onPayment()}
-                              className="flex  mx-auto hover:bg-active w-60"
-                            >
-                              Beli Sekarang
-                            </Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                    )}
+                              </DialogTrigger>
+
+                              <DialogContent className="sm:max-w-[500px] font-poppins">
+                                <DialogHeader>
+                                  <DialogTitle className="text-center text-sm font-normal">Selangkah Lagi Menuju</DialogTitle>
+                                  <DialogDescription className="text-center text-2xl text-active font-medium ">Kelas Premium</DialogDescription>
+                                </DialogHeader>
+                                <div className=" flex flex-col">
+                                  <div className="space-y-3 cursor-pointer mx-auto">
+                                    <Card className="">
+                                      <div>
+                                        <img
+                                          src={courseDetail.image}
+                                          alt="UI/UX Design"
+                                          className=" object-cover w-96 h-56 rounded-sm "
+                                        />
+                                      </div>
+                                    </Card>
+                                    <div className=" font-bold text-center">{courseDetail.title}</div>
+                                  </div>
+                                </div>
+                                <DialogFooter className="flex">
+                                  <Button
+                                    type="button"
+                                    onClick={() => onPayment()}
+                                    className="flex  mx-auto hover:bg-active w-60"
+                                  >
+                                    Beli Sekarang
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
+            <Card className="p-3">
+              <CardHeader>
+                <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
+              </CardHeader>
+              <CardContent className=" space-y-10">
+                {courseDetail.chapters.map((chapter, chapterIndex) => (
+                  <div
+                    key={chapter.id}
+                    className="space-y-5"
+                  >
+                    <div className="flex justify-between font-semibold text-sm">
+                      <div>{`Chapter ${chapter.chapterNumber} - ${chapter.title}`}</div>
+                      <div>{`${chapter.duration} Menit`}</div>
+                    </div>
+                    <div className="space-y-3">
+                      {chapter.modules.map((module, index) => (
+                        <div
+                          key={module.id}
+                          onClick={() => handleModuleClick(module, chapterIndex)}
+                          className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
+                        >
+                          {chapterIndex === 0 ? (
+                            <div className="flex items-center justify-between w-full">
+                              <div className="flex items-center text-sm">
+                                <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
+                                <div>{module.title}</div>
+                              </div>
+                              <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
+                                <FontAwesomeIcon
+                                  icon={faPlay} // Use faLock for the second module
+                                  className="text-white text-xs"
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <Dialog className="font-poppins">
+                              <DialogTrigger className="w-full">
+                                <div className="flex items-center justify-between w-full">
+                                  <div className="flex items-center text-sm">
+                                    <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
+                                    <div>{module.title}</div>
+                                  </div>
+                                  <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
+                                    <FontAwesomeIcon
+                                      icon={faLock} // Use faLock for the second module
+                                      className="text-white text-xs"
+                                    />
+                                  </div>
+                                </div>
+                              </DialogTrigger>
+
+                              <DialogContent className="sm:max-w-[500px] font-poppins">
+                                <DialogHeader>
+                                  <DialogTitle className="text-center text-sm font-normal">Selangkah Lagi Menuju</DialogTitle>
+                                  <DialogDescription className="text-center text-2xl text-active font-medium ">Kelas Premium</DialogDescription>
+                                </DialogHeader>
+                                <div className=" flex flex-col">
+                                  <div className="space-y-3 cursor-pointer mx-auto">
+                                    <Card className="">
+                                      <div>
+                                        <img
+                                          src={courseDetail.image}
+                                          alt="UI/UX Design"
+                                          className=" object-cover w-96 h-56 rounded-sm "
+                                        />
+                                      </div>
+                                    </Card>
+                                    <div className=" font-bold text-center">{courseDetail.title}</div>
+                                  </div>
+                                </div>
+                                <DialogFooter className="flex">
+                                  <Button
+                                    type="button"
+                                    onClick={() => onPayment()}
+                                    className="flex  mx-auto hover:bg-active w-60"
+                                  >
+                                    Beli Sekarang
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
