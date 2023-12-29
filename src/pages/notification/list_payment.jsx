@@ -103,6 +103,12 @@ const PaymentsPage = () => {
                               <FontAwesomeIcon icon={faClock} /> Waiting for Payment{" "}
                             </Button>
                           </Link>
+                        ) : payment.status === "CANCELED" ? (
+                          <Link to={`/payment/${payment.id}`}>
+                            <Button className="h-6 md:h-7 text-xs flex gap-3 bg-active text-white">
+                              <FontAwesomeIcon icon={faClock} /> Waiting for Payment{" "}
+                            </Button>
+                          </Link>
                         ) : (
                           <Link to={`/Course/${payment.courseId}`}>
                             <Button className="h-6 md:h-7 text-xs bg-success flex gap-3">
