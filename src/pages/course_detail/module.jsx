@@ -21,6 +21,7 @@ const Module = ({ onSelectModule }) => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
+        console.log(res.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -111,7 +112,7 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 || modulePaid ? (
+                          {chapterIndex === 0 || courseDetail.type === "free" || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
@@ -206,7 +207,7 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 || modulePaid ? (
+                          {chapterIndex === 0 || courseDetail.type === "free" || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>

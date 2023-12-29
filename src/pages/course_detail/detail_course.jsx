@@ -137,12 +137,22 @@ const DetailCourse = () => {
                   />
                 </div>
                 <div className="flex justify-between items-center mt-3">
-                  <div className="text-xl ps-2 font-bold">#{titleModule}</div>
+                  <div className="text-xl ps-2 font-bold">{titleModule}</div>
                 </div>
-
-                <div className="space-y-5 mt-10">
-                  <div className="font-bold text-2xl">Tentang Kelas</div>
-                  <div className="text-justify">{courseDetail.description}</div>
+                <div>
+                  <div className="space-y-2 mt-5">
+                    <div className="font-bold text-2xl">Tentang Kelas</div>
+                    <div className="text-justify">{courseDetail.description}</div>
+                  </div>
+                  <div className="space-y-2 mt-5">
+                    <div className="font-bold text-2xl">Target Audience</div>
+                    {courseDetail.audience.map((item, index) => (
+                      <div key={index}>
+                        {index + 1 + ". "}
+                        {item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="w-1/3">

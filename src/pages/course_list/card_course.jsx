@@ -75,10 +75,10 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
     }
 
     if (activeTab === "premium") {
-      filteredCourses = filteredCourses.filter((course) => course.type !== "premium");
+      filteredCourses = filteredCourses.filter((course) => course.type === "premium");
     }
     if (activeTab === "free") {
-      filteredCourses = filteredCourses.filter((course) => course.type !== "free");
+      filteredCourses = filteredCourses.filter((course) => course.type === "free");
     }
     return filteredCourses;
   };
@@ -177,7 +177,7 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
                 </div>
                 <div>
                   <Link to={`/Course/${course.id}`}>
-                    {course.type === "free" ? (
+                    {course.type === "premium" ? (
                       <Button className="h-7 text-xs flex gap-3 bg-active text-white">
                         <FontAwesomeIcon icon={faGem} /> Premium{" "}
                       </Button>
