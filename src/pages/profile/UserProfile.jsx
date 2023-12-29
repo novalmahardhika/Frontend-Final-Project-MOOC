@@ -153,7 +153,7 @@ const UserProfile = () => {
       >
         {isLoadingFetch ? (
           <img
-            src='/src/assets/profile-empty.png'
+            src='/src/assets/profile.png'
             className='object-cover rounded-full'
           />
         ) : (
