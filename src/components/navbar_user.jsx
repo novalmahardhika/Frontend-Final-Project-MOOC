@@ -28,104 +28,125 @@ const Navbar_User = () => {
   return (
     <>
       {isMobile ? (
-        <nav
-          id="bottom-navigation"
-          className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow font-poppins"
-        >
-          <div
-            id="tabs"
-            className="flex justify-between"
+        <>
+          <nav
+            id="bottom-navigation"
+            className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow font-poppins"
           >
-            <Link
-              to="/"
-              className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+            <div
+              id="tabs"
+              className="flex justify-between"
             >
-              <FontAwesomeIcon
-                icon={faHouse}
-                className="inline-block mb-1"
-              />
-              <span className="tab tab-back block text-xs">Beranda</span>
-            </Link>
-            <Link
-              to="/notification"
-              className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-            >
-              <FontAwesomeIcon
-                icon={faBell}
-                className="inline-block mb-1"
-              />
-              <span className="tab tab-profile block text-xs">Notifikasi</span>
-            </Link>
-            <Link
-              to="/courses"
-              className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-            >
-              <FontAwesomeIcon
-                icon={faPlayCircle}
-                className="inline-block mb-1"
-              />
-              <span className="tab tab-change-password block text-xs">Kelas</span>
-            </Link>
-            <Link
-              to="/myCourses"
-              className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-            >
-              <FontAwesomeIcon
-                icon={faList}
-                className="inline-block mb-1"
-              />
-              <span className="tab tab-payment-history block text-xs">Kursus</span>
-            </Link>
-            <Link
-              to="/profile"
-              className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-            >
-              <FontAwesomeIcon
-                icon={faUser}
-                className="inline-block mb-1"
-              />
-              <span className="tab tab-logout block text-xs">Profile</span>
-            </Link>
-          </div>
-        </nav>
-      ) : (
-        <nav className="bg-primary font-poppins font-medium p-4 top-0 right-0 w-full z-10 sticky">
-          <div className=" container mx-auto flex items-center justify-between h-12 ">
-            <div>
+              <Link
+                to="/"
+                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+              >
+                <FontAwesomeIcon
+                  icon={faHouse}
+                  className="inline-block mb-1"
+                />
+                <span className="tab tab-back block text-xs">Beranda</span>
+              </Link>
+              <Link
+                to="/notification"
+                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+              >
+                <FontAwesomeIcon
+                  icon={faBell}
+                  className="inline-block mb-1"
+                />
+                <span className="tab tab-profile block text-xs">Notifikasi</span>
+              </Link>
+              <Link
+                to="/courses"
+                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+              >
+                <FontAwesomeIcon
+                  icon={faPlayCircle}
+                  className="inline-block mb-1"
+                />
+                <span className="tab tab-change-password block text-xs">Kelas</span>
+              </Link>
+              <Link
+                to="/myCourses"
+                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+              >
+                <FontAwesomeIcon
+                  icon={faList}
+                  className="inline-block mb-1"
+                />
+                <span className="tab tab-payment-history block text-xs">Kursus</span>
+              </Link>
+              <Link
+                to="/profile"
+                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+              >
+                <FontAwesomeIcon
+                  icon={faUser}
+                  className="inline-block mb-1"
+                />
+                <span className="tab tab-logout block text-xs">Profile</span>
+              </Link>
+            </div>
+          </nav>
+          {/* <div className="bg-primary opacity-80"> */}
+
+          <div className="flex bg-primary h-16  w-screen items-center justify-between">
+            <Link to="/">
               <img
                 src={Logo}
                 alt="Logo"
-                className="mx-auto my-auto w-36"
+                className="ms-3 my-auto w-28"
               />
-            </div>
-            <div>
-              <Menu />
-            </div>
-
-            <div className="flex justify-between items-center space-x-4">
-              <div>
-                <Search />
-              </div>
-              {token ? (
-                <div className="flex space-x-4 items-center">
-                  <div>
-                    <Notification />
-                  </div>
-
-                  <div>
-                    <AvatarProfile />
-                  </div>
-                </div>
-              ) : (
-                <div className="flex space-x-5 items-center">
-                  <Link to="/user/Register">
-                    <Button className="cursor-pointer bg-active text-white hover:bg-secondary hover:text-black">Daftar</Button>
-                  </Link>
-                </div>
-              )}
+            </Link>
+            <div className="block relative top-0 right-0 z-10 p-4">
+              <Search />
             </div>
           </div>
-        </nav>
+          {/* </div> */}
+        </>
+      ) : (
+        <>
+          <nav className="bg-primary font-poppins font-medium p-4 top-0 right-0 w-full z-10 sticky">
+            <div className=" container mx-auto flex items-center justify-between h-12 ">
+              <div>
+                <Link to="/">
+                  <img
+                    src={Logo}
+                    alt="Logo"
+                    className="mx-auto my-auto w-36"
+                  />
+                </Link>
+              </div>
+              <div>
+                <Menu />
+              </div>
+
+              <div className="flex justify-between items-center space-x-4">
+                <div>
+                  <Search />
+                </div>
+                {token ? (
+                  <div className="flex space-x-4 items-center">
+                    <div>
+                      <Notification />
+                    </div>
+
+                    <div>
+                      <AvatarProfile />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex space-x-5 items-center">
+                    <Link to="/user/Register">
+                      <Button className="cursor-pointer bg-active text-white hover:bg-secondary hover:text-black">Daftar</Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </nav>
+        </>
       )}
     </>
   );

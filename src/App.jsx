@@ -16,6 +16,7 @@ import MyCourses from './pages/my_course/my_courses'
 import Otp from './pages/authentication/register/Otp'
 import OtpProtected from './pages/authentication/otp_protected'
 import Payment from './pages/payment/payment'
+import LayoutPayment from './pages/payment/layout'
 
 import LayoutProfile from './pages/profile/LayoutProfile'
 import UserProfile from './pages/profile/UserProfile'
@@ -24,6 +25,7 @@ import HistoryPayment from './pages/profile/HistoryPayment'
 import ForgotPassword from './pages/authentication/forgot_password/forgot_password'
 import ForgotPasswordProtected from './pages/authentication/forgot_password_protected'
 import InputForgotPassword from './pages/authentication/forgot_password/input_password'
+import PaymentSuccess from './pages/payment/payment_success'
 
 function App() {
   return (
@@ -159,7 +161,7 @@ function App() {
           }
         />
         <Route
-          path='/courses/:id/*'
+          path='/course/:id/*'
           element={
             <LayoutBeranda>
               <CourseDetail />
@@ -171,9 +173,15 @@ function App() {
           path='/notification'
           element={
             <LayoutBeranda>
-              {/* <LayoutNotification> */}
               <NotificationList />
-              {/* </LayoutNotification> */}
+            </LayoutBeranda>
+          }
+        />
+        <Route
+          path='/payment-history'
+          element={
+            <LayoutBeranda>
+              <NotificationList />
             </LayoutBeranda>
           }
         />
@@ -183,7 +191,21 @@ function App() {
           element={
             <LayoutBeranda>
               <UserProtected>
-                <Payment />
+                <LayoutPayment>
+                  <Payment />
+                </LayoutPayment>
+              </UserProtected>
+            </LayoutBeranda>
+          }
+        />
+        <Route
+          path='/payment-success/:id/*'
+          element={
+            <LayoutBeranda>
+              <UserProtected>
+                <LayoutPayment>
+                  <PaymentSuccess />
+                </LayoutPayment>
               </UserProtected>
             </LayoutBeranda>
           }

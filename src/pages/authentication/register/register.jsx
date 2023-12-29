@@ -27,6 +27,13 @@ const Register = () => {
   const [isModalError, setIsModalError] = useState(false)
 
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    if (token) {
+      navigate('/beranda')
+    }
+  }, [token])
 
   const validateInput = useCallback(() => {
     // Validasi Nama
@@ -256,6 +263,13 @@ const Register = () => {
                 >
                   {!isPasswordValid && passwordError}
                 </div>
+
+                <Link
+                  to={'/user/forgot-password'}
+                  className='flex justify-end text-sm font-medium text-gray-900 text-end hover:text-active'
+                >
+                  Lupa Password
+                </Link>
               </div>
 
               <div className='pt-3'>
