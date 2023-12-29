@@ -1,23 +1,34 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import LayoutAdmin from './pages/dashboard/layout'
-import Dashboard from './pages/dashboard/dashboard'
-import KelolaKelas from './pages/dashboard/kelolaKelas'
-import LayoutUser from './pages/authentication/auth_layout'
-import Register from './pages/authentication/register/register'
-import UserLogin from './pages/authentication/login/user'
-import AdminLogin from './pages/authentication/login/admin'
-import Beranda from './pages/beranda/beranda'
-import Courses from './pages/course_list/courses'
-import CourseDetail from './pages/course_detail/detail_course'
-import LayoutBeranda from './pages/beranda/layout'
-import UserProtected from './pages/authentication/protected'
-import NotificationList from './pages/notification/notification_detail'
-import MyCourses from './pages/my_course/my_courses'
-import Otp from './pages/authentication/register/Otp'
-import OtpProtected from './pages/authentication/otp_protected'
-import Payment from './pages/payment/payment'
+
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LayoutAdmin from "./pages/dashboard/layout";
+import Dashboard from "./pages/dashboard/dashboard";
+import KelolaKelas from "./pages/dashboard/kelolaKelas";
+import LayoutUser from "./pages/authentication/auth_layout";
+import Register from "./pages/authentication/register/register";
+import UserLogin from "./pages/authentication/login/user";
+import AdminLogin from "./pages/authentication/login/admin";
+import Beranda from "./pages/beranda/beranda";
+import Courses from "./pages/course_list/courses";
+import CourseDetail from "./pages/course_detail/detail_course";
+import LayoutBeranda from "./pages/beranda/layout";
+import UserProtected from "./pages/authentication/protected";
+import NotificationList from "./pages/notification/notification_detail";
+import MyCourses from "./pages/my_course/my_courses";
+import Otp from "./pages/authentication/register/Otp";
+import OtpProtected from "./pages/authentication/otp_protected";
+import Payment from "./pages/payment/payment";
 import PaymentSuccess from './pages/payment/payment_success'
-import LayoutPayment from './pages/payment/layout'
+import LayoutPayment from "./pages/payment/layout";
+
+import LayoutProfile from './pages/profile/LayoutProfile'
+import UserProfile from './pages/profile/UserProfile'
+import ResetPassword from './pages/profile/ResetPassword'
+import HistoryPayment from './pages/profile/HistoryPayment'
+import ForgotPassword from './pages/authentication/forgot_password/forgot_password'
+import ForgotPasswordProtected from './pages/authentication/forgot_password_protected'
+import InputForgotPassword from './pages/authentication/forgot_password/input_password'
+
 
 function App() {
   return (
@@ -56,18 +67,30 @@ function App() {
           }
         />
         <Route
-          path='/User/Register'
+
+          path='/User/forgot-password'
+
           element={
             <LayoutUser>
-              <Register />
+              <ForgotPassword />
             </LayoutUser>
           }
         />
         <Route
-          path='/User/Login'
+          path='/User/forgot-password/verified'
+          element={
+            <ForgotPasswordProtected>
+              <LayoutUser>
+                <InputForgotPassword />
+              </LayoutUser>
+            </ForgotPasswordProtected>
+          }
+        />
+        <Route
+          path='/User/Register'
           element={
             <LayoutUser>
-              <UserLogin />
+              <Register />
             </LayoutUser>
           }
         />
@@ -79,6 +102,51 @@ function App() {
                 <Otp />
               </LayoutUser>
             </OtpProtected>
+          }
+        />
+        <Route
+
+          path='/User/Login'
+          element={
+            <LayoutUser>
+              <UserLogin />
+            </LayoutUser>
+          }
+        />
+        <Route
+          path='/User/profile'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <UserProfile />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
+          }
+        />
+        <Route
+          path='/User/reset-password'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <ResetPassword />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
+          }
+        />
+        <Route
+          path='/User/history-payment'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <HistoryPayment />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
           }
         />
         <Route
@@ -99,14 +167,13 @@ function App() {
           }
         />
         <Route
-          path='/course/:id/*'
+          path='/courses/:id/*'
           element={
             <LayoutBeranda>
               <CourseDetail />
             </LayoutBeranda>
           }
         />
-
         <Route
           path='/notification'
           element={
@@ -146,6 +213,7 @@ function App() {
             </LayoutBeranda>
           }
         />
+        <Route
         <Route
           path='/myCourses'
           element={
