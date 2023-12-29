@@ -111,37 +111,6 @@ const Courses = ({ activeTab }) => {
               </div>
             </Card>
           </div>
-          //   key={course.id}
-          //   className="md:w-[250px] pb-5"
-          // >
-          //   <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
-          //     <img
-          //       className="object-cover w-full h-48 rounded-t-sm"
-          //       src={course.image}
-          //       alt={course.title}
-          //     />
-          //   </div>
-
-          //   <div className="mx-5 space-y-5">
-          //     <div className="space-y-3">
-          //       <div className="space-y-2">
-          //         <Link to={`/Course/${course.id}`}>
-          //           <CardTitle className="text-[18px] font-semibold pt-2">{course.title}</CardTitle>
-          //         </Link>
-          //         <div className="text-xs">#{course.category}</div>
-          //         <div className="flex items-center space-x-2">
-          //           <div className="bg-secondary rounded-full w-6 h-6 flex items-center justify-center">
-          //             <FontAwesomeIcon
-          //               icon={faCheck}
-          //               className="text-success"
-          //             />
-          //           </div>
-          //           <div className="text-sm">Akses Selamanya</div>
-          //         </div>
-          //       </div>
-          //     </div>
-          //   </div>
-          // </Card>
         ))}
       </div>
     </div>

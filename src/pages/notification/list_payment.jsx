@@ -53,7 +53,7 @@ const PaymentsPage = () => {
                     className="md:w-[420px] w-[300px] h-[250px] md:h-full "
                   >
                     <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
-                      <div className="text-xs  z-10 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                      <div className="text-xs  z-1 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
                       <img
                         className="object-cover w-full h-24 md:h-48 rounded-t-sm"
                         src={payment.Course.image}
@@ -122,7 +122,7 @@ const PaymentsPage = () => {
         </>
       ) : (
         <>
-          <div className="relative -top-16 font-poppins w-screen">
+          <div className="relative -top-16 font-poppins w-screen overflow-y-scroll">
             <div className="flex flex-wrap gap-10">
               {payments.length > 0 ? (
                 payments.map((payment) => (
@@ -131,7 +131,7 @@ const PaymentsPage = () => {
                     className="md:w-[420px] w-[300px] h-[250px] md:h-full "
                   >
                     <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
-                      <div className="text-xs z-10 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                      <div className="text-xs z-1 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
                       <img
                         className="object-cover w-full h-24 md:h-48 rounded-t-sm"
                         src={payment.Course.image}

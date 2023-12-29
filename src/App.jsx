@@ -16,6 +16,7 @@ import MyCourses from "./pages/my_course/my_courses";
 import Otp from "./pages/authentication/register/Otp";
 import OtpProtected from "./pages/authentication/otp_protected";
 import Payment from "./pages/payment/payment";
+import LayoutPayment from "./pages/payment/layout";
 
 function App() {
   return (
@@ -109,9 +110,15 @@ function App() {
           path="/notification"
           element={
             <LayoutBeranda>
-              {/* <LayoutNotification> */}
               <NotificationList />
-              {/* </LayoutNotification> */}
+            </LayoutBeranda>
+          }
+        />
+        <Route
+          path="/payment-history"
+          element={
+            <LayoutBeranda>
+              <NotificationList />
             </LayoutBeranda>
           }
         />
@@ -121,7 +128,9 @@ function App() {
           element={
             <LayoutBeranda>
               <UserProtected>
-                <Payment />
+                <LayoutPayment>
+                  <Payment />
+                </LayoutPayment>
               </UserProtected>
             </LayoutBeranda>
           }

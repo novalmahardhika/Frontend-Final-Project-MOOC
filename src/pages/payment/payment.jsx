@@ -55,6 +55,7 @@ const Payment = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(responsePost.data.data.Course);
 
         const courseData = responsePost.data.data.Course;
         const serverExpirationTime = new Date(responsePost.data.data.expiredDateAt).getTime();
