@@ -23,6 +23,7 @@ const DetailCourse = () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
+        console.log(res.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -30,11 +31,11 @@ const DetailCourse = () => {
     fetchCourseDetail();
   }, [id, token]);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 1024);
     };
 
     window.addEventListener("resize", handleResize);
@@ -136,8 +137,7 @@ const DetailCourse = () => {
                   />
                 </div>
                 <div className="flex justify-between items-center mt-3">
-                  <div className="text-xl ps-2 font-bold">{titleModule}</div>
-                  <Button className=" w-20 h-8">Next</Button>
+                  <div className="text-xl ps-2 font-bold">#{titleModule}</div>
                 </div>
 
                 <div className="space-y-5 mt-10">

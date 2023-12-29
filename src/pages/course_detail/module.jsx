@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 const Module = ({ onSelectModule }) => {
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
+  const [modulePaid, setModulePaid] = useState(null);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -18,13 +19,27 @@ const Module = ({ onSelectModule }) => {
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchCourseDetail();
+  }, [id, token]);
+
+  useEffect(() => {
+    const fetchPaid = async () => {
+      try {
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/orders`, { headers: { Authorization: `Bearer ${token}` } });
+        const courseIdFromParam = id;
+        const foundOrder = res.data.data.find((order) => order.courseId === courseIdFromParam && order.status === "COMPLETED");
+        setModulePaid(foundOrder);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPaid();
   }, [id, token]);
 
   const handleModuleClick = async (module) => {
@@ -43,8 +58,6 @@ const Module = ({ onSelectModule }) => {
       if (response.data && response.data.data && response.data.data.id) {
         const orderId = response.data.data.id;
 
-        console.log(response.data);
-
         navigate(`/payment/${orderId}`);
       } else {
         console.error("Invalid response structure");
@@ -54,11 +67,11 @@ const Module = ({ onSelectModule }) => {
     }
   };
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 1024);
     };
 
     window.addEventListener("resize", handleResize);
@@ -76,16 +89,16 @@ const Module = ({ onSelectModule }) => {
     <>
       {isMobile ? (
         <>
-          <div className="px-4 md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins mb-14 ">
+          <div className="px-4 md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
             <div className="p-3">
               <div>
                 <div className="font-bold text-lg">Materi Belajar</div>
               </div>
-              <div className=" space-y-10">
+              <div className=" space-y-5">
                 {courseDetail.chapters.map((chapter, chapterIndex) => (
                   <div
                     key={chapter.id}
-                    className="space-y-5"
+                    className="space-y-3"
                   >
                     <div className="flex justify-between font-semibold text-sm">
                       <div>{`Chapter ${chapter.chapterNumber} - ${chapter.title}`}</div>
@@ -98,15 +111,16 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 ? (
+                          {chapterIndex === 0 || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
                                 <div>{module.title}</div>
                               </div>
-                              <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
+
+                              <div className={`rounded-full w-6 h-6 flex justify-center items-center me-3 ${module.done ? "bg-success" : "bg-primary"}`}>
                                 <FontAwesomeIcon
-                                  icon={faPlay} // Use faLock for the second module
+                                  icon={faPlay}
                                   className="text-white text-xs"
                                 />
                               </div>
@@ -192,15 +206,16 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 ? (
+                          {chapterIndex === 0 || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
                                 <div>{module.title}</div>
                               </div>
-                              <div className="rounded-full w-6 h-6 bg-primary flex justify-center items-center me-3">
+
+                              <div className={`rounded-full w-6 h-6 flex justify-center items-center me-3 ${module.done ? "bg-success" : "bg-primary"}`}>
                                 <FontAwesomeIcon
-                                  icon={faPlay} // Use faLock for the second module
+                                  icon={faPlay}
                                   className="text-white text-xs"
                                 />
                               </div>
@@ -215,7 +230,7 @@ const Module = ({ onSelectModule }) => {
                                   </div>
                                   <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
                                     <FontAwesomeIcon
-                                      icon={faLock} // Use faLock for the second module
+                                      icon={faLock}
                                       className="text-white text-xs"
                                     />
                                   </div>
