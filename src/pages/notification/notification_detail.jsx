@@ -1,8 +1,10 @@
+
 import Notification from "./list_notif";
 import Payments from "./list_payment";
 import { useState, useEffect } from "react";
 import TabComponent from "./tab";
 import { useLocation } from "react-router-dom";
+
 
 const NotificationDetail = () => {
   const location = useLocation();
@@ -24,6 +26,7 @@ const NotificationDetail = () => {
   }, []);
 
   return (
+
     <>
       {isMobile ? (
         <div className="relative z-1 font-poppins">
@@ -71,3 +74,4 @@ const NotificationDetail = () => {
   );
 };
 export default NotificationDetail;
+

@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./pages/dashboard/layout";
 import Dashboard from "./pages/dashboard/dashboard";
@@ -18,12 +19,21 @@ import OtpProtected from "./pages/authentication/otp_protected";
 import Payment from "./pages/payment/payment";
 import LayoutPayment from "./pages/payment/layout";
 
+import LayoutProfile from './pages/profile/LayoutProfile'
+import UserProfile from './pages/profile/UserProfile'
+import ResetPassword from './pages/profile/ResetPassword'
+import HistoryPayment from './pages/profile/HistoryPayment'
+import ForgotPassword from './pages/authentication/forgot_password/forgot_password'
+import ForgotPasswordProtected from './pages/authentication/forgot_password_protected'
+import InputForgotPassword from './pages/authentication/forgot_password/input_password'
+
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
             <LayoutBeranda>
               <Beranda />
@@ -31,7 +41,7 @@ function App() {
           }
         />
         <Route
-          path="/beranda"
+          path='/beranda'
           element={
             <LayoutBeranda>
               <Beranda />
@@ -39,7 +49,7 @@ function App() {
           }
         />
         <Route
-          path="/Admin"
+          path='/Admin'
           element={
             <LayoutAdmin>
               <Dashboard />
@@ -47,7 +57,7 @@ function App() {
           }
         />
         <Route
-          path="/AdminKelolaKelas"
+          path='/AdminKelolaKelas'
           element={
             <LayoutAdmin>
               <KelolaKelas />
@@ -55,7 +65,25 @@ function App() {
           }
         />
         <Route
-          path="/User/Register"
+          path='/User/forgot-password'
+          element={
+            <LayoutUser>
+              <ForgotPassword />
+            </LayoutUser>
+          }
+        />
+        <Route
+          path='/User/forgot-password/verified'
+          element={
+            <ForgotPasswordProtected>
+              <LayoutUser>
+                <InputForgotPassword />
+              </LayoutUser>
+            </ForgotPasswordProtected>
+          }
+        />
+        <Route
+          path='/User/Register'
           element={
             <LayoutUser>
               <Register />
@@ -63,15 +91,7 @@ function App() {
           }
         />
         <Route
-          path="/User/Login"
-          element={
-            <LayoutUser>
-              <UserLogin />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path="/User/otp"
+          path='/User/otp'
           element={
             <OtpProtected>
               <LayoutUser>
@@ -81,7 +101,51 @@ function App() {
           }
         />
         <Route
-          path="/Admin/Login"
+          path='/User/Login'
+          element={
+            <LayoutUser>
+              <UserLogin />
+            </LayoutUser>
+          }
+        />
+        <Route
+          path='/User/profile'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <UserProfile />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
+          }
+        />
+        <Route
+          path='/User/reset-password'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <ResetPassword />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
+          }
+        />
+        <Route
+          path='/User/history-payment'
+          element={
+            <UserProtected>
+              <LayoutBeranda>
+                <LayoutProfile>
+                  <HistoryPayment />
+                </LayoutProfile>
+              </LayoutBeranda>
+            </UserProtected>
+          }
+        />
+        <Route
+          path='/Admin/Login'
           element={
             <LayoutUser>
               <AdminLogin />
@@ -90,7 +154,7 @@ function App() {
         />
 
         <Route
-          path="/courses"
+          path='/courses'
           element={
             <LayoutBeranda>
               <Courses />
@@ -98,7 +162,7 @@ function App() {
           }
         />
         <Route
-          path="/course/:id/*"
+          path='/courses/:id/*'
           element={
             <LayoutBeranda>
               <CourseDetail />
@@ -107,7 +171,7 @@ function App() {
         />
 
         <Route
-          path="/notification"
+          path='/notification'
           element={
             <LayoutBeranda>
               <NotificationList />
@@ -124,7 +188,7 @@ function App() {
         />
 
         <Route
-          path="/payment/:id/*"
+          path='/payment/:id/*'
           element={
             <LayoutBeranda>
               <UserProtected>
@@ -136,7 +200,7 @@ function App() {
           }
         />
         <Route
-          path="/myCourses"
+          path='/myCourses'
           element={
             <LayoutBeranda>
               <MyCourses />
@@ -145,7 +209,7 @@ function App() {
         />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
