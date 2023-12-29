@@ -73,17 +73,17 @@ const UserProfile = () => {
   }, [])
 
   useEffect(() => {
+    if (preview) {
+      URL.revokeObjectURL(preview)
+    }
+    
     if (!isSelected) {
       setPreview(null)
       return
     }
 
-    console.log(isSelected)
-
     const objUrl = URL.createObjectURL(isSelected)
     setPreview(objUrl)
-
-    return () => URL.revokeObjectURL(objUrl)
   }, [isSelected])
 
   const imageHandler = (e) => {
@@ -153,10 +153,10 @@ const UserProfile = () => {
       >
         {isLoadingFetch ? (
           <img src='/src/assets/profile-empty.png' className='rounded-full' />
-        ) : (
+          ) : (
           <img
-            src={`${preview === null ? isData?.image : preview}`}
-            className='w-[75px] h-[75px] rounded-full '
+            src={preview ? preview : isData.image}
+            className='w-[75px] h-[75px] rounded-full object-cover'
           />
         )}
       </button>
