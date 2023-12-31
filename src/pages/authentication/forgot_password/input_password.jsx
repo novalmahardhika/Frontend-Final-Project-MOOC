@@ -21,6 +21,7 @@ const datas = [
 const InputForgotPassword = () => {
   const inputRef = useRef()
   const [activeOtp, setActiveOtp] = useState(0)
+  const [seconds, setSeconds] = useState(60)
   const [isMessage, setIsMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -122,6 +123,35 @@ const InputForgotPassword = () => {
     }
   }
 
+  useEffect(() => {
+    const timeOutOtp = setTimeout(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1)
+      }
+    }, 1000)
+
+    return () => clearTimeout(timeOutOtp)
+  }, [seconds])
+
+  const resendOtp = async () => {
+    const payload = {
+      email: isEmail,
+    }
+
+    try {
+      await axios.post(
+        `https://idea-academy.up.railway.app/api/v1/resend-otp`,
+        payload
+      )
+    } catch (error) {
+      setIsMessage(error.response.data.message)
+
+      setTimeout(() => {
+        setIsMessage('')
+      }, 3000)
+    }
+  }
+
   return (
     <div className='flex w-screen h-screen font-poppins'>
       <div className='flex items-center w-screen mx-auto my-auto md:w-1/2'>
@@ -177,7 +207,22 @@ const InputForgotPassword = () => {
                 ))}
               </div>
 
-              <div className='pt-3'>
+              <div className='flex justify-between space-x-1 text-sm'>
+                <p>OTP Belum Terkirim ? </p>
+                {seconds === 0 ? (
+                  <button
+                    className='font-medium text-primary hover:text-active'
+                    type='button'
+                    onClick={resendOtp}
+                  >
+                    Kirim Ulang OTP
+                  </button>
+                ) : (
+                  <p className='font-semibold'>{seconds} Detik</p>
+                )}
+              </div>
+
+              <div className=''>
                 <Button type='submit' className='w-full h-11 hover:bg-active'>
                   {isLoading ? 'Loading...' : 'Button'}
                 </Button>
