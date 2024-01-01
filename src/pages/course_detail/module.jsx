@@ -12,6 +12,7 @@ const Module = ({ onSelectModule }) => {
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
   const [modulePaid, setModulePaid] = useState(null);
+  const [progress, setProgress] = useState(0);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -20,8 +21,17 @@ const Module = ({ onSelectModule }) => {
     const fetchCourseDetail = async () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-        setCourseDetail(res.data.data);
-        console.log(res.data.data);
+        const data = res.data.data;
+        setCourseDetail(data);
+        let done = 0;
+        data["chapters"].forEach((item) => {
+          item["modules"].forEach((module) => {
+            if (module.done) done++;
+          })
+        });
+        const percentage = Math.floor((done/data.totalModule)*100);
+        console.log(percentage)
+        setProgress(percentage);
       } catch (err) {
         console.log(err);
       }
@@ -189,6 +199,9 @@ const Module = ({ onSelectModule }) => {
             <Card className="p-3">
               <CardHeader>
                 <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                  <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{width: (progress)+"%"}}> {progress + "%"}</div>
+                </div>
               </CardHeader>
               <CardContent className=" space-y-10">
                 {courseDetail.chapters.map((chapter, chapterIndex) => (
