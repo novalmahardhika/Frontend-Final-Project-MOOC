@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import image from '../../assets/success.png'
 
 const PaymentSuccess = () => {
   const { id } = useParams()
@@ -15,7 +16,7 @@ const PaymentSuccess = () => {
 
       <div className='flex flex-col items-center justify-center max-w-md px-3 mx-auto mt-10 space-y-5 text-center'>
         <h1 className='text-3xl font-semibold text-primary'>Selamat!</h1>
-        <img src='/src/assets/success.png' className='max-w-[200px]' />
+        <img src={image} alt='success-payment' className='max-w-[200px]' />
         <b>Transaksi Pembayaran Course Berhasil</b>
         <Button className='w-full hover:bg-active'>
           <Link to={`/course/${id}`}>Mulai Belajar</Link>

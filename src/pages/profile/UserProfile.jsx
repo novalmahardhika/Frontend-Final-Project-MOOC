@@ -155,6 +155,7 @@ const UserProfile = () => {
           <img
             src='/src/assets/profile.png'
             className='object-cover rounded-full'
+            alt='defaultProfile'
           />
         ) : (
           <img
