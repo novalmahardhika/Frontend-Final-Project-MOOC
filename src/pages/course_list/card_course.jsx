@@ -48,7 +48,6 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
         let url = "https://idea-academy.up.railway.app/api/v1/courses";
         const res = await axios.get(url);
         setCourseList(res.data.data);
-        console.log(res.data.data);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -93,7 +92,7 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  });
 
   if (loading) {
     return (
@@ -125,7 +124,7 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
         {filterCourses().map((course) => (
           <div
             className="space-y-3"
-            key={course.title}
+            key={course.id}
           >
             <Card className="md:w-[420px] w-[300px] h-full md:h-full ">
               <Link to={`/Course/${course.id}`}>

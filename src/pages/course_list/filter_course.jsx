@@ -29,10 +29,6 @@ const FilterCourse = ({ onFilterChange }) => {
   const [checkedLevelIds, setCheckedLevelIds] = useState([]);
   const [checkedCategoryIds, setCheckedCategoryIds] = useState([]);
 
-  // const getCategoryItemId = (title) => {
-  //   return `${title.replace(/\s+/g, " ")}`;
-  // };
-
   const onCheckedChange = (checked, item, type) => {
     if (type === "sort") {
       const newSearchParams = new URLSearchParams(location.search);
@@ -78,7 +74,6 @@ const FilterCourse = ({ onFilterChange }) => {
   const isAnyCheckboxChecked = checkedSortId || checkedLevelIds.length > 0 || checkedCategoryIds.length > 0;
 
   useEffect(() => {
-    // Check the category checkbox based on the categoryParam
     const categoryParamArray = categoryParam ? categoryParam.split(",") : [];
     setCheckedCategoryIds(categoryParamArray);
     onFilterChange("category", categoryParamArray);
