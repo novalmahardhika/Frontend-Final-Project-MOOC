@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import Loading from './loading'
+import imageProfile from '../../assets/profile.png'
 
 const items = [
   {
@@ -78,8 +79,6 @@ const UserProfile = () => {
       return
     }
 
-    console.log(isSelected)
-
     const objUrl = URL.createObjectURL(isSelected)
     setPreview(objUrl)
 
@@ -153,9 +152,9 @@ const UserProfile = () => {
       >
         {isLoadingFetch ? (
           <img
-            src='/src/assets/profile.png'
+            src={imageProfile}
             className='object-cover rounded-full'
-            alt='defaultProfile'
+            alt='profile'
           />
         ) : (
           <img
