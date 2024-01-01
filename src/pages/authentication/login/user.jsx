@@ -193,7 +193,7 @@ const UserLogin = () => {
                   to={'/user/forgot-password'}
                   className='flex justify-end text-sm font-medium text-gray-900 text-end hover:text-active'
                 >
-                  Lupa Password
+                  Lupa Password ?
                 </Link>
               </div>
 
