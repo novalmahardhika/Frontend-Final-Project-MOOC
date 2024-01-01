@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // import { useLocation } from "react-router-dom";
-import { faMedal, faClock, faBook, faStar, faGem, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { faMedal, faClock, faBook, faStar, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 // import { Skeleton } from "@/components/ui/skeleton";
 
@@ -52,6 +52,7 @@ const Courses = ({ activeTab }) => {
             <Card className="md:w-[420px] w-[300px] h-full md:h-full ">
               <Link to={`/Course/${course.id}`}>
                 <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
+                  <div className={`text-xs absolute px-3 py-1 rounded-tl-sm rounded-br-sm font-semibold text-white ${course.type === "free" ? "bg-success" : "bg-active"}`}>{course.type.charAt(0).toUpperCase() + course.type.slice(1)}</div>{" "}
                   <img
                     className="object-cover w-full h-32 md:h-48 rounded-t-sm"
                     src={course.image}
@@ -97,16 +98,12 @@ const Courses = ({ activeTab }) => {
                     <div className="text-xs">{course.totalDuration} Menit</div>
                   </div>
                 </div>
-                <div>
-                  {course.type === "free" ? (
-                    <Button className="h-7 text-xs flex gap-3 bg-active text-white">
-                      <FontAwesomeIcon icon={faGem} /> Premium{" "}
-                    </Button>
-                  ) : (
+                <div className="flex justify-between items-center">
+                  <Link to={`/course/${course.id}`}>
                     <Button className="h-7 text-xs bg-primary flex gap-3 ">
                       <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{" "}
                     </Button>
-                  )}
+                  </Link>
                 </div>
               </div>
             </Card>
