@@ -44,7 +44,7 @@ const AdminLogin = () => {
     if (!password) {
       setPasswordError("Password harus diisi");
       setIsPasswordValid(false);
-    } else if (password.length < 8 || password.length > 12) {
+    } else if (password.length < 4 || password.length > 12) {
       setPasswordError("Password harus terdiri dari 8-12 karakter");
       setIsPasswordValid(false);
     } else {
@@ -78,7 +78,7 @@ const AdminLogin = () => {
           setEmail("");
           setPassword("");
           localStorage.setItem("token", res.data.data.token);
-          navigate("/beranda");
+          navigate("/admin");
         }, 3000);
       } catch (err) {
         if (!email && !password) {
@@ -96,7 +96,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/beranda");
+      navigate("/admin");
     }
   }, [token, navigate]);
 
@@ -180,7 +180,7 @@ const AdminLogin = () => {
 
       {isModalVisible && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center h-20">
-          <div className="bg-success text-white p-4 rounded-md shadow-md">Login berhasil! Mengalihkan ke halaman Beranda...</div>
+          <div className="bg-success text-white p-4 rounded-md shadow-md">Login berhasil! Mengalihkan ke halaman Dashboard...</div>
         </div>
       )}
       {isModalError && (
