@@ -27,10 +27,10 @@ const Module = ({ onSelectModule }) => {
         data["chapters"].forEach((item) => {
           item["modules"].forEach((module) => {
             if (module.done) done++;
-          })
+          });
         });
-        const percentage = Math.floor((done/data.totalModule)*100);
-        console.log(percentage)
+        const percentage = Math.floor((done / data.totalModule) * 100);
+        console.log(percentage);
         setProgress(percentage);
       } catch (err) {
         console.log(err);
@@ -122,7 +122,7 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 || courseDetail.type === "free" || modulePaid ? (
+                          {chapterIndex === 0 || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
@@ -200,7 +200,13 @@ const Module = ({ onSelectModule }) => {
               <CardHeader>
                 <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
                 <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{width: (progress)+"%"}}> {progress + "%"}</div>
+                  <div
+                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                    style={{ width: progress + "%" }}
+                  >
+                    {" "}
+                    {progress + "%"}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className=" space-y-10">
@@ -220,7 +226,7 @@ const Module = ({ onSelectModule }) => {
                           onClick={() => handleModuleClick(module, chapterIndex)}
                           className="flex items-center justify-between cursor-pointer bg-secondary rounded-sm hover:scale-105 hover:transition-transform shadow-sm"
                         >
-                          {chapterIndex === 0 || courseDetail.type === "free" || modulePaid ? (
+                          {chapterIndex === 0 || modulePaid ? (
                             <div className="flex items-center justify-between w-full">
                               <div className="flex items-center text-sm">
                                 <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
