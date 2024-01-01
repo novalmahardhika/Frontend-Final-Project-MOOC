@@ -130,7 +130,7 @@ const Course = ({ activeTab }) => {
                 </div>
                 <div>
                   <Link to={`/Course/${item.id}`}>
-                    {item.type === "free" ? (
+                    {item.type === "premium" ? (
                       <Button className="h-7 text-xs flex gap-3 bg-active text-white">
                         <FontAwesomeIcon icon={faGem} /> Premium{" "}
                       </Button>
