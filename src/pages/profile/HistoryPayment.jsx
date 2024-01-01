@@ -58,7 +58,7 @@ const HistoryPayment = () => {
                   className={`${data.status === 'PENDING' && 'bg-active'}`}
                   disabled={data.status === 'COMPLETED'}
                 >
-                  <Link to={`/payment/${data.courseId}`}>{data.status}</Link>
+                  <Link to={`/payment/${data.id}`}>{data.status}</Link>
                 </Button>
               </div>
             </div>

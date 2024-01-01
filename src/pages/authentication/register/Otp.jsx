@@ -8,6 +8,7 @@ import axios from 'axios'
 
 const Otp = () => {
   const inputRef = useRef()
+  const [seconds, setSeconds] = useState(60)
   const [activeOtp, setActiveOtp] = useState(0)
   const [isEmail, setIsEmail] = useState('')
   const [isSubmit, setIsSubmit] = useState(false)
@@ -78,6 +79,37 @@ const Otp = () => {
     }
   }
 
+  useEffect(() => {
+    const timeOutOtp = setTimeout(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1)
+      }
+    }, 1000)
+
+    return () => clearTimeout(timeOutOtp)
+  }, [seconds])
+
+  console.log(seconds)
+
+  const resendOtp = async () => {
+    const payload = {
+      email: isEmail,
+    }
+
+    try {
+      await axios.post(
+        `https://idea-academy.up.railway.app/api/v1/resend-otp`,
+        payload
+      )
+    } catch (error) {
+      setErrMsg(error.response.data.message)
+
+      setTimeout(() => {
+        setErrMsg('')
+      }, 3000)
+    }
+  }
+
   return (
     <div className='flex w-screen h-screen font-poppins'>
       <div className='flex items-center w-screen mx-auto my-auto md:w-1/2'>
@@ -110,6 +142,21 @@ const Otp = () => {
                 >
                   {errMsg.message}
                 </div>
+              </div>
+
+              <div className='flex justify-between space-x-1 text-sm'>
+                <p>OTP Belum Terkirim ? </p>
+                {seconds === 0 ? (
+                  <button
+                    className='font-medium text-primary hover:text-active'
+                    type='button'
+                    onClick={resendOtp}
+                  >
+                    Kirim Ulang OTP
+                  </button>
+                ) : (
+                  <p className='font-semibold'>{seconds} Detik</p>
+                )}
               </div>
 
               <div className='pt-3'>

@@ -31,7 +31,7 @@ const Navbar_User = () => {
         <>
           <nav
             id="bottom-navigation"
-            className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow font-poppins"
+            className="fixed inset-x-0 bottom-0 z-10 block bg-white shadow font-poppins"
           >
             <div
               id="tabs"
@@ -39,67 +39,67 @@ const Navbar_User = () => {
             >
               <Link
                 to="/"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                className="justify-center inline-block w-full pt-2 pb-1 text-center text-gray-600 focus:outline-none hover:text-active"
               >
                 <FontAwesomeIcon
                   icon={faHouse}
                   className="inline-block mb-1"
                 />
-                <span className="tab tab-back block text-xs">Beranda</span>
+                <span className="block text-xs tab tab-back">Beranda</span>
               </Link>
               <Link
                 to="/notification"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                className="justify-center inline-block w-full pt-2 pb-1 text-center text-gray-600 focus:outline-none hover:text-active"
               >
                 <FontAwesomeIcon
                   icon={faBell}
                   className="inline-block mb-1"
                 />
-                <span className="tab tab-profile block text-xs">Notifikasi</span>
+                <span className="block text-xs tab tab-profile">Notifikasi</span>
               </Link>
               <Link
                 to="/courses"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                className="justify-center inline-block w-full pt-2 pb-1 text-center text-gray-600 focus:outline-none hover:text-active"
               >
                 <FontAwesomeIcon
                   icon={faPlayCircle}
                   className="inline-block mb-1"
                 />
-                <span className="tab tab-change-password block text-xs">Kelas</span>
+                <span className="block text-xs tab tab-change-password">Kelas</span>
               </Link>
               <Link
                 to="/myCourses"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                className="justify-center inline-block w-full pt-2 pb-1 text-center text-gray-600 focus:outline-none hover:text-active"
               >
                 <FontAwesomeIcon
                   icon={faList}
                   className="inline-block mb-1"
                 />
-                <span className="tab tab-payment-history block text-xs">Kursus</span>
+                <span className="block text-xs tab tab-payment-history">Kursus</span>
               </Link>
               <Link
-                to="/profile"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                to="/user/profile"
+                className="justify-center inline-block w-full pt-2 pb-1 text-center text-gray-600 focus:outline-none hover:text-active"
               >
                 <FontAwesomeIcon
                   icon={faUser}
                   className="inline-block mb-1"
                 />
-                <span className="tab tab-logout block text-xs">Profile</span>
+                <span className="block text-xs tab tab-logout">Profile</span>
               </Link>
             </div>
           </nav>
           {/* <div className="bg-primary opacity-80"> */}
 
-          <div className="flex bg-primary h-16  w-screen items-center justify-between">
+          <div className="flex items-center justify-between w-screen h-16 bg-primary">
             <Link to="/">
               <img
                 src={Logo}
                 alt="Logo"
-                className="ms-3 my-auto w-28"
+                className="my-auto ms-3 w-28"
               />
             </Link>
-            <div className="block relative top-0 right-0 z-10 p-4">
+            <div className="relative top-0 right-0 z-10 block p-4">
               <Search />
             </div>
           </div>
@@ -107,8 +107,8 @@ const Navbar_User = () => {
         </>
       ) : (
         <>
-          <nav className="bg-primary font-poppins font-medium p-4 top-0 right-0 w-full z-10 sticky">
-            <div className=" container mx-auto flex items-center justify-between h-12 ">
+          <nav className="sticky top-0 right-0 z-10 w-full p-4 font-medium bg-primary font-poppins">
+            <div className="container flex items-center justify-between h-12 mx-auto ">
               <div>
                 <Link to="/">
                   <img
@@ -122,12 +122,12 @@ const Navbar_User = () => {
                 <Menu />
               </div>
 
-              <div className="flex justify-between items-center space-x-4">
+              <div className="flex items-center justify-between space-x-4">
                 <div>
                   <Search />
                 </div>
                 {token ? (
-                  <div className="flex space-x-4 items-center">
+                  <div className="flex items-center space-x-4">
                     <div>
                       <Notification />
                     </div>
@@ -137,9 +137,9 @@ const Navbar_User = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex space-x-5 items-center">
+                  <div className="flex items-center space-x-5">
                     <Link to="/user/Register">
-                      <Button className="cursor-pointer bg-active text-white hover:bg-secondary hover:text-black">Daftar</Button>
+                      <Button className="text-white cursor-pointer bg-active hover:bg-secondary hover:text-black">Daftar</Button>
                     </Link>
                   </div>
                 )}

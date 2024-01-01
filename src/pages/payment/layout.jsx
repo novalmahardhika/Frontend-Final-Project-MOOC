@@ -1,19 +1,19 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 
 const Layout = ({ children }) => {
   return (
-    <div className="h-screen font-poppins items-center">
+    <div className='items-center  font-poppins'>
       {/* Main Content */}
 
-      <div className="">
-        <div className="container">{children}</div>
+      <div className=''>
+        <div className='container'>{children}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-};
+}
 
-export default Layout;
+export default Layout
