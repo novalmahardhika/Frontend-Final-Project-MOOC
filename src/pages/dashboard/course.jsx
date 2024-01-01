@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -51,7 +51,7 @@ const KelolaKelas = () => {
   return (
     <div className="px-10 font-poppins">
       <div className="mt-2 flex items-center justify-between mb-4">
-        <div className="text-2xl font-semibold"> Tabel Kelas</div>
+        <div className="text-2xl font-semibold">Data Kelas</div>
 
         <div className="flex space-x-5 items-center">
           <Search onSearchChange={(term) => setSearchTerm(term)} />
@@ -83,7 +83,9 @@ const KelolaKelas = () => {
                   <TableCell>{item.price.toLocaleString("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 })}</TableCell>
                   <TableCell>
                     <div className="justify-between space-x-2">
-                      <Button className=" w-14 h-6 text-xs bg-success">ubah</Button>
+                      <Link to={`/admin/course/${item.id}`}>
+                        <Button className=" w-14 h-6 text-xs bg-success">ubah</Button>
+                      </Link>
                       <Button className=" w-14 h-6 text-xs bg-destructive">hapus</Button>
                     </div>
                   </TableCell>

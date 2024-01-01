@@ -80,9 +80,14 @@ const Layout = ({ children }) => {
 
   const menu = [
     { id: 1, path: "/Admin", label: "Dashboard" },
-    { id: 2, path: "/Admin/Kelas", label: "Kelola Kelas" },
+    { id: 2, path: "/Admin/Courses", label: "Kelola Kelas" },
     { id: 3, path: "/Keluar", label: "Keluar", onClick: handleLogout },
   ];
+
+  const currentUrl = location.pathname;
+
+  const isCourseDetailPage = currentUrl.startsWith("/admin/course/");
+
   return (
     <>
       {isMobile ? (
@@ -91,58 +96,62 @@ const Layout = ({ children }) => {
             {/* Main Content */}
             <div>
               <Navbar />
-              <div className=" container items-center flex flex-col justify-between space-y-3">
-                {/* Active Users */}
-                <Card className="w-full bg-secondary shadow-none ">
-                  <div className="flex items-center ">
-                    <div>
-                      <CardHeader className="text-xl text-primary">
-                        <FontAwesomeIcon icon={faUserGroup} />
-                      </CardHeader>
-                    </div>
-                    <div>
-                      <div className="flex space-x-3 items-center text-primary">
-                        <div className="text-xl  font-semibold">{totalUsers}</div>
-                        <div>Active Users</div>
+              {!isCourseDetailPage && (
+                <>
+                  <div className=" container items-center flex flex-col justify-between space-y-3">
+                    {/* Active Users */}
+                    <Card className="w-full bg-secondary shadow-none ">
+                      <div className="flex items-center ">
+                        <div>
+                          <CardHeader className="text-xl text-primary">
+                            <FontAwesomeIcon icon={faUserGroup} />
+                          </CardHeader>
+                        </div>
+                        <div>
+                          <div className="flex space-x-3 items-center text-primary">
+                            <div className="text-xl  font-semibold">{totalUsers}</div>
+                            <div>Active Users</div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Card>
+                    </Card>
 
-                {/* Active Class */}
-                <Card className="w-full bg-secondary shadow-none ">
-                  <div className="flex items-center ">
-                    <div>
-                      <CardHeader className="text-xl text-primary">
-                        <FontAwesomeIcon icon={faUserGroup} />
-                      </CardHeader>
-                    </div>
-                    <div>
-                      <div className="flex space-x-3 items-center text-primary">
-                        <div className="text-xl  font-semibold">{totalPayment}</div>
-                        <div>Active Class</div>
+                    {/* Active Class */}
+                    <Card className="w-full bg-secondary shadow-none ">
+                      <div className="flex items-center ">
+                        <div>
+                          <CardHeader className="text-xl text-primary">
+                            <FontAwesomeIcon icon={faUserGroup} />
+                          </CardHeader>
+                        </div>
+                        <div>
+                          <div className="flex space-x-3 items-center text-primary">
+                            <div className="text-xl  font-semibold">{totalPayment}</div>
+                            <div>Active Class</div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Card>
+                    </Card>
 
-                {/* Premium Class */}
-                <Card className="w-full bg-secondary shadow-none ">
-                  <div className="flex items-center ">
-                    <div>
-                      <CardHeader className="text-xl text-primary">
-                        <FontAwesomeIcon icon={faUserGroup} />
-                      </CardHeader>
-                    </div>
-                    <div>
-                      <div className="flex space-x-3 items-center text-primary">
-                        <div className="text-xl  font-semibold">{totalPremium}</div>
-                        <div>Premium Class</div>
+                    {/* Premium Class */}
+                    <Card className="w-full bg-secondary shadow-none ">
+                      <div className="flex items-center ">
+                        <div>
+                          <CardHeader className="text-xl text-primary">
+                            <FontAwesomeIcon icon={faUserGroup} />
+                          </CardHeader>
+                        </div>
+                        <div>
+                          <div className="flex space-x-3 items-center text-primary">
+                            <div className="text-xl  font-semibold">{totalPremium}</div>
+                            <div>Premium Class</div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    </Card>
                   </div>
-                </Card>
-              </div>
+                </>
+              )}
 
               <div className="overflow-x-scroll pb-12">{children}</div>
             </div>
@@ -175,40 +184,42 @@ const Layout = ({ children }) => {
             {/* Main Content */}
             <div className="flex flex-col flex-1">
               <Navbar />
-              <div className=" items-center flex justify-between space-x-14 my-8 px-16">
-                {/* Active Users */}
-                <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
-                  <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
-                    <FontAwesomeIcon icon={faUserGroup} />
-                  </CardHeader>
-                  <CardContent className="py-10 ">
-                    <CardTitle className="text-2xl text-primary font-semibold">{totalUsers}</CardTitle>
-                    <CardDescription className="text-primary">Active Users</CardDescription>
-                  </CardContent>
-                </Card>
+              {!isCourseDetailPage && (
+                <div className=" items-center flex justify-between space-x-14 my-8 px-16">
+                  {/* Active Users */}
+                  <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
+                    <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
+                      <FontAwesomeIcon icon={faUserGroup} />
+                    </CardHeader>
+                    <CardContent className="py-10 ">
+                      <CardTitle className="text-2xl text-primary font-semibold">{totalUsers}</CardTitle>
+                      <CardDescription className="text-primary">Active Users</CardDescription>
+                    </CardContent>
+                  </Card>
 
-                {/* Active Class */}
-                <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
-                  <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
-                    <FontAwesomeIcon icon={faUserGroup} />
-                  </CardHeader>
-                  <CardContent className="py-10 ">
-                    <CardTitle className="text-2xl text-primary font-semibold">{totalPayment}</CardTitle>
-                    <CardDescription className="text-primary">Active Class</CardDescription>
-                  </CardContent>
-                </Card>
+                  {/* Active Class */}
+                  <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
+                    <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
+                      <FontAwesomeIcon icon={faUserGroup} />
+                    </CardHeader>
+                    <CardContent className="py-10 ">
+                      <CardTitle className="text-2xl text-primary font-semibold">{totalPayment}</CardTitle>
+                      <CardDescription className="text-primary">Active Class</CardDescription>
+                    </CardContent>
+                  </Card>
 
-                {/* Premium Class */}
-                <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
-                  <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
-                    <FontAwesomeIcon icon={faUserGroup} />
-                  </CardHeader>
-                  <CardContent className="py-10 ">
-                    <CardTitle className="text-2xl text-primary font-semibold">{totalPremium}</CardTitle>
-                    <CardDescription className="text-primary">Premium Class</CardDescription>
-                  </CardContent>
-                </Card>
-              </div>
+                  {/* Premium Class */}
+                  <Card className="flex flex-1 w-1/3 items-center my-auto h-24 bg-secondary shadow-none">
+                    <CardHeader className="text-4xl text-primary p-3 ms-6 rounded-sm">
+                      <FontAwesomeIcon icon={faUserGroup} />
+                    </CardHeader>
+                    <CardContent className="py-10 ">
+                      <CardTitle className="text-2xl text-primary font-semibold">{totalPremium}</CardTitle>
+                      <CardDescription className="text-primary">Premium Class</CardDescription>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
 
               <div className="overflow-y-scroll pb-12">{children}</div>
             </div>
