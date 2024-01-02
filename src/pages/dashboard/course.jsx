@@ -8,6 +8,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router';
+import AddCourse from "./addClass";
 
 const KelolaKelas = () => {
   const { token } = useContext(AuthContext);
@@ -91,6 +92,7 @@ const KelolaKelas = () => {
         <div className="text-2xl font-semibold">Kelola Kelas</div>
         <div className="flex space-x-4 justify-between">
           <Filter onFilterChange={setFilterType} onSearchChange={setSearch} />
+          <AddCourse />
         </div>
       </div>
       <div>
