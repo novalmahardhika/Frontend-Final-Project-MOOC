@@ -341,7 +341,7 @@ const Payment = () => {
 
             <TabsContent value='Bank Transfer'>
               {activeTab === 'Bank Transfer' && (
-                <Card title='Bank Transfer'>
+                <Card title={'Bank Transfer'}>
                   <div className='mb-6'>
                     <p className='pt-10 mb-2 ml-4 text-lg font-semibold ps-6'>
                       Informasi Transfer Bank
@@ -361,7 +361,7 @@ const Payment = () => {
                           <p className='text-sm font-semibold text-white'>
                             Nomor Rekening
                           </p>
-                          <p className='text-white'>123-456-7890</p>
+                          <p className='text-white'>063-456-7901</p>
                         </div>
                         <div>
                           <p className='text-sm font-semibold text-white'>
@@ -552,18 +552,13 @@ const Payment = () => {
                 </div>
               </CardContent>
               <CardFooter className='flex justify-center text-center'>
-                {/* <Button
-                  className='w-full h-12 px-3 rounded-full bg-success'
-                  onClick={handlePayment}
-                > */}
                 <button
                   onClick={handlePayment}
-                  className='w-full p-3 text-sm font-medium text-white rounded-full sm:p-0 sm:h-12 bg-success'
+                  className='w-full p-3 text-sm font-medium text-white duration-300 rounded-full sm:p-0 sm:h-12 bg-success hover:bg-green-700'
                 >
                   {courseType === 'free'
                     ? 'Klaim Kelas'
                     : 'Bayar dan Ikuti Kelas Selamanya'}
-                  {/* </Button> */}
                 </button>
               </CardFooter>
             </Card>
