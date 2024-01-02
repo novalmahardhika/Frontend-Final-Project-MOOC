@@ -84,7 +84,7 @@ const Course = ({ activeTab }) => {
             className="space-y-3 cursor-pointer"
             key={item.title}
           >
-            <Card className="md:w-[420px] w-[250px] h-[280px] md:h-full">
+            <Card className="md:w-[420px] w-[250px] h-full">
               <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
                 <img
                   className="object-cover w-full h-32 md:h-48 rounded-t-sm"
