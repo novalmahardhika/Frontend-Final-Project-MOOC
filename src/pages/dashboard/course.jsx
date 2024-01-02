@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Search from "@/components/search_table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"; // Sesuaikan dengan komponen paginasi yang Anda gunakan
-import AddCourse from "./add_course";
+import AddCourse from "./add";
 
 const KelolaKelas = () => {
   const [courseList, setCourseList] = useState([]);
