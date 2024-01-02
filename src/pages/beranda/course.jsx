@@ -56,7 +56,9 @@ const Course = ({ activeTab }) => {
     return course.category === activeTab && course.rating >= 4;
   });
 
-  const displayedCourses = filteredCourses.slice(0, 6);
+  const sortedCourses = [...filteredCourses].sort((a, b) => b.rating - a.rating);
+
+  const displayedCourses = sortedCourses.slice(0, 6);
 
   if (loading) {
     return (
