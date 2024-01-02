@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
@@ -16,17 +17,17 @@ import {
 } from '@/components/ui/select'
 import { useState } from 'react'
 
-const UpdateCourse = () => {
+const AddCourse = (props) => {
   const [image, setImage] = useState(null)
   const [formData, setFormData] = useState({
-    title: '',
-    category: '',
-    creator: '',
-    description: '',
-    level: '',
-    price: '',
-    image: null,
-    telegram: '',
+    title: props.title,
+    category: props.category,
+    creator: props.creator,
+    description: props.description,
+    level: props.level,
+    price: props.price,
+    image: props.image,
+    telegram: props.telegram,
   })
   const token = localStorage.getItem('token')
 
@@ -40,7 +41,7 @@ const UpdateCourse = () => {
       reader.readAsDataURL(file)
       setFormData({ ...formData, image: file })
     } else {
-      setImage(null)
+      setImage(props.image)
       setFormData({ ...formData, image: null })
     }
   }
@@ -48,28 +49,14 @@ const UpdateCourse = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    // Form validation
-    if (
-      !formData.title ||
-      !formData.category ||
-      !formData.creator ||
-      !formData.description ||
-      !formData.level ||
-      !formData.price ||
-      !formData.image ||
-      !formData.telegram
-    ) {
-      // Handle validation error (you can show a message to the user)
-      console.error('All fields must be filled')
-      return
-    }
-
     // Additional validation for price (numeric check)
     if (isNaN(formData.price)) {
       // Handle validation error for price (you can show a message to the user)
       console.error('Price must be a number')
       return
     }
+
+    console.log(props.image)
 
     // You can now proceed to make the axios POST request
     try {
@@ -86,18 +73,18 @@ const UpdateCourse = () => {
       formDataToSend.append('creator', formData.creator)
       formDataToSend.append('description', formData.description)
       formDataToSend.append('level', formData.level)
-      formDataToSend.append('price', formData.price)
+      formDataToSend.append('price', +formData.price)
       formDataToSend.append('image', formData.image)
       formDataToSend.append('telegram', formData.telegram)
 
-      const res = await axios.post(
-        'https://idea-academy.up.railway.app/api/v1/courses',
+      const res = await axios.put(
+        `https://idea-academy.up.railway.app/api/v1/courses/${props.id}`,
         formDataToSend,
         config
       )
 
       // Handle success (you can show a success message or redirect)
-      console.log('Course added successfully:', res.data)
+      console.log('Course added successfully:', res.data.data)
     } catch (error) {
       // Handle error (you can show an error message to the user)
       console.error('Error adding course:', error)
@@ -109,15 +96,14 @@ const UpdateCourse = () => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className='flex items-center justify-between h-8 space-x-2 bg-success'>
-              <FontAwesomeIcon icon={faCirclePlus} />
-              <div>Course</div>
+            <Button className='flex items-center justify-center h-6 space-x-2 text-xs text-center w-14 bg-success'>
+              <div>Ubah</div>
             </Button>
           </DialogTrigger>
 
           <DialogContent className='shadow-2xl font-poppins border-gray-800 md:h-[600px]'>
             <div className='mb-2 text-2xl font-semibold text-center'>
-              Tambah Kelas
+              Ubah Kelas
             </div>
             <Form>
               <div className='px-5 space-y-5 overflow-y-scroll'>
@@ -126,6 +112,8 @@ const UpdateCourse = () => {
                     Nama Kelas
                   </Label>
                   <Input
+                    // eslint-disable-next-line react/prop-types
+                    defaultValue={props.title}
                     placeholder='Nama Kelas'
                     name='title'
                     maxLength={50}
@@ -141,6 +129,7 @@ const UpdateCourse = () => {
                     Kategori
                   </Label>
                   <Select
+                    defaultValue={props.category}
                     onValueChange={(value) =>
                       setFormData({ ...formData, category: value })
                     }
@@ -193,6 +182,7 @@ const UpdateCourse = () => {
                     Nama Fasilitator/Creator
                   </Label>
                   <Input
+                    defaultValue={props.creator}
                     placeholder='Nama Lengkap Fasilitator/Creator'
                     name='creator'
                     maxLength={50}
@@ -207,6 +197,7 @@ const UpdateCourse = () => {
                     Deskripsi Kelas
                   </Label>
                   <Textarea
+                    defaultValue={props.description}
                     placeholder='Deskripsi Kelas'
                     id='description'
                     className='border border-gray-500'
@@ -223,6 +214,7 @@ const UpdateCourse = () => {
                     onValueChange={(value) =>
                       setFormData({ ...formData, level: value })
                     }
+                    defaultValue={props.level}
                   >
                     <SelectTrigger className='w-full border border-gray-500'>
                       <SelectValue placeholder='Pilih Level' />
@@ -249,6 +241,7 @@ const UpdateCourse = () => {
                     Harga
                   </Label>
                   <Input
+                    defaultValue={props.price}
                     placeholder='Masukkan'
                     type='number'
                     name='price'
@@ -312,6 +305,7 @@ const UpdateCourse = () => {
                     Link Grup Kelas
                   </Label>
                   <Input
+                    defaultValue={props.telegram}
                     placeholder='Link Telegram'
                     name='telegram'
                     className='border border-gray-500'
@@ -334,4 +328,4 @@ const UpdateCourse = () => {
   )
 }
 
-export default UpdateCourse
+export default AddCourse
