@@ -86,7 +86,7 @@ const Layout = ({ children }) => {
 
   const currentUrl = location.pathname;
 
-  const isCourseDetailPage = currentUrl.startsWith("/admin/course/");
+  const isCourseDetailPage = currentUrl.startsWith("/Admin/course/");
 
   return (
     <>
