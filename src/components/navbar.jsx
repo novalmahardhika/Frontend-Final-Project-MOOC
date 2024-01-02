@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-14 ">
           <div className="text-primary text-2xl font-bold">Hi, Admin! </div>
-          <div className="flex space-x-4 relative">
+          {/* <div className="flex space-x-4 relative">
             <div>
               <Input
                 type="text"
@@ -19,7 +19,7 @@ const Navbar = () => {
             <div className="absolute right-3 flex items-center bg-primary text-white my-2 w-10 h-8 justify-center rounded-sm cursor-pointer">
               <FontAwesomeIcon icon={faSearch} />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

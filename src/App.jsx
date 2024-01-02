@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LayoutAdmin from "./pages/dashboard/layout";
 import Dashboard from "./pages/dashboard/dashboard";
 import KelolaKelas from "./pages/dashboard/course";
+import ClassEdit from './pages/dashboard/classEdit'
 import LayoutUser from "./pages/authentication/auth_layout";
 import Register from "./pages/authentication/register/register";
 import UserLogin from "./pages/authentication/login/user";
@@ -28,204 +29,217 @@ import InputForgotPassword from "./pages/authentication/forgot_password/input_pa
 import PaymentSuccess from "./pages/payment/payment_success";
 
 import AdminProtected from "./pages/authentication/admin_protected";
+import AuthContextProvider from '@/context/AuthContext';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <LayoutBeranda>
-              <Beranda />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/beranda"
-          element={
-            <LayoutBeranda>
-              <Beranda />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/Admin"
-          element={
-            <AdminProtected>
-              <LayoutAdmin>
-                <Dashboard />
-              </LayoutAdmin>
-            </AdminProtected>
-          }
-        />
-        <Route
-          path="/Admin/Kelas"
-          element={
-            <AdminProtected>
-              <LayoutAdmin>
-                <KelolaKelas />
-              </LayoutAdmin>
-            </AdminProtected>
-          }
-        />
-        <Route
-          path="/User/forgot-password"
-          element={
-            <LayoutUser>
-              <ForgotPassword />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path="/User/forgot-password/verified"
-          element={
-            <ForgotPasswordProtected>
-              <LayoutUser>
-                <InputForgotPassword />
-              </LayoutUser>
-            </ForgotPasswordProtected>
-          }
-        />
-        <Route
-          path="/User/Register"
-          element={
-            <LayoutUser>
-              <Register />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path="/User/otp"
-          element={
-            <OtpProtected>
-              <LayoutUser>
-                <Otp />
-              </LayoutUser>
-            </OtpProtected>
-          }
-        />
-        <Route
-          path="/User/Login"
-          element={
-            <LayoutUser>
-              <UserLogin />
-            </LayoutUser>
-          }
-        />
-        <Route
-          path="/User/profile"
-          element={
-            <LayoutBeranda>
-              <UserProtected>
-                <LayoutProfile>
-                  <UserProfile />
-                </LayoutProfile>
-              </UserProtected>
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/User/reset-password"
-          element={
-            <UserProtected>
+    <AuthContextProvider>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
               <LayoutBeranda>
-                <LayoutProfile>
-                  <ResetPassword />
-                </LayoutProfile>
+                <Beranda />
               </LayoutBeranda>
-            </UserProtected>
-          }
-        />
-        <Route
-          path="/User/history-payment"
-          element={
-            <UserProtected>
+            }
+          />
+          <Route
+            path="/beranda"
+            element={
               <LayoutBeranda>
-                <LayoutProfile>
-                  <HistoryPayment />
-                </LayoutProfile>
+                <Beranda />
               </LayoutBeranda>
-            </UserProtected>
-          }
-        />
-        <Route
-          path="/Admin/Login"
-          element={
-            <LayoutUser>
-              <AdminLogin />
-            </LayoutUser>
-          }
-        />
-
-        <Route
-          path="/courses"
-          element={
-            <LayoutBeranda>
-              <Courses />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/course/:id/*"
-          element={
-            <LayoutBeranda>
-              <CourseDetail />
-            </LayoutBeranda>
-          }
-        />
-
-        <Route
-          path="/notification"
-          element={
-            <LayoutBeranda>
-              <NotificationList />
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/payment-history"
-          element={
-            <LayoutBeranda>
-              <NotificationList />
-            </LayoutBeranda>
-          }
-        />
-
-        <Route
-          path="/payment/:id/*"
-          element={
-            <LayoutBeranda>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminProtected>
+                <LayoutAdmin>
+                  <Dashboard />
+                </LayoutAdmin>
+              </AdminProtected>
+            }
+          />
+          <Route
+            path="/admin/kelas"
+            element={
+              <AdminProtected>
+                <LayoutAdmin>
+                  <KelolaKelas />
+                </LayoutAdmin>
+              </AdminProtected>
+            }
+          />
+          <Route
+            path='/admin/kelas/update/:id'
+            element={
+              <AdminProtected>
+                <LayoutAdmin>
+                  <ClassEdit />
+                </LayoutAdmin>
+              </AdminProtected>
+            }
+          />
+          <Route
+            path="/User/forgot-password"
+            element={
+              <LayoutUser>
+                <ForgotPassword />
+              </LayoutUser>
+            }
+          />
+          <Route
+            path="/User/forgot-password/verified"
+            element={
+              <ForgotPasswordProtected>
+                <LayoutUser>
+                  <InputForgotPassword />
+                </LayoutUser>
+              </ForgotPasswordProtected>
+            }
+          />
+          <Route
+            path="/User/Register"
+            element={
+              <LayoutUser>
+                <Register />
+              </LayoutUser>
+            }
+          />
+          <Route
+            path="/User/otp"
+            element={
+              <OtpProtected>
+                <LayoutUser>
+                  <Otp />
+                </LayoutUser>
+              </OtpProtected>
+            }
+          />
+          <Route
+            path="/User/Login"
+            element={
+              <LayoutUser>
+                <UserLogin />
+              </LayoutUser>
+            }
+          />
+          <Route
+            path="/User/profile"
+            element={
+              <LayoutBeranda>
+                <UserProtected>
+                  <LayoutProfile>
+                    <UserProfile />
+                  </LayoutProfile>
+                </UserProtected>
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path="/User/reset-password"
+            element={
               <UserProtected>
-                <LayoutPayment>
-                  <Payment />
-                </LayoutPayment>
+                <LayoutBeranda>
+                  <LayoutProfile>
+                    <ResetPassword />
+                  </LayoutProfile>
+                </LayoutBeranda>
               </UserProtected>
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/payment-success/:id/*"
-          element={
-            <LayoutBeranda>
+            }
+          />
+          <Route
+            path="/User/history-payment"
+            element={
               <UserProtected>
-                <LayoutPayment>
-                  <PaymentSuccess />
-                </LayoutPayment>
+                <LayoutBeranda>
+                  <LayoutProfile>
+                    <HistoryPayment />
+                  </LayoutProfile>
+                </LayoutBeranda>
               </UserProtected>
-            </LayoutBeranda>
-          }
-        />
-        <Route
-          path="/myCourses"
-          element={
-            <LayoutBeranda>
-              <MyCourses />
-            </LayoutBeranda>
-          }
-        />
-      </Routes>
-    </Router>
+            }
+          />
+          <Route
+            path="/Admin/Login"
+            element={
+              <LayoutUser>
+                <AdminLogin />
+              </LayoutUser>
+            }
+          />
+  
+          <Route
+            path="/courses"
+            element={
+              <LayoutBeranda>
+                <Courses />
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path="/course/:id/*"
+            element={
+              <LayoutBeranda>
+                <CourseDetail />
+              </LayoutBeranda>
+            }
+          />
+  
+          <Route
+            path="/notification"
+            element={
+              <LayoutBeranda>
+                <NotificationList />
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path="/payment-history"
+            element={
+              <LayoutBeranda>
+                <NotificationList />
+              </LayoutBeranda>
+            }
+          />
+  
+          <Route
+            path="/payment/:id/*"
+            element={
+              <LayoutBeranda>
+                <UserProtected>
+                  <LayoutPayment>
+                    <Payment />
+                  </LayoutPayment>
+                </UserProtected>
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path="/payment-success/:id/*"
+            element={
+              <LayoutBeranda>
+                <UserProtected>
+                  <LayoutPayment>
+                    <PaymentSuccess />
+                  </LayoutPayment>
+                </UserProtected>
+              </LayoutBeranda>
+            }
+          />
+          <Route
+            path="/myCourses"
+            element={
+              <LayoutBeranda>
+                <MyCourses />
+              </LayoutBeranda>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthContextProvider>
   );
 }
 
