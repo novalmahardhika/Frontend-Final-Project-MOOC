@@ -135,26 +135,6 @@ const FilterCourse = ({ onFilterChange }) => {
                   ))}
                 </div>
 
-                <div className="font-bold md:text-xl text-sm">Level</div>
-                <div className="space-y-1">
-                  {level.map((item) => (
-                    <div key={item.id}>
-                      <div className="flex items-center gap-2">
-                        <Checkbox
-                          className="w-5 h-5"
-                          id={`level-${item.id}`}
-                          value={item.id}
-                          checked={checkedLevelIds.includes(item.id)}
-                          onCheckedChange={(checked) => onCheckedChange(checked, item, "level")}
-                        />
-                        <div className="grid gap-1.5 leading-none ">
-                          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{item.level}</label>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
                 <div className="font-bold md:text-xl text-sm">Kategori</div>
                 <div className="space-y-1">
                   {categories.map((item) => (
@@ -176,6 +156,26 @@ const FilterCourse = ({ onFilterChange }) => {
                         >
                           {item.title}
                         </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="font-bold md:text-xl text-sm">Level</div>
+                <div className="space-y-1">
+                  {level.map((item) => (
+                    <div key={item.id}>
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          className="w-5 h-5"
+                          id={`level-${item.id}`}
+                          value={item.id}
+                          checked={checkedLevelIds.includes(item.id)}
+                          onCheckedChange={(checked) => onCheckedChange(checked, item, "level")}
+                        />
+                        <div className="grid gap-1.5 leading-none ">
+                          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{item.level}</label>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -221,26 +221,6 @@ const FilterCourse = ({ onFilterChange }) => {
                 ))}
               </div>
 
-              <div className="font-bold md:text-xl text-xs">Level</div>
-              <div className="space-y-2">
-                {level.map((item) => (
-                  <div key={item.id}>
-                    <div className="flex items-center gap-2">
-                      <Checkbox
-                        className="w-3 h-3 md:w-7 md:h-7"
-                        id={`level-${item.id}`}
-                        value={item.id}
-                        checked={checkedLevelIds.includes(item.id)}
-                        onCheckedChange={(checked) => onCheckedChange(checked, item, "level")}
-                      />
-                      <div className="grid gap-1.5 leading-none ">
-                        <label className="text-xs md:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{item.level}</label>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               <div className="font-bold md:text-xl text-xs">Kategori</div>
               <div className="space-y-2">
                 {categories.map((item) => (
@@ -262,6 +242,26 @@ const FilterCourse = ({ onFilterChange }) => {
                       >
                         {item.title}
                       </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="font-bold md:text-xl text-xs">Level</div>
+              <div className="space-y-2">
+                {level.map((item) => (
+                  <div key={item.id}>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        className="w-3 h-3 md:w-7 md:h-7"
+                        id={`level-${item.id}`}
+                        value={item.id}
+                        checked={checkedLevelIds.includes(item.id)}
+                        onCheckedChange={(checked) => onCheckedChange(checked, item, "level")}
+                      />
+                      <div className="grid gap-1.5 leading-none ">
+                        <label className="text-xs md:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{item.level}</label>
+                      </div>
                     </div>
                   </div>
                 ))}
