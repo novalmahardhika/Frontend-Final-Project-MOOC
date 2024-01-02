@@ -92,9 +92,9 @@ const UpdateCourse = () => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="flex items-center justify-between h-8 space-x-2 bg-success">
+            <Button className="flex items-center justify-between h-7 space-x-2 bg-success">
               <FontAwesomeIcon icon={faCirclePlus} />
-              <div>Course</div>
+              <div className="text-xs">Tambah</div>
             </Button>
           </DialogTrigger>
 

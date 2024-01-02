@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -10,10 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
-const UbahChapter = () => {
-  const { id } = useParams();
-
-  const [chapters, setChapters] = useState([{ title: "", chapterNumber: 0, duration: 0 }]);
+const UpdateModule = (idChapter) => {
+  const [chapters, setChapters] = useState([{ title: "", videoLink: "" }]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -25,11 +23,11 @@ const UbahChapter = () => {
           },
         };
 
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, config);
-        console.log(res.data.data);
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/chapters/${idChapter}`, config);
+        console.log(res.data.data.modules);
 
         // Make sure res.data.chapters is an array before setting it
-        const fetchedChapters = Array.isArray(res.data.data.chapters) ? res.data.data.chapters : [];
+        const fetchedChapters = Array.isArray(res.data.data.modules) ? res.data.data.modules : [];
         setChapters(fetchedChapters);
       } catch (error) {
         console.error("Error fetching chapter data:", error);
@@ -37,12 +35,12 @@ const UbahChapter = () => {
     };
 
     fetchChapterData();
-  }, [id, token]);
+  }, [idChapter, token]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    if (!chapters.every((chapter) => chapter.title && chapter.chapterNumber && chapter.duration)) {
+    if (!chapters.every((chapter) => chapter.title && chapter.videoLink)) {
       console.error("All fields must be filled");
       return;
     }
@@ -57,13 +55,12 @@ const UbahChapter = () => {
       const formDataToSend = {
         chapters: chapters.map((chapter) => ({
           title: chapter.title,
-          chapterNumber: chapter.chapterNumber,
-          duration: chapter.duration,
+          videoLink: chapter.videoLink,
         })),
       };
 
-      const res = await axios.post(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, formDataToSend, config);
-      console.log(res.data.data);
+      const res = await axios.post(`https://idea-academy.up.railway.app/api/v1/chapters/${idChapter}`, formDataToSend, config);
+
       console.log("Chapters updated successfully:", res.data);
     } catch (error) {
       console.error("Error updating chapters:", error);
@@ -94,7 +91,7 @@ const UbahChapter = () => {
           </DialogTrigger>
 
           <DialogContent className="shadow-2xl font-poppins border-gray-800 ">
-            <div className="mb-2 text-2xl font-semibold text-center">Ubah Chapter</div>
+            <div className="mb-2 text-2xl font-semibold text-center">Ubah Modul</div>
             <Form>
               <div className="px-5 space-y-5 mb-3">
                 {chapters.map((chapter, index) => (
@@ -102,41 +99,27 @@ const UbahChapter = () => {
                     key={index}
                     className="flex space-x-3 items-end"
                   >
-                    <div className="space-y-1 shadow-sm w-1/3">
-                      <Label className="text-sm font-medium text-gray-800">Chap. No.</Label>
+                    <div className="space-y-1 shadow-sm">
+                      <Label className="text-sm font-medium text-gray-800">Judul Module</Label>
                       <Input
-                        placeholder="Masukkan Chapter Number"
-                        type="number"
-                        value={chapter.chapterNumber || ""}
-                        name={`chapterNumber-${index}`}
-                        maxLength={3}
-                        className="border border-gray-500"
-                        onChange={(e) => handleChapterChange(index, "chapterNumber", parseInt(e.target.value) || 0)}
-                        autoFocus={index[0]}
-                      />
-                    </div>
-                    <div className="space-y-1 shadow-sm w-full">
-                      <Label className="text-sm font-medium text-gray-800">Judul Chapter</Label>
-                      <Input
-                        placeholder="Masukkan Judul Chapter"
+                        placeholder="Masukkan Judul"
                         value={chapter.title}
                         name={`title-${index}`}
-                        maxLength={50}
+                        maxLength={100}
                         className="border border-gray-500"
                         onChange={(e) => handleChapterChange(index, "title", e.target.value)}
+                        autoFocus
                       />
                     </div>
-
-                    <div className="space-y-1 shadow-sm w-1/3">
-                      <Label className="text-sm font-medium text-gray-800">Duration</Label>
+                    <div className="space-y-1 shadow-sm">
+                      <Label className="text-sm font-medium text-gray-800">Link Video</Label>
                       <Input
-                        placeholder="Masukkan Duration"
-                        type="number"
-                        value={chapter.duration || ""}
-                        name={`duration-${index}`}
-                        maxLength={3}
+                        placeholder="Link Video Module"
+                        value={chapter.videoLink}
+                        name={`videoLink-${index}`}
+                        maxLength={100}
                         className="border border-gray-500"
-                        onChange={(e) => handleChapterChange(index, "duration", parseInt(e.target.value) || 0)}
+                        onChange={(e) => handleChapterChange(index, "videoLink", e.target.value)}
                       />
                     </div>
                     {index >= 0 && (
@@ -165,7 +148,6 @@ const UbahChapter = () => {
                     )}
                   </div>
                 ))}
-
                 <div className="w-full">
                   <Button
                     className="w-full"
@@ -183,4 +165,4 @@ const UbahChapter = () => {
   );
 };
 
-export default UbahChapter;
+export default UpdateModule;

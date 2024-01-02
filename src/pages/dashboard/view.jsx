@@ -3,12 +3,13 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import UpdateCourse from "./update_course";
 import AddChapter from "./add_chapter";
 import AddModule from "./add_module";
+import UpdateChapter from "./update_chapter";
+import UpdateModule from "./update_module";
 
 const ViewCourse = () => {
   const { id } = useParams();
@@ -57,39 +58,45 @@ const ViewCourse = () => {
               <div className="mt-5 font-poppins">
                 <div className="flex justify-between items-center">
                   <div className="font-semibold text-2xl">Detail Chapters</div>
-                  <div className="flex space-x-3 items-center">
+                  <div className="flex items-center space-x-2">
                     <AddChapter />
-                    <Button>Edit</Button>
+                    <UpdateChapter id={id} />
                   </div>
                 </div>
                 <Separator className="my-4" />
 
                 <div>
-                  <div className="border-b py-2 ">
+                  <div className="border-b py-2">
                     {courseList.chapters.map((chapter) => (
-                      <div key={chapter.id}>
-                        <div className="flex  justify-between mt-5">
-                          <div>
-                            Chapter {chapter.chapterNumber} - {chapter.title}
+                      <div
+                        key={chapter.id}
+                        className="space-y-3"
+                      >
+                        <div className="flex justify-between">
+                          <div className="font-semibold text-sm mt-3">
+                            Chapter {chapter.chapterNumber} - {chapter.title} - {chapter.duration + "Minutes"}
                           </div>
-
-                          <div>Duration {chapter.duration} Minutes</div>
-                        </div>
-                        <Separator className="my-2" />
-                        <div className="flex space-x-2">
-                          <div className="px-3">Detail Modules</div>
-                          <AddModule id={chapter.id} />
-                        </div>
-                        {chapter.modules.map((module, index) => (
-                          <div
-                            key={module.id}
-                            className="px-3"
-                          >
-                            <div>
-                              {index + 1} {module.title}
-                            </div>
+                          <div className="flex items-center space-x-2">
+                            <AddModule id={chapter.id} />
+                            <UpdateModule id={chapter.id} />
                           </div>
-                        ))}
+                        </div>
+                        <Separator className="my-1" />
+                        <div className="space-y-3">
+                          <div className="text-sm">Detail Modules</div>
+                          <div className=" space-y-1">
+                            {chapter.modules.map((module, index) => (
+                              <div
+                                key={module.id}
+                                className="px-3"
+                              >
+                                <div className="text-sm">
+                                  {index + 1 + "."} {module.title}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -101,7 +108,7 @@ const ViewCourse = () => {
             <>
               <div className="mt-5 font-poppins">
                 <div className="flex justify-between items-center">
-                  <div className="font-semibold text-2xl">Detail Kelas</div>
+                  <div className="font-semibold text-2xl">{courseList.title}</div>
                   <div>
                     <UpdateCourse
                       id={courseList.id}
@@ -118,92 +125,83 @@ const ViewCourse = () => {
                 </div>
                 <Separator className="my-4" />
 
-                <div>
-                  <div className="border-b py-2">
-                    <Label>Nama Kelas</Label>
-                    <Input
-                      value={courseList.title}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
+                <div className="space-y-3">
+                  <div className="flex space-x-5">
+                    <div className="h-full w-[700px]">
+                      <img
+                        src={courseList.image}
+                        alt="Course Thumbnail"
+                        className="w-full h-[350px] object-cover rounded-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <div className="border-b py-2">
+                        <Label className="font-semibold">Deskripsi Kelas</Label>
+                        <Textarea
+                          value={courseList.description}
+                          readOnly
+                          className="border-none cursor-default focus:border-none shadow-none h-20"
+                        />
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Kategori</Label>
+                          <Input
+                            value={courseList.category}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none"
+                          />
+                        </div>
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Tingkatan</Label>
+                          <Input
+                            value={courseList.level}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none"
+                          />
+                        </div>
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Tipe Kelas</Label>
+                          <Input
+                            value={courseList.type}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none"
+                          />
+                        </div>
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Harga Kelas</Label>
+                          <Input
+                            value={courseList.price}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none"
+                          />
+                        </div>
 
-                  <div className="border-b py-2">
-                    <Label>Deskripsi Kelas</Label>
-                    <Textarea
-                      value={courseList.description}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Nama Creator</Label>
+                          <Input
+                            value={courseList.creator}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none"
+                          />
+                        </div>
 
-                  <div className="border-b py-2">
-                    <Label>Kategori</Label>
-                    <Input
-                      value={courseList.category}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Tingkatan</Label>
-                    <Input
-                      value={courseList.level}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Tipe Kelas</Label>
-                    <Input
-                      value={courseList.type}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Harga Kelas</Label>
-                    <Input
-                      value={courseList.price}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Nama Creator</Label>
-                    <Input
-                      value={courseList.creator}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Thumbnail</Label>
-                    <Input
-                      value={courseList.image}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
-                  </div>
-
-                  <div className="border-b py-2">
-                    <Label>Link Telegram</Label>
-                    <Input
-                      value={courseList.telegram}
-                      readOnly
-                      className="border-none cursor-default focus:border-none shadow-none"
-                    />
+                        <div className="border-b py-2">
+                          <Label className="font-semibold">Link Telegram</Label>
+                          <Input
+                            value={courseList.telegram}
+                            readOnly
+                            className="border-none cursor-default focus:border-none shadow-none w-full"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </>
           )}
-          <Separator className="my-4" />
+          <Separator className="mt-10" />
         </div>
       </div>
     </>

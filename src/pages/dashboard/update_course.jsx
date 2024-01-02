@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 
-const AddCourse = (props) => {
+const UpdateCourse = (props) => {
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     title: props.title,
@@ -87,8 +87,9 @@ const AddCourse = (props) => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="hover:bg-active">
-              <div>Ubah</div>
+            <Button className="flex items-center justify-between space-x-2 h-7 bg-active">
+              <FontAwesomeIcon icon={faPen} />
+              <div className="text-xs">Ubah</div>
             </Button>
           </DialogTrigger>
 
@@ -319,4 +320,4 @@ const AddCourse = (props) => {
   );
 };
 
-export default AddCourse;
+export default UpdateCourse;

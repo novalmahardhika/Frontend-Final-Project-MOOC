@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
@@ -9,19 +9,14 @@ import axios from "axios";
 import { useState } from "react";
 
 const AddModule = (idChapter) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    video: "",
-  });
-  console.log(formData);
+  const [modules, setModules] = useState([{ title: "", videoLink: "" }]);
   const token = localStorage.getItem("token");
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     // Form validation
-    if (!formData.title || !formData.Video) {
-      // Handle validation error (you can show a message to the user)
+    if (!modules.every((module) => module.title && module.videoLink)) {
       console.error("All fields must be filled");
       return;
     }
@@ -34,18 +29,39 @@ const AddModule = (idChapter) => {
         },
       };
 
-      const formDataToSend = new FormData();
-      formDataToSend.append("title", formData.title);
-      formDataToSend.append("Video", formData.Video);
+      const formDataToSend = {
+        modules: modules.map((module) => ({
+          title: module.title,
+          Video: module.videoLink,
+        })),
+      };
 
       const res = await axios.post(`https://idea-academy.up.railway.app/api/v1/chapters/${idChapter}`, formDataToSend, config);
 
       // Handle success (you can show a success message or redirect)
-      console.log("Course added successfully:", res.data);
+      console.log("Modules added successfully:", res.data);
     } catch (error) {
       // Handle error (you can show an error message to the user)
-      console.error("Error adding course:", error);
+      console.error("Error adding modules:", error);
     }
+  };
+
+  const handleAddModule = () => {
+    if (modules.length < 10) {
+      setModules([...modules, { title: "", videoLink: "" }]);
+    }
+  };
+
+  const handleRemoveModule = (index) => {
+    const updatedModules = [...modules];
+    updatedModules.splice(index, 1);
+    setModules(updatedModules);
+  };
+
+  const handleModuleChange = (index, key, value) => {
+    const updatedModules = [...modules];
+    updatedModules[index][key] = value;
+    setModules(updatedModules);
   };
 
   return (
@@ -53,38 +69,68 @@ const AddModule = (idChapter) => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <FontAwesomeIcon
-              icon={faCirclePlus}
-              className="shadow-sm cursor-pointer text-success hover:text-active"
-            />
+            <Button className="flex space-x-2 items-center h-6 bg-blue-500">
+              <FontAwesomeIcon
+                icon={faCirclePlus}
+                className=" hover:text-active"
+              />
+              <div className="text-xs">Module</div>
+            </Button>
           </DialogTrigger>
 
           <DialogContent className="shadow-2xl font-poppins border-gray-800 ">
             <div className="mb-2 text-2xl font-semibold text-center">Tambah Module</div>
             <Form>
               <div className="px-5 space-y-5 mb-3">
-                <div className="relative space-y-1 shadow-sm">
-                  <Label className="block text-sm font-medium text-gray-800">Judul Module</Label>
-                  <Input
-                    placeholder="Masukkan Judul Chapter"
-                    name="title"
-                    maxLength={50}
-                    className="border border-gray-500"
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    autoFocus
-                  />
-                </div>
-                <div className="relative space-y-1 shadow-sm">
-                  <Label className="block text-sm font-medium text-gray-800">Chapter Number</Label>
-                  <Input
-                    placeholder="Masukkan"
-                    type="number"
-                    name="Video"
-                    maxLength={3}
-                    className="border border-gray-500"
-                    onChange={(e) => setFormData({ ...formData, Video: e.target.value })}
-                  />
-                </div>
+                {modules.map((module, index) => (
+                  <div
+                    key={index}
+                    className="flex space-x-3 items-end"
+                  >
+                    <div className="space-y-1 shadow-sm">
+                      <Label className="text-sm font-medium text-gray-800">Judul Module</Label>
+                      <Input
+                        placeholder="Masukkan Judul"
+                        value={module.title}
+                        name={`title-${index}`}
+                        maxLength={100}
+                        className="border border-gray-500"
+                        onChange={(e) => handleModuleChange(index, "title", e.target.value)}
+                        autoFocus
+                      />
+                    </div>
+                    <div className="space-y-1 shadow-sm">
+                      <Label className="text-sm font-medium text-gray-800">Link Video</Label>
+                      <Input
+                        placeholder="Link Video Module"
+                        value={module.videoLink}
+                        name={`video-${index}`}
+                        maxLength={100}
+                        className="border border-gray-500"
+                        onChange={(e) => handleModuleChange(index, "videoLink", e.target.value)}
+                      />
+                    </div>
+                    {index > 0 && (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={() => handleRemoveModule(index)}
+                          className="text-destructive hover:cursor-pointer hover:opacity-80 pb-2"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {modules.length === 10 ? (
+                  ""
+                ) : (
+                  <Button
+                    onClick={handleAddModule}
+                    className="bg-blue-500 text-white mt-2 text-xs h-7"
+                  >
+                    Add Module
+                  </Button>
+                )}
                 <div className="w-full">
                   <Button
                     className="w-full"
