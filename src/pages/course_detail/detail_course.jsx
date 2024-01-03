@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Loading from "@/components/loading";
 
 const DetailCourse = () => {
   const { id } = useParams();
@@ -46,7 +47,7 @@ const DetailCourse = () => {
   }, []);
 
   if (!courseDetail) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const handleModuleSelection = async (selectedModule) => {

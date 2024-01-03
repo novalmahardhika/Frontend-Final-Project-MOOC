@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Loading from "@/components/loading";
 
 const Module = ({ onSelectModule }) => {
   const { id } = useParams();
@@ -93,7 +94,7 @@ const Module = ({ onSelectModule }) => {
   }, []);
 
   if (!courseDetail) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

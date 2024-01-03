@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "@/components/loading";
 
 const CourseHeader = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -36,7 +37,7 @@ const CourseHeader = () => {
   }, []);
 
   if (!courseDetail) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const totalDuration = courseDetail.chapters.reduce((acc, chapter) => acc + chapter.duration, 0);
@@ -91,16 +92,6 @@ const CourseHeader = () => {
                     </div>
                   </div>
                 </div>
-                {/* <Link
-                  to={courseDetail.telegram}
-                  target="blank"
-                  className="flex justify-center"
-                >
-                  <Button className="text-xs h-8 bg-success space-x-2">
-                    <p>Join Grup Telegram</p>
-                    <FontAwesomeIcon icon={faComments} />
-                  </Button>
-                </Link> */}
               </div>
             </div>
           </>
