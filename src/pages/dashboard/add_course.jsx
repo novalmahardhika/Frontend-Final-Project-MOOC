@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { Toast } from "@/components/ui/toast";
 
 const UpdateCourse = () => {
   const [image, setImage] = useState(null);
@@ -50,13 +51,6 @@ const UpdateCourse = () => {
       return;
     }
 
-    // Additional validation for price (numeric check)
-    if (isNaN(formData.price)) {
-      // Handle validation error for price (you can show a message to the user)
-      console.error("Price must be a number");
-      return;
-    }
-
     // You can now proceed to make the axios POST request
     try {
       const config = {
@@ -81,6 +75,11 @@ const UpdateCourse = () => {
 
       // Handle success (you can show a success message or redirect)
       console.log("Course added successfully:", res.data);
+
+      Toast({
+        title: "Berhasil!.",
+        description: "Data berhasil ditambahkan",
+      });
     } catch (error) {
       // Handle error (you can show an error message to the user)
       console.error("Error adding course:", error);

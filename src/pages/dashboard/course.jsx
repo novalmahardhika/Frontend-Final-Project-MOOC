@@ -6,7 +6,7 @@ import Search from "@/components/search_table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"; // Sesuaikan dengan komponen paginasi yang Anda gunakan
 import AddCourse from "./add_course";
 import { Link } from "react-router-dom";
-// import UpdateCourse from "./update_course";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog";
 
 const KelolaKelas = () => {
   const [courseList, setCourseList] = useState([]);
@@ -20,7 +20,6 @@ const KelolaKelas = () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseList(res.data.data);
-        console.log(res.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -118,13 +117,26 @@ const KelolaKelas = () => {
                         image={item.image}
                       /> */}
                       </Link>
-                      <Button
-                        id={item.id}
-                        className="h-6 text-xs w-14 bg-destructive"
-                        onClick={deleteHandler}
-                      >
-                        Hapus
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button className="h-6 text-xs w-14 bg-destructive">Hapus</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              id={item.id}
+                              onClick={deleteHandler}
+                            >
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </TableCell>
                 </TableRow>
