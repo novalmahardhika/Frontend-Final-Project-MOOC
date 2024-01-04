@@ -3,10 +3,11 @@ import { Input } from '@/components/ui/input'
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import Loading from './loading'
+import imageProfile from '../../assets/profile.png'
 
 const items = [
   {
-    title: 'Name',
+    title: 'Nama',
     id: 'name',
   },
   {
@@ -14,11 +15,11 @@ const items = [
     id: 'email',
   },
   {
-    title: 'Phone',
+    title: 'Nomor Hp',
     id: 'phoneNumber',
   },
   {
-    title: 'Address',
+    title: 'Alamat',
     id: 'address',
   },
 ]
@@ -76,7 +77,7 @@ const UserProfile = () => {
     if (preview) {
       URL.revokeObjectURL(preview)
     }
-    
+
     if (!isSelected) {
       setPreview(null)
       return
@@ -152,8 +153,8 @@ const UserProfile = () => {
         className='w-[80px] h-[80px] rounded-full relative mx-auto  border-2 hover:border-active duration-300 border-primary flex justify-center items-center'
       >
         {isLoadingFetch ? (
-          <img src='/src/assets/profile-empty.png' className='rounded-full' />
-          ) : (
+          <img src={imageProfile} className='rounded-full' />
+        ) : (
           <img
             src={preview ? preview : isData.image}
             className='w-[75px] h-[75px] rounded-full object-cover'
@@ -202,7 +203,7 @@ const UserProfile = () => {
         </h1>
       )}
       <Button className='my-3 hover:bg-active' onClick={clickHandler}>
-        Update Profile
+        Perbarui Profil
       </Button>
     </div>
   )

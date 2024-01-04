@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Form } from '@/components/ui/form'
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select'
 import { useState } from 'react'
 
-const AddCourse = (props) => {
+const UpdateCourse = (props) => {
   const [image, setImage] = useState(null)
   const [formData, setFormData] = useState({
     title: props.title,
@@ -25,10 +25,12 @@ const AddCourse = (props) => {
     creator: props.creator,
     description: props.description,
     level: props.level,
-    price: props.price,
+    type: props.type,
+    price: +props.price,
     image: props.image,
     telegram: props.telegram,
   })
+  console.log(formData)
   const token = localStorage.getItem('token')
 
   const handleImageChange = (e) => {
@@ -50,13 +52,11 @@ const AddCourse = (props) => {
     e.preventDefault()
 
     // Additional validation for price (numeric check)
-    if (isNaN(formData.price)) {
-      // Handle validation error for price (you can show a message to the user)
-      console.error('Price must be a number')
-      return
-    }
-
-    console.log(props.image)
+    // if (isNaN(+formData.price)) {
+    //   // Handle validation error for price (you can show a message to the user)
+    //   console.error("Price must be a number");
+    //   return;
+    // }
 
     // You can now proceed to make the axios POST request
     try {
@@ -96,8 +96,9 @@ const AddCourse = (props) => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className='flex items-center justify-center h-6 space-x-2 text-xs text-center w-14 bg-success'>
-              <div>Ubah</div>
+            <Button className='flex items-center justify-between space-x-2 h-7 bg-active'>
+              <FontAwesomeIcon icon={faPen} />
+              <div className='text-xs'>Ubah</div>
             </Button>
           </DialogTrigger>
 
@@ -235,13 +236,36 @@ const AddCourse = (props) => {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className='relative space-y-1 shadow-sm'>
+                  <Label className='block text-sm font-medium text-gray-800'>
+                    Tingkatan
+                  </Label>
+                  <Select
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, type: value })
+                    }
+                    defaultValue={props.type}
+                  >
+                    <SelectTrigger className='w-full border border-gray-500'>
+                      <SelectValue placeholder='Pilih Tipe' />
+                    </SelectTrigger>
+                    <SelectContent className='p-1 font-poppins'>
+                      <SelectItem className='cursor-pointer' value='free'>
+                        Free
+                      </SelectItem>
+                      <SelectItem className='cursor-pointer' value='premium'>
+                        Premium
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
                 <div className='relative space-y-1 shadow-sm'>
                   <Label className='block text-sm font-medium text-gray-800'>
                     Harga
                   </Label>
                   <Input
-                    defaultValue={props.price}
+                    defaultValue={+props.price}
                     placeholder='Masukkan'
                     type='number'
                     name='price'
@@ -261,7 +285,7 @@ const AddCourse = (props) => {
                     {image && (
                       <>
                         <img
-                          src={image}
+                          src={props.image}
                           alt='Thumbnail Preview'
                           className='object-cover w-full h-20 rounded-sm'
                         />
@@ -328,4 +352,4 @@ const AddCourse = (props) => {
   )
 }
 
-export default AddCourse
+export default UpdateCourse

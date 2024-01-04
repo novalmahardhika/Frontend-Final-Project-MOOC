@@ -9,7 +9,7 @@ import Notification from "@/pages/notification/notif";
 import { useState, useEffect } from "react";
 import Search from "./search";
 import axios from "axios";
-
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 const Navbar_User = () => {
   const token = localStorage.getItem("token");
   const [userInfo, setUserInfo] = useState("");
@@ -62,16 +62,43 @@ const Navbar_User = () => {
                 />
                 <span className="tab tab-back block text-xs">Beranda</span>
               </Link>
-              <Link
-                to="/notification"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-              >
-                <FontAwesomeIcon
-                  icon={faBell}
-                  className="inline-block mb-1"
-                />
-                <span className="tab tab-profile block text-xs">Notifikasi</span>
-              </Link>
+              {token ? (
+                <Link
+                  to="/notification"
+                  className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                >
+                  <FontAwesomeIcon
+                    icon={faBell}
+                    className="inline-block mb-1"
+                  />
+                  <span className="tab tab-profile block text-xs">Notifikasi</span>
+                </Link>
+              ) : (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1">
+                      <FontAwesomeIcon
+                        icon={faBell}
+                        className="inline-block mb-1"
+                      />
+                      <span className="tab tab-profile block text-xs">Notifikasi</span>
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="w-[300px] rounded-sm font-poppins">
+                    <DialogHeader>
+                      <DialogTitle className="text">Perhatian!</DialogTitle>
+                      <DialogDescription>Untuk mengakses halaman Notifikasi anda harus login terlebih dahulu</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <Link to="/user/login">
+                        <DialogClose className="w-full">
+                          <Button className="w-full">Login</Button>
+                        </DialogClose>
+                      </Link>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
               <Link
                 to="/courses"
                 className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
@@ -92,16 +119,43 @@ const Navbar_User = () => {
                 />
                 <span className="tab tab-payment-history block text-xs">Kursus</span>
               </Link>
-              <Link
-                to="/user/profile"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-              >
-                <FontAwesomeIcon
-                  icon={faUser}
-                  className="inline-block mb-1"
-                />
-                <span className="tab tab-logout block text-xs">Profile</span>
-              </Link>
+              {token ? (
+                <Link
+                  to="/user/profile"
+                  className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                >
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className="inline-block mb-1"
+                  />
+                  <span className="tab tab-logout block text-xs">Profile</span>
+                </Link>
+              ) : (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1">
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        className="inline-block mb-1"
+                      />
+                      <span className="tab tab-logout block text-xs">Profile</span>
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="w-[300px] rounded-sm font-poppins">
+                    <DialogHeader>
+                      <DialogTitle className="text">Perhatian!</DialogTitle>
+                      <DialogDescription>Untuk mengakses halaman Profile anda harus login terlebih dahulu</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <Link to="/user/login">
+                        <DialogClose className="w-full">
+                          <Button className="w-full">Login</Button>
+                        </DialogClose>
+                      </Link>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
             </div>
           </nav>
           {/* <div className="bg-primary opacity-80"> */}

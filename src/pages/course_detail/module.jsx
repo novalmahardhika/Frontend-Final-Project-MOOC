@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Loading from "@/components/loading";
 
 const Module = ({ onSelectModule }) => {
   const { id } = useParams();
@@ -22,16 +23,29 @@ const Module = ({ onSelectModule }) => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         const data = res.data.data;
-        setCourseDetail(data);
-        let done = 0;
-        data["chapters"].forEach((item) => {
-          item["modules"].forEach((module) => {
-            if (module.done) done++;
-          });
+
+        let chapterNumber = 1;
+        data["chapters"].forEach((chapter) => {
+          chapter["chapterNumber"] = chapterNumber;
+          chapterNumber++;
         });
-        const percentage = Math.floor((done / data.totalModule) * 100);
-        console.log(percentage);
-        setProgress(percentage);
+
+        // Sort chapters dan modules berdasarkan nomor chapter dan nomor modul
+        const sortedCourseDetail = sortChaptersAndModules(data);
+
+        setCourseDetail(sortedCourseDetail);
+
+        if (res.data.data.statusPayment) {
+          let done = 0;
+          data["chapters"].forEach((item) => {
+            item["modules"].forEach((module) => {
+              if (module.done) done++;
+            });
+          });
+          const percentage = Math.floor((done / data.totalModule) * 100);
+
+          setProgress(percentage);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -92,8 +106,18 @@ const Module = ({ onSelectModule }) => {
     };
   }, []);
 
+  const sortChaptersAndModules = (courseDetail) => {
+    const sortedChapters = courseDetail.chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+    const sortedModules = sortedChapters.map((chapter) => ({
+      ...chapter,
+      modules: chapter.modules.sort((a, b) => a.index - b.index),
+    }));
+
+    return { ...courseDetail, chapters: sortedModules };
+  };
+
   if (!courseDetail) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -103,7 +127,7 @@ const Module = ({ onSelectModule }) => {
           <div className="px-4 md:relative md:w-[450px] md:-top-20 w-screen z-1 font-poppins ">
             <div className="p-3">
               <div>
-                <div className="font-bold text-lg">Materi Belajar</div>
+                <div className="font-bold text-lg pb-3">Materi Belajar</div>
               </div>
               <div className=" space-y-5">
                 {courseDetail.chapters.map((chapter, chapterIndex) => (
@@ -141,8 +165,8 @@ const Module = ({ onSelectModule }) => {
                               <DialogTrigger className="w-full">
                                 <div className="flex items-center justify-between w-full">
                                   <div className="flex items-center text-sm">
-                                    <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex">{index + 1}</div>
-                                    <div>{module.title}</div>
+                                    <div className="bg-secondary rounded-full w-10 h-10 items-center justify-center flex text-start">{index + 1}</div>
+                                    <div className="text-start">{module.title}</div>
                                   </div>
                                   <div className="rounded-full w-6 h-6 bg-gray-400 flex justify-center items-center me-3">
                                     <FontAwesomeIcon
@@ -199,15 +223,17 @@ const Module = ({ onSelectModule }) => {
             <Card className="p-3">
               <CardHeader>
                 <CardTitle className="font-bold text-lg">Materi Belajar</CardTitle>
-                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-                  <div
-                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                    style={{ width: progress + "%" }}
-                  >
-                    {" "}
-                    {progress + "%"}
+                {courseDetail.statusPayment && (
+                  <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                    <div
+                      className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                      style={{ width: progress + "%" }}
+                    >
+                      {" "}
+                      {progress + "%"}
+                    </div>
                   </div>
-                </div>
+                )}
               </CardHeader>
               <CardContent className=" space-y-10">
                 {courseDetail.chapters.map((chapter, chapterIndex) => (

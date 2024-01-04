@@ -9,8 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { Toast } from "@/components/ui/toast";
 
-const AddCourse = () => {
+const UpdateCourse = () => {
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -18,10 +19,12 @@ const AddCourse = () => {
     creator: "",
     description: "",
     level: "",
+    type: "",
     price: "",
     image: null,
     telegram: "",
   });
+  const token = localStorage.getItem("token");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -38,26 +41,18 @@ const AddCourse = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     // Form validation
-    if (!formData.title || !formData.category || !formData.creator || !formData.description || !formData.level || !formData.price || !formData.image || !formData.telegram) {
+    if (!formData.title || !formData.category || !formData.creator || !formData.description || !formData.level || !formData.type || !formData.price || !formData.image || !formData.telegram) {
       // Handle validation error (you can show a message to the user)
       console.error("All fields must be filled");
       return;
     }
 
-    // Additional validation for price (numeric check)
-    if (isNaN(formData.price)) {
-      // Handle validation error for price (you can show a message to the user)
-      console.error("Price must be a number");
-      return;
-    }
-
     // You can now proceed to make the axios POST request
     try {
-      const token = localStorage.getItem("token");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -71,6 +66,7 @@ const AddCourse = () => {
       formDataToSend.append("creator", formData.creator);
       formDataToSend.append("description", formData.description);
       formDataToSend.append("level", formData.level);
+      formDataToSend.append("type", formData.type);
       formDataToSend.append("price", formData.price);
       formDataToSend.append("image", formData.image);
       formDataToSend.append("telegram", formData.telegram);
@@ -79,6 +75,11 @@ const AddCourse = () => {
 
       // Handle success (you can show a success message or redirect)
       console.log("Course added successfully:", res.data);
+
+      Toast({
+        title: "Berhasil!.",
+        description: "Data berhasil ditambahkan",
+      });
     } catch (error) {
       // Handle error (you can show an error message to the user)
       console.error("Error adding course:", error);
@@ -90,16 +91,16 @@ const AddCourse = () => {
       <div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="h-8 flex items-center justify-between space-x-2 bg-success">
+            <Button className="flex items-center justify-between h-7 space-x-2 bg-success">
               <FontAwesomeIcon icon={faCirclePlus} />
-              <div>Course</div>
+              <div className="text-xs">Tambah</div>
             </Button>
           </DialogTrigger>
 
           <DialogContent className="shadow-2xl font-poppins border-gray-800 md:h-[600px]">
-            <div className="text-2xl text-center font-semibold mb-2">Tambah Kelas</div>
-            <Form onSubmit={handleSubmit}>
-              <div className="overflow-y-scroll px-5 space-y-5">
+            <div className="mb-2 text-2xl font-semibold text-center">Tambah Kelas</div>
+            <Form>
+              <div className="px-5 space-y-5 overflow-y-scroll">
                 <div className="relative space-y-1 shadow-sm">
                   <Label className="block text-sm font-medium text-gray-800">Nama Kelas</Label>
                   <Input
@@ -107,16 +108,17 @@ const AddCourse = () => {
                     name="title"
                     maxLength={50}
                     className="border border-gray-500"
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     autoFocus
                   />
                 </div>
                 <div className="relative space-y-1 shadow-sm">
                   <Label className="block text-sm font-medium text-gray-800">Kategori</Label>
-                  <Select>
+                  <Select onValueChange={(value) => setFormData({ ...formData, category: value })}>
                     <SelectTrigger className="w-full border border-gray-500">
                       <SelectValue placeholder="Pilih Kategori" />
                     </SelectTrigger>
-                    <SelectContent className="p-1 font-poppins cursor-pointer">
+                    <SelectContent className="p-1 cursor-pointer font-poppins">
                       <SelectItem
                         className="cursor-pointer"
                         value="Android Development"
@@ -163,6 +165,7 @@ const AddCourse = () => {
                     name="creator"
                     maxLength={50}
                     className="border border-gray-500"
+                    onChange={(e) => setFormData({ ...formData, creator: e.target.value })}
                   />
                 </div>
                 <div className="relative space-y-1 shadow-sm">
@@ -171,11 +174,34 @@ const AddCourse = () => {
                     placeholder="Deskripsi Kelas"
                     id="description"
                     className="border border-gray-500"
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
                 <div className="relative space-y-1 shadow-sm">
+                  <Label className="block text-sm font-medium text-gray-800">Tipe Kelas</Label>
+                  <Select onValueChange={(value) => setFormData({ ...formData, type: value })}>
+                    <SelectTrigger className="w-full border border-gray-500">
+                      <SelectValue placeholder="Pilih tipe kelas" />
+                    </SelectTrigger>
+                    <SelectContent className="p-1 font-poppins">
+                      <SelectItem
+                        className="cursor-pointer"
+                        value="free"
+                      >
+                        Free
+                      </SelectItem>
+                      <SelectItem
+                        className="cursor-pointer"
+                        value="premium"
+                      >
+                        Premium
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="relative space-y-1 shadow-sm">
                   <Label className="block text-sm font-medium text-gray-800">Tingkatan</Label>
-                  <Select>
+                  <Select onValueChange={(value) => setFormData({ ...formData, level: value })}>
                     <SelectTrigger className="w-full border border-gray-500">
                       <SelectValue placeholder="Pilih Level" />
                     </SelectTrigger>
@@ -210,6 +236,7 @@ const AddCourse = () => {
                     name="price"
                     maxLength={50}
                     className="border border-gray-500"
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                   />
                 </div>
 
@@ -221,11 +248,11 @@ const AddCourse = () => {
                         <img
                           src={image}
                           alt="Thumbnail Preview"
-                          className="h-20 w-full object-cover rounded-sm"
+                          className="object-cover w-full h-20 rounded-sm"
                         />
                         <FontAwesomeIcon
                           icon={faTrash}
-                          className="cursor-pointer text-red-500"
+                          className="text-red-500 cursor-pointer"
                           onClick={() => setImage(null)}
                         />
                       </>
@@ -236,7 +263,7 @@ const AddCourse = () => {
                           className="cursor-pointer h-7 bg-success"
                           onClick={() => document.getElementById("thumbnailInput").click()}
                         >
-                          <div className="flex space-x-2 items-center ">
+                          <div className="flex items-center space-x-2 ">
                             <FontAwesomeIcon
                               icon={faCirclePlus}
                               className="text-white"
@@ -262,12 +289,13 @@ const AddCourse = () => {
                     placeholder="Link Telegram"
                     name="telegram"
                     className="border border-gray-500"
+                    onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
                   />
                 </div>
                 <div className="w-full">
                   <Button
                     className="w-full"
-                    type="submit"
+                    onClick={submitHandler}
                   >
                     Submit
                   </Button>
@@ -281,4 +309,4 @@ const AddCourse = () => {
   );
 };
 
-export default AddCourse;
+export default UpdateCourse;

@@ -19,7 +19,7 @@ const TabCourse = ({ onTabChange }) => {
   return (
     <div>
       <div className="font-poppins space-y-6">
-        <div className="md:absolute z-10 md:top-20 mb-4 pb-3 md:pb-0 md:mb-0 overflow-x-scroll md:overflow-hidden">
+        <div className="md:absolute md:top-20 mb-4 pb-3 md:pb-0 md:mb-0 overflow-x-scroll md:overflow-hidden">
           <div className="flex justify-start  md:pb-0 ">
             <TabButton
               tabName="All Course"

@@ -4,18 +4,31 @@ import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "@/components/loading";
 
 const CourseHeader = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
   const token = localStorage.getItem("token");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
-        setCourseDetail(res.data.data);
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+        const data = res.data.data;
+        setCourseDetail(data);
+        if (res.data.data.statusPayment) {
+          let done = 0;
+          data["chapters"].forEach((item) => {
+            item["modules"].forEach((module) => {
+              if (module.done) done++;
+            });
+          });
+          const percentage = Math.floor((done / data.totalModule) * 100);
+          setProgress(percentage);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -36,7 +49,7 @@ const CourseHeader = () => {
   }, []);
 
   if (!courseDetail) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   const totalDuration = courseDetail.chapters.reduce((acc, chapter) => acc + chapter.duration, 0);
@@ -90,17 +103,20 @@ const CourseHeader = () => {
                       <div className="text-xs">{courseDetail.totalDuration} Menit</div>
                     </div>
                   </div>
+                  {/* <div className="py-2"> */}
+                  {courseDetail.statusPayment && (
+                    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                      <div
+                        className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full my-2"
+                        style={{ width: progress + "%" }}
+                      >
+                        {" "}
+                        {progress + "%"}
+                      </div>
+                    </div>
+                  )}
+                  {/* </div> */}
                 </div>
-                {/* <Link
-                  to={courseDetail.telegram}
-                  target="blank"
-                  className="flex justify-center"
-                >
-                  <Button className="text-xs h-8 bg-success space-x-2">
-                    <p>Join Grup Telegram</p>
-                    <FontAwesomeIcon icon={faComments} />
-                  </Button>
-                </Link> */}
               </div>
             </div>
           </>
