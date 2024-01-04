@@ -6,18 +6,18 @@ import PropTypes from "prop-types";
 
 const LayoutProfile = ({ children }) => {
   return (
-    <div className="flex flex-col px-3 mb-20 max-w-[950px] mx-auto ">
+    <div className="flex flex-col px-3 mb-14 md:mb-10 max-w-[950px] mx-auto ">
       <div className="flex space-x-2 items-center text-primary">
         <FontAwesomeIcon icon={faArrowLeft} />
         <Link
-          className="py-4 font-medium text-primary"
+          className="py-4 font-medium text-primary text-sm"
           to="/"
         >
           Kembali ke Beranda
         </Link>
       </div>
       <div className="flex flex-col rounded-md">
-        <h3 className="py-2 text-lg text-center text-white rounded-t-md bg-primary">Account</h3>
+        <h3 className="py-2 text-lg text-center text-white rounded-t-md bg-primary">Pengaturan Akun</h3>
         <div className="grid px-5 py-3 border-b md:grid-cols-2 border-x rounded-b-md border-primary">
           {/* items profile */}
           <ItemsProfile />

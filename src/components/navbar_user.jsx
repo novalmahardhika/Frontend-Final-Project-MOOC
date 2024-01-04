@@ -109,16 +109,43 @@ const Navbar_User = () => {
                 />
                 <span className="tab tab-change-password block text-xs">Kelas</span>
               </Link>
-              <Link
-                to="/myCourses"
-                className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
-              >
-                <FontAwesomeIcon
-                  icon={faList}
-                  className="inline-block mb-1"
-                />
-                <span className="tab tab-payment-history block text-xs">Kursus</span>
-              </Link>
+              {token ? (
+                <Link
+                  to="/myCourses"
+                  className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1"
+                >
+                  <FontAwesomeIcon
+                    icon={faList}
+                    className="inline-block mb-1"
+                  />
+                  <span className="tab tab-payment-history block text-xs">Kursus</span>
+                </Link>
+              ) : (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="w-full focus:outline-none text-gray-600 hover:text-active justify-center inline-block text-center pt-2 pb-1">
+                      <FontAwesomeIcon
+                        icon={faList}
+                        className="inline-block mb-1"
+                      />
+                      <span className="tab tab-logout block text-xs">Profile</span>
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent className="w-[300px] rounded-sm font-poppins">
+                    <DialogHeader>
+                      <DialogTitle className="text">Perhatian!</DialogTitle>
+                      <DialogDescription>Untuk mengakses halaman Kelas Saya anda harus login terlebih dahulu</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <Link to="/user/login">
+                        <DialogClose className="w-full">
+                          <Button className="w-full">Login</Button>
+                        </DialogClose>
+                      </Link>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              )}
               {token ? (
                 <Link
                   to="/user/profile"

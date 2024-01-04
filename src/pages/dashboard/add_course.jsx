@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
-import { Toast } from "@/components/ui/toast";
+import { ToastContainer, toast } from "react-toastify";
 
 const UpdateCourse = () => {
   const [image, setImage] = useState(null);
@@ -75,11 +75,7 @@ const UpdateCourse = () => {
 
       // Handle success (you can show a success message or redirect)
       console.log("Course added successfully:", res.data);
-
-      Toast({
-        title: "Berhasil!.",
-        description: "Data berhasil ditambahkan",
-      });
+      toast.success("Data berhasil ditambahkan!", { autoClose: 2000 });
     } catch (error) {
       // Handle error (you can show an error message to the user)
       console.error("Error adding course:", error);
@@ -89,6 +85,7 @@ const UpdateCourse = () => {
   return (
     <>
       <div>
+        <ToastContainer />
         <Dialog>
           <DialogTrigger asChild>
             <Button className="flex items-center justify-between h-7 space-x-2 bg-success">
@@ -292,14 +289,15 @@ const UpdateCourse = () => {
                     onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
                   />
                 </div>
-                <div className="w-full">
+                <DialogClose asChild>
                   <Button
                     className="w-full"
                     onClick={submitHandler}
+                    type="button"
                   >
                     Submit
                   </Button>
-                </div>
+                </DialogClose>
               </div>
             </Form>
           </DialogContent>

@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useParams } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UbahChapter = () => {
   const { id } = useParams();
@@ -26,7 +28,6 @@ const UbahChapter = () => {
         };
 
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, config);
-        console.log(res.data.data);
 
         // Make sure res.data.chapters is an array before setting it
         const fetchedChapters = Array.isArray(res.data.data.chapters) ? res.data.data.chapters : [];
@@ -69,10 +70,12 @@ const UbahChapter = () => {
           const res = await axios.put(`https://idea-academy.up.railway.app/api/v1/chapters/${chapter.id}`, payload, config);
 
           console.log(res.data.data);
+          toast.success("Data berhasil diperbarui!", { autoClose: 2000 });
         })
       );
     } catch (error) {
       console.error("Error updating chapters:", error);
+      toast.error("Gagal mengupdate data. Silakan coba lagi.");
     }
   };
 
@@ -100,6 +103,7 @@ const UbahChapter = () => {
   return (
     <>
       <div>
+        <ToastContainer />
         <Dialog>
           <DialogTrigger asChild>
             <Button className="flex items-center justify-between space-x-2 bg-active h-7">

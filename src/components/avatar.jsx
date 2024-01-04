@@ -1,84 +1,76 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const AvatarProfile = () => {
-  const navigate = useNavigate()
-  const [performLogout, setPerformLogout] = useState(false)
-  const [userData, setUserData] = useState({})
+  const navigate = useNavigate();
+  const [performLogout, setPerformLogout] = useState(false);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token')
-        const res = await axios.get(
-          'https://idea-academy.up.railway.app/api/v1/current-user',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        setUserData(res.data.data)
+        const token = localStorage.getItem("token");
+        const res = await axios.get("https://idea-academy.up.railway.app/api/v1/current-user", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserData(res.data.data);
       } catch (error) {
-        console.error('Error fetching user data:', error)
+        console.error("Error fetching user data:", error);
       }
-    }
+    };
 
-    fetchUserData()
-  }, [])
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (performLogout) {
-      localStorage.removeItem('token')
-      navigate('/user/login')
+      localStorage.removeItem("token");
+      navigate("/user/login");
     }
-  }, [performLogout, navigate])
+  }, [performLogout, navigate]);
 
   const handleLogout = () => {
-    setPerformLogout(true)
-  }
+    setPerformLogout(true);
+  };
 
   return (
-    <div className='font-poppins'>
+    <div className="font-poppins">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className='cursor-pointer'>
+          <Avatar className="cursor-pointer">
             <AvatarImage
               src={userData.image}
               alt={userData.name}
-              className='object-cover w-12 h-12 cursor-pointer'
+              className="object-cover w-12 h-12 cursor-pointer"
               title={userData.name}
             />
-            <AvatarFallback>
-              {userData.username ? userData.username[0].toUpperCase() : 'U'}
-            </AvatarFallback>
+            <AvatarFallback>{userData.username ? userData.username[0].toUpperCase() : "U"}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='p-3 mt-2 w-44 me-20 font-poppins'>
-          <DropdownMenuGroup className='space-y-4 font-medium'>
-            <DropdownMenuItem className='cursor-pointer'>
-              <Link to='/myCourses'>Kelas Saya</Link>
+        <DropdownMenuContent className="p-3 mt-2 w-44 me-20 font-poppins">
+          <DropdownMenuGroup className="space-y-4 font-medium">
+            <DropdownMenuItem className="cursor-pointer">
+              <Link to="/myCourses">Kelas Saya</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className='cursor-pointer'>
-              <Link to='/payment-history'>Payment</Link>
+            <DropdownMenuItem className="cursor-pointer">
+              <Link to="/payment-history">Payment</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className='cursor-pointer'>
-              <Link to='/user/profile'>Settings</Link>
+            <DropdownMenuItem className="cursor-pointer">
+              <Link to="/User/profile">Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className='cursor-pointer' onClick={handleLogout}>
-              <Link to='#'>Keluar</Link>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleLogout}
+            >
+              <Link to="#">Keluar</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
-}
-export default AvatarProfile
+  );
+};
+export default AvatarProfile;
