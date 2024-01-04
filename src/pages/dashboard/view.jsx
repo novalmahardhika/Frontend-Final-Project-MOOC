@@ -1,9 +1,9 @@
+// ... (kode lainnya)
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import UpdateCourse from "./update_course";
 import AddChapter from "./add_chapter";
@@ -13,24 +13,29 @@ import UpdateModule from "./update_module";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import Loading from "@/components/loading";
 
 const ViewCourse = () => {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [courseList, setCourseList] = useState([]);
   const [activeTab, setActiveTab] = useState("Course");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-        setCourseList(res.data.data);
+        const sortedCourseList = sortChapters(res.data.data);
+        setCourseList(sortedCourseList);
+        setLoading(false);
       } catch (err) {
         console.log(err);
+        setLoading(false);
       }
     };
     fetchCourse();
-  });
+  }, [id, token]);
 
   const deleteHandler = async (e) => {
     try {
@@ -49,6 +54,17 @@ const ViewCourse = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  const sortChapters = (courseList) => {
+    return {
+      ...courseList,
+      chapters: courseList.chapters.sort((a, b) => a.chapterNumber - b.chapterNumber),
+    };
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -70,6 +86,7 @@ const ViewCourse = () => {
             </div>
           </div>
 
+          {/* Tampilkan tab Chapter hanya jika loading selesai */}
           {activeTab === "Chapter" && (
             <>
               <div className="mt-5 font-poppins">
@@ -168,12 +185,12 @@ const ViewCourse = () => {
                 <Separator className="my-4" />
 
                 <div className="space-y-3">
-                  <div className="flex space-x-5">
+                  <div className="flex space-x-5 w-full">
                     <div className="h-full w-[700px]">
                       <img
                         src={courseList.image}
                         alt="Course Thumbnail"
-                        className="w-full h-[350px] object-cover rounded-sm"
+                        className="w-full h-[450px] object-cover rounded-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -182,59 +199,41 @@ const ViewCourse = () => {
                         <Textarea
                           value={courseList.description}
                           readOnly
-                          className="h-20 border-none shadow-none cursor-default focus:border-none"
+                          className="h-24 border-none shadow-none cursor-default focus:border-none"
                         />
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Kategori</Label>
-                          <Input
-                            value={courseList.category}
-                            readOnly
-                            className="border-none shadow-none cursor-default focus:border-none"
-                          />
+                        <div className="border-b flex w-full py-3">
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/2">Kategori</Label>
+                            <Label className="font-normal">: {courseList.category}</Label>
+                          </div>
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/2">Tingkatan</Label>
+                            <Label className="font-normal">: {courseList.level}</Label>
+                          </div>
                         </div>
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Tingkatan</Label>
-                          <Input
-                            value={courseList.level}
-                            readOnly
-                            className="border-none shadow-none cursor-default focus:border-none"
-                          />
+                        <div className="border-b flex w-full py-3">
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/2">Tipe Kelas</Label>
+                            <Label className="font-normal">: {courseList.type}</Label>
+                          </div>
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/2">Harga Kelas</Label>
+                            <Label className="font-normal">: {courseList.price}</Label>
+                          </div>
                         </div>
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Tipe Kelas</Label>
-                          <Input
-                            value={courseList.type}
-                            readOnly
-                            className="border-none shadow-none cursor-default focus:border-none"
-                          />
+                        <div className="border-b flex w-full py-3">
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/4">Nama Creator</Label>
+                            <Label className="font-normal">: {courseList.creator}</Label>
+                          </div>
                         </div>
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Harga Kelas</Label>
-                          <Input
-                            value={courseList.price}
-                            readOnly
-                            className="border-none shadow-none cursor-default focus:border-none"
-                          />
-                        </div>
-
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Nama Creator</Label>
-                          <Input
-                            value={courseList.creator}
-                            readOnly
-                            className="border-none shadow-none cursor-default focus:border-none"
-                          />
-                        </div>
-
-                        <div className="py-2 border-b">
-                          <Label className="font-semibold">Link Telegram</Label>
-                          <Input
-                            value={courseList.telegram}
-                            readOnly
-                            className="w-full border-none shadow-none cursor-default focus:border-none"
-                          />
+                        <div className="border-b flex w-full py-3">
+                          <div className="flex items-center w-full">
+                            <Label className="font-semibold w-1/4">Link Grup</Label>
+                            <Label className="font-normal">: {courseList.telegram}</Label>
+                          </div>
                         </div>
                       </div>
                     </div>

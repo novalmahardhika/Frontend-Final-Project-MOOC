@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // import { useLocation } from "react-router-dom";
-import { faMedal, faClock, faBook, faStar, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { faMedal, faStar, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 // import { Skeleton } from "@/components/ui/skeleton";
 
@@ -22,7 +22,7 @@ const Courses = ({ activeTab }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         const courses = res.data.data?.Courses || [];
-
+        console.log(res.data.data);
         setMyCourseList(courses);
       } catch (err) {
         console.error(err);
@@ -75,30 +75,15 @@ const Courses = ({ activeTab }) => {
                   <div className="text-sm text-primary font-semibold">{course.title}</div>
                 </Link>
                 <div className="text-xs">by {course.creator}</div>
-                <div className="flex flex-wrap gap-3 justify-between items-center pt-2 pb-3">
-                  <div className="flex items-center space-x-2">
-                    <FontAwesomeIcon
-                      icon={faMedal}
-                      className="text-success"
-                    />
-                    <div className="text-xs">{course.level === "beginner" ? "Beginner" : course.level === "intermediate" ? "Intermediate" : "Advance"}</div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <FontAwesomeIcon
-                      icon={faBook}
-                      className="text-success"
-                    />
-                    <div className="text-xs">{course.totalModule} Modules</div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <FontAwesomeIcon
-                      icon={faClock}
-                      className="text-success"
-                    />
-                    <div className="text-xs">{course.totalDuration} Menit</div>
-                  </div>
+
+                <div className="flex items-center pt-2">
+                  <FontAwesomeIcon
+                    icon={faMedal}
+                    className="text-success"
+                  />
+                  <div className="text-xs">{course.level === "beginner" ? "Beginner" : course.level === "intermediate" ? "Intermediate" : "Advance"}</div>
                 </div>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-start items-center pt-3">
                   <Link to={`/course/${course.id}`}>
                     <Button className="h-7 text-xs bg-primary flex gap-3 ">
                       <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{" "}

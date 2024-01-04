@@ -110,7 +110,7 @@ const AddChapter = () => {
                         placeholder="Masukkan Judul Chapter"
                         value={chapter.title}
                         name={`title-${index}`}
-                        maxLength={50}
+                        maxLength={150}
                         className="border border-gray-500"
                         onChange={(e) => handleChapterChange(index, "title", e.target.value)}
                       />

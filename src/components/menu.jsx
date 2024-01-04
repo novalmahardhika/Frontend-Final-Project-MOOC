@@ -53,11 +53,11 @@ const Menu = () => {
               </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem className="">
+          {/* <NavigationMenuItem className="">
             <Link to="#">
               <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-primary text-white p-6`}>About Us</NavigationMenuLink>
             </Link>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

@@ -11,12 +11,24 @@ const CourseHeader = () => {
   const { id } = useParams();
   const [courseDetail, setCourseDetail] = useState(null);
   const token = localStorage.getItem("token");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchCourseDetail = async () => {
       try {
-        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { Headers: { Authorization: `Bearer ${token}` } });
-        setCourseDetail(res.data.data);
+        const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+        const data = res.data.data;
+        setCourseDetail(data);
+        if (res.data.data.statusPayment) {
+          let done = 0;
+          data["chapters"].forEach((item) => {
+            item["modules"].forEach((module) => {
+              if (module.done) done++;
+            });
+          });
+          const percentage = Math.floor((done / data.totalModule) * 100);
+          setProgress(percentage);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -91,6 +103,19 @@ const CourseHeader = () => {
                       <div className="text-xs">{courseDetail.totalDuration} Menit</div>
                     </div>
                   </div>
+                  {/* <div className="py-2"> */}
+                  {courseDetail.statusPayment && (
+                    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                      <div
+                        className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full my-2"
+                        style={{ width: progress + "%" }}
+                      >
+                        {" "}
+                        {progress + "%"}
+                      </div>
+                    </div>
+                  )}
+                  {/* </div> */}
                 </div>
               </div>
             </div>
