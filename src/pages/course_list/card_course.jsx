@@ -210,13 +210,17 @@ const Card_Course = ({ selectedFilters, activeTab }) => {
                 <div>
                   <Link to={`/Course/${course.id}`}>
                     {course.statusPayment !== true ? (
-                      <Button className='flex gap-3 text-xs text-white h-7 bg-active'>
+                      <Button
+                        className={`${
+                          course.type === 'free' ? 'bg-primary' : 'bg-active'
+                        } flex gap-3 text-xs text-white h-7 `}
+                      >
                         <FontAwesomeIcon icon={faGem} />{' '}
                         {course.type === 'free' ? 'Free' : 'Premium'}{' '}
                         {course.statusPayment}
                       </Button>
                     ) : (
-                      <Button className='flex gap-3 text-xs h-7 bg-primary '>
+                      <Button className='flex gap-3 text-xs h-7 bg-success '>
                         <FontAwesomeIcon icon={faCirclePlay} /> Mulai Kelas{' '}
                       </Button>
                     )}
