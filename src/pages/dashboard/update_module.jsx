@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import Loading from "@/components/loading";
 import PropTypes from "prop-types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateModule = ({ id }) => {
   const [modules, setModules] = useState({
@@ -54,23 +56,25 @@ const UpdateModule = ({ id }) => {
       console.log("Updating data:", modules);
 
       // Example using axios.put:
-      const response = await axios.put(`https://idea-academy.up.railway.app/api/v1/modules/${id}`, modules, {
+      await axios.put(`https://idea-academy.up.railway.app/api/v1/modules/${id}`, modules, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log("Update response:", response.data);
+      toast.success("Data berhasil diperbarui!", { autoClose: 2000 });
 
       // Add any additional handling for success here
     } catch (error) {
       console.error("Error updating chapter data:", error);
+      toast.error("Gagal mengupdate data. Silakan coba lagi.");
     }
   };
 
   return (
     <>
       <div>
+        <ToastContainer />
         <Dialog>
           <DialogTrigger asChild>
             <FontAwesomeIcon

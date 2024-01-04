@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddChapter = () => {
   const { id } = useParams();
@@ -45,11 +46,11 @@ const AddChapter = () => {
         console.log(res);
       });
 
-      // Handle success (you can show a success message or redirect)
-      // console.log('Chapters added successfully:', res.data)
+      toast.success("Data berhasil ditambahkan!", { autoClose: 2000 }); // Menampilkan toast sukses selama 2 detik
     } catch (error) {
       // Handle error (you can show an error message to the user)
       console.error("Error adding chapters:", error);
+      toast.error("Gagal menambahkan data. Silakan coba lagi.");
     }
   };
 
@@ -74,6 +75,7 @@ const AddChapter = () => {
   return (
     <>
       <div>
+        <ToastContainer />
         <Dialog>
           <DialogTrigger asChild>
             <Button className="flex items-center justify-between space-x-2 bg-success h-7">

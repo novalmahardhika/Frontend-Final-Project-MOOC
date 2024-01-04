@@ -8,6 +8,7 @@ import AddCourse from "./add_course";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from "@/components/ui/alert-dialog";
 import Loading from "@/components/loading";
+import { toast, ToastContainer } from "react-toastify";
 
 const KelolaKelas = () => {
   const [courseList, setCourseList] = useState([]);
@@ -20,7 +21,6 @@ const KelolaKelas = () => {
   useEffect(() => {
     const fetchPremiumCourse = async () => {
       try {
-        setIsLoading(true);
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseList(res.data.data);
         setIsLoading(false);
@@ -48,15 +48,16 @@ const KelolaKelas = () => {
 
   const deleteHandler = async (e) => {
     try {
-      const res = await axios.delete(`https://idea-academy.up.railway.app/api/v1/courses/${e.currentTarget.id}`, {
+      axios.delete(`https://idea-academy.up.railway.app/api/v1/courses/${e.currentTarget.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log(res.data);
+      toast.success("Data berhasil dihapus!", { autoClose: 2000 });
     } catch (error) {
       console.log(error);
+      toast.error("Gagal menghapus data. Silakan coba lagi.");
     }
   };
 
@@ -69,6 +70,7 @@ const KelolaKelas = () => {
 
   return (
     <div className="px-10 font-poppins">
+      <ToastContainer />
       <div className="flex items-center justify-between mt-2 mb-4">
         <div className="text-2xl font-semibold">Data Kelas</div>
 
@@ -120,8 +122,8 @@ const KelolaKelas = () => {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                              <AlertDialogDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</AlertDialogDescription>
+                              <AlertDialogTitle>Apakah anda yakin akan menghapus?</AlertDialogTitle>
+                              <AlertDialogDescription>Tindakan ini tidak bisa dibatalkan. Tindakan ini akan menghapus akun Anda secara permanen dan menghapus data Anda dari server kami.</AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancel</AlertDialogCancel>
