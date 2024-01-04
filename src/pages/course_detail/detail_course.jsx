@@ -24,7 +24,6 @@ const DetailCourse = () => {
       try {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         setCourseDetail(res.data.data);
-        console.log(res.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -114,7 +113,20 @@ const DetailCourse = () => {
                     </Link>{" "}
                     <div className="space-y-3">
                       <div className="text-justify px-4 text-primary font-semibold text-xl">Tentang Kelas</div>
-                      <div className="text-justify px-4">{courseDetail.description}</div>
+                      <div className="text-justify px-4 text-sm">{courseDetail.description}</div>
+                      <div className="space-y-1">
+                        {" "}
+                        <div className="text-justify px-4 text-primary font-semibold text-xl pb-2">Target Audience</div>
+                        {courseDetail.audience.map((item, index) => (
+                          <div
+                            key={index}
+                            className="text-justify px-4 text-sm"
+                          >
+                            {index + 1 + ". "}
+                            {item}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </>
                 ) : (
