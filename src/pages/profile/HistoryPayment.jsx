@@ -61,12 +61,12 @@ const HistoryPayment = () => {
             payments.map((payment) => (
               <Card
                 key={payment.id}
-                className="md:w-[420px] w-[300px] h-[250px] md:h-full "
+                className="md:w-[420px] w-[300px] h-[250px] md:h-full me-3 "
               >
                 <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
-                  <div className="text-xs  z-1 relative bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                  <div className="text-xs  z-1 relative px-3">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
                   <img
-                    className="object-cover w-full h-20 md:h-28 rounded-t-sm"
+                    className="object-cover w-full h-20 md:h-28 r"
                     src={payment.Course.image}
                     alt={payment.Course.title}
                   />
