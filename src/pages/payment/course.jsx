@@ -549,7 +549,7 @@ const Payment = () => {
               </CardContent>
               <CardFooter>
                 <Button
-                  className='w-full h-12 rounded-full bg-success '
+                  className='w-full h-12 duration-300 rounded-full bg-success hover:bg-primary'
                   onClick={handlePayment}
                 >
                   {courseType === 'free'
