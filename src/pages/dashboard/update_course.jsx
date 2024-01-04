@@ -16,6 +16,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const UpdateCourse = (props) => {
   const [image, setImage] = useState(null)
@@ -30,7 +32,7 @@ const UpdateCourse = (props) => {
     image: props.image,
     telegram: props.telegram,
   })
-  console.log(formData)
+
   const token = localStorage.getItem('token')
 
   const handleImageChange = (e) => {
@@ -43,20 +45,19 @@ const UpdateCourse = (props) => {
       reader.readAsDataURL(file)
       setFormData({ ...formData, image: file })
     } else {
-      setImage(props.image)
+      setImage(null)
       setFormData({ ...formData, image: null })
     }
+  }
+
+  const handleUpdateImage = () => {
+    document.getElementById('thumbnailInput').click()
   }
 
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    // Additional validation for price (numeric check)
-    // if (isNaN(+formData.price)) {
-    //   // Handle validation error for price (you can show a message to the user)
-    //   console.error("Price must be a number");
-    //   return;
-    // }
+    console.log(formData.image)
 
     // You can now proceed to make the axios POST request
     try {
@@ -77,23 +78,24 @@ const UpdateCourse = (props) => {
       formDataToSend.append('image', formData.image)
       formDataToSend.append('telegram', formData.telegram)
 
-      const res = await axios.put(
+      await axios.put(
         `https://idea-academy.up.railway.app/api/v1/courses/${props.id}`,
         formDataToSend,
         config
       )
 
-      // Handle success (you can show a success message or redirect)
-      console.log('Course added successfully:', res.data.data)
+      toast.success('Data berhasil diperbarui!', { autoClose: 2000 }) // Menampilkan toast sukses selama 2 detik
     } catch (error) {
-      // Handle error (you can show an error message to the user)
-      console.error('Error adding course:', error)
+      // Handle error
+      console.error('Error updating course:', error)
+      toast.error('Gagal mengupdate data. Silakan coba lagi.') // Menampilkan toast error
     }
   }
 
   return (
     <>
       <div>
+        <ToastContainer />
         <Dialog>
           <DialogTrigger asChild>
             <Button className='flex items-center justify-between space-x-2 h-7 bg-active'>
@@ -282,36 +284,51 @@ const UpdateCourse = (props) => {
                     Tumbnail Kelas
                   </Label>
                   <div className='flex items-center space-x-2'>
-                    {image && (
+                    {image ? (
                       <>
                         <img
-                          src={props.image}
+                          src={image}
                           alt='Thumbnail Preview'
                           className='object-cover w-full h-20 rounded-sm'
                         />
                         <FontAwesomeIcon
                           icon={faTrash}
                           className='text-red-500 cursor-pointer'
-                          onClick={() => setImage(null)}
+                          onClick={() => {
+                            setImage(null)
+                            setFormData({ ...formData, image: null })
+                          }}
                         />
                       </>
-                    )}
-                    {!image && (
+                    ) : (
                       <>
-                        <Button
-                          className='cursor-pointer h-7 bg-success'
-                          onClick={() =>
-                            document.getElementById('thumbnailInput').click()
-                          }
-                        >
-                          <div className='flex items-center space-x-2 '>
-                            <FontAwesomeIcon
-                              icon={faCirclePlus}
-                              className='text-white'
+                        {props.image ? (
+                          <>
+                            <img
+                              src={props.image}
+                              alt='Thumbnail Preview'
+                              className='object-cover w-full h-20 rounded-sm'
                             />
-                            <div className='text-xs'>Tambah Gambar</div>
-                          </div>
-                        </Button>
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              className='text-red-500 cursor-pointer'
+                              onClick={handleUpdateImage}
+                            />
+                          </>
+                        ) : (
+                          <Button
+                            className='cursor-pointer h-7 bg-success'
+                            onClick={handleUpdateImage}
+                          >
+                            <div className='flex items-center space-x-2 '>
+                              <FontAwesomeIcon
+                                icon={faCirclePlus}
+                                className='text-white'
+                              />
+                              <div className='text-xs'>Tambah Gambar</div>
+                            </div>
+                          </Button>
+                        )}
                         <input
                           type='file'
                           id='thumbnailInput'
@@ -339,8 +356,12 @@ const UpdateCourse = (props) => {
                   />
                 </div>
                 <div className='w-full'>
-                  <Button className='w-full' onClick={submitHandler}>
-                    Submit
+                  <Button
+                    className='w-full'
+                    onClick={submitHandler}
+                    type='button'
+                  >
+                    Perbarui
                   </Button>
                 </div>
               </div>

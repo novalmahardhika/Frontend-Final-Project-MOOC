@@ -18,8 +18,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        setIsLoading(true);
-
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/orders/list`, { headers: { Authorization: `Bearer ${token}` } });
         setPayments(res.data.data);
         const userIds = res.data.data.map((item) => item.userId);
@@ -41,12 +39,10 @@ const Dashboard = () => {
           }
         }
 
-        console.log("userNamesMap:", userNamesMap);
         setUserNames(userNamesMap);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
-        setIsLoading(false);
       }
     };
     fetchCourse();
@@ -88,7 +84,7 @@ const Dashboard = () => {
             <Table>
               <TableHeader className="bg-secondary h-12">
                 <TableRow>
-                  <TableHead className="text-primary font-bold">ID</TableHead>
+                  <TableHead className="text-primary font-bold">Nama</TableHead>
                   <TableHead className="text-primary font-bold">Kategori</TableHead>
                   <TableHead className="text-primary font-bold">Kelas Premium</TableHead>
                   <TableHead className="text-primary font-bold">Status</TableHead>

@@ -22,7 +22,6 @@ const FilterCourse = ({ onFilterChange }) => {
   const sort = [
     { id: "Terbaru", type: "Terbaru" },
     { id: "Terpopuler", type: "Terpopuler" },
-    { id: "Promo", type: "Promo" },
   ];
 
   const [checkedSortId, setCheckedSortId] = useState();

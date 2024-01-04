@@ -28,6 +28,7 @@ const ViewCourse = () => {
         const res = await axios.get(`https://idea-academy.up.railway.app/api/v1/courses/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         const sortedCourseList = sortChapters(res.data.data);
         setCourseList(sortedCourseList);
+        console.log(sortedCourseList);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -176,6 +177,7 @@ const ViewCourse = () => {
                       price={courseList.price}
                       telegram={courseList.telegram}
                       level={courseList.level}
+                      type={courseList.type}
                       description={courseList.description}
                       category={courseList.category}
                       image={courseList.image}

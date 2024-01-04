@@ -30,7 +30,7 @@ const HistoryPayment = () => {
   }, [token]);
 
   return (
-    <div className="flex flex-col space-y-3 md:max-h-[500px] overflow-hidden rounded-md mb-5">
+    <div className="flex flex-col space-y-3 md:max-h-[450px] overflow-y-scroll rounded-md mb-5 md:mb-0">
       <h2 className="mx-auto text-lg font-medium font-poppins">History Payment</h2>
       {/* {isLoading && <Loading />}
       <div className="overflow-y-auto no-scrollbar rounded-t-md">
@@ -61,12 +61,12 @@ const HistoryPayment = () => {
             payments.map((payment) => (
               <Card
                 key={payment.id}
-                className="md:w-[420px] w-[300px] h-[250px] md:h-full "
+                className="md:w-[420px] w-[300px] h-[250px] md:h-full me-3 "
               >
                 <div className="hover:opacity-50 cursor-pointer hover:transition-transform">
-                  <div className="text-xs  z-1 absolute bg-white px-3 py-1 rounded-tl-sm rounded-br-sm">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
+                  <div className="text-xs  z-1 relative px-3">{formatDistanceToNow(new Date(payment.createdAt), { addSuffix: true })}</div>
                   <img
-                    className="object-cover w-full h-24 md:h-48 rounded-t-sm"
+                    className="object-cover w-full h-20 md:h-28 r"
                     src={payment.Course.image}
                     alt={payment.Course.title}
                   />
