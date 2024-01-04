@@ -145,12 +145,16 @@ const Course = ({ activeTab }) => {
                 <div>
                   <Link to={`/Course/${item.id}`}>
                     {item.statusPayment !== true ? (
-                      <Button className='flex gap-3 text-xs text-white h-7 bg-active'>
+                      <Button
+                        className={`${
+                          item.type === 'free' ? 'bg-primary' : 'bg-active'
+                        } flex gap-3 text-xs text-white h-7 `}
+                      >
                         <FontAwesomeIcon icon={faGem} />{' '}
                         {item.type === 'free' ? 'Free' : 'Premium'}
                       </Button>
                     ) : (
-                      <Button className='flex gap-3 text-xs h-7 bg-primary'>
+                      <Button className='flex gap-3 text-xs h-7 bg-success'>
                         <FontAwesomeIcon icon={faCirclePlay} />
                         Mulai Kelas{' '}
                       </Button>
